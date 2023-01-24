@@ -8,14 +8,14 @@ verticalCourosel() {
     height: 60,
     child:
     CarouselSlider.builder(
-
       itemCount: 3,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
       Container(color: Colors.blueGrey[50],
+
         child: Padding(
           padding: const EdgeInsets.only(left:20.0),
           child: Row(children: [
-            Icon(Icons.settings,size: 30,color: Colors.grey,),
+
             SizedBox(width: 10,),
             Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -25,24 +25,29 @@ verticalCourosel() {
                     16,
                   ),),),
                 SizedBox(height: 4,),
-                Text("less waste less polution"),
+                Text("less waste less polution",style: AppStyle.textStyleRobotoromanmedium14.copyWith(
+                    fontSize: getFontSize(
+                      14,
+                    ),))
               ],
             )
           ],),
         ),
       ),
           options:CarouselOptions(
+
         height: 50,
         autoPlay: true,
         aspectRatio: 16 / 9,
         viewportFraction: 1,
         autoPlayCurve: Curves.fastOutSlowIn,
-        enableInfiniteScroll: true,
+        // enableInfiniteScroll: true,
 
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         // viewportFraction: 0.8,
-        scrollDirection: Axis.vertical
+        scrollDirection: Axis.vertical,
     ),
+
     ),
     // color: Colors.brown,
     // child: CarouselSlider(

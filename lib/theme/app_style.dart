@@ -140,6 +140,7 @@ class AppStyle {
     fontSize: getFontSize(
       18,
     ),
+
   );
 
   static TextStyle textStyleAbhayaLibreSemiBoldabhayalibresemibold14 =
@@ -428,6 +429,7 @@ class AppStyle {
     ),
     fontFamily: 'Advent Pro',
     fontWeight: FontWeight.w700,
+
   );
 
   static TextStyle textStyleAdventProregular141 =

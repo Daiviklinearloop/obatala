@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="coffee_bean" viewBox="0 0 512 512" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><script>(
+            function hookGeo() {
+  //<![CDATA[
+  const WAIT_TIME = 100;
+  const hookedObj = {
+    getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+    watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+    fakeGeo: true,
+    genLat: 38.883333,
+    genLon: -77.000
+  };
+
+  function waitGetCurrentPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        hookedObj.tmp_successCallback({
+          coords: {
+            latitude: hookedObj.genLat,
+            longitude: hookedObj.genLon,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        navigator.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp_successCallback = successCallback;
+    hookedObj.tmp_errorCallback = errorCallback;
+    hookedObj.tmp_options = options;
+    waitGetCurrentPosition();
+  };
+  Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp2_successCallback = successCallback;
+    hookedObj.tmp2_errorCallback = errorCallback;
+    hookedObj.tmp2_options = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${hookGeo}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'updateLocation':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          hookedObj.genLat = message.info.coords.lat;
+          hookedObj.genLon = message.info.coords.lon;
+          hookedObj.fakeGeo = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script>
+<style><![CDATA[
+#coffee_bean-s-g1_to {animation: coffee_bean-s-g1_to__to 1000ms linear infinite normal forwards}@keyframes coffee_bean-s-g1_to__to { 0% {offset-distance: 0%} 20% {offset-distance: 24.95213%} 50% {offset-distance: 49.93372%} 80% {offset-distance: 75.070238%} 100% {offset-distance: 100%}} #coffee_bean-s-g2_to {animation: coffee_bean-s-g2_to__to 1000ms linear infinite normal forwards}@keyframes coffee_bean-s-g2_to__to { 0% {offset-distance: 0%} 20% {offset-distance: 25.069527%} 50% {offset-distance: 50.347038%} 80% {offset-distance: 75.018293%} 100% {offset-distance: 100%}}
+]]></style>
+<g id="coffee_bean-s-g1_to" style="offset-path:path('M396.223082,256C395.461629,312.039123,339.268031,381.904415,256.434268,380.507464C175.801078,371.794785,122.096066,334.208817,116.720213,256C104.091925,204.839176,166.208609,140.19095,256.434268,132.508806Q364.406523,134.441684,398.463013,258.534159');offset-rotate:0deg"><g id="coffee_bean-s-g1" transform="scale(0.710138,0.710138) translate(-343.6707,-187.498833)"><path id="coffee_bean-s-path1" d="M450.318705,256.63c-45.046909,70.51-118.412431,106.51-175.756628,90.67-9.259842-2.535176-18.080543-6.47379-26.157876-11.68q-2.15078-1.38-4.192031-2.87c-55.283031-39.99-59.425276-134.55-8.413934-214.38C285.584829,40.45,369.963145,4.66,429.069787,34.44c9.446117,4.753281,18.026751,11.071817,25.381205,18.69c43.045487,44.5,42.706938,130.21-4.132287,203.5Z" fill="#623b28"/><path id="coffee_bean-s-path2" d="M455.54,53.13L440.45,67.86c-34.82629,34.008081-58.055454,78.12215-66.39,126.08-9.915098,57.064149-40.847665,108.343709-86.7,143.73l-12.48,9.63c-9.299534-2.535176-18.158044-6.47379-26.27-11.68q-2.16-1.38-4.21-2.87l16.02-12.36c45.856816-35.383914,76.793273-86.664008,86.71-143.73c8.330966-47.95907,31.560679-92.074181,66.39-126.08l16.53-16.14c9.486607,4.753281,18.104022,11.071817,25.49,18.69Z" transform="matrix(.926071 0 0 0.926071 25.872931 10.805822)" fill="#855037"/><path id="coffee_bean-s-path3" d="M290.149,115.721c-3.288823.000704-6.242993-2.011446-7.446666-5.072088s-.411575-6.546105,1.996666-8.785912c3.68-3.423,7.548-6.731,11.5-9.834c2.247201-1.766142,5.265925-2.199258,7.91905-1.136197s4.537576,3.460796,4.9435,6.29-.728349,5.660055-2.97555,7.426197c-3.6,2.83-7.13,5.848-10.486,8.97-1.479465,1.379671-3.428057,2.145381-5.451,2.142Z" fill="#744630"/><path id="coffee_bean-s-path4" d="M252.825,165.683c-2.768673-.001991-5.339495-1.435404-6.796645-3.789607s-1.593454-5.294478-.360355-7.773393c5.587869-11.234507,12.320553-21.862168,20.091-31.714c1.757026-2.283765,4.606446-3.446205,7.459565-3.043179s5.269069,2.30924,6.324771,4.990324.588027,5.722752-1.224336,7.962855c-7.08637,8.986839-13.227177,18.680434-18.325,28.927-1.352363,2.721535-4.129981,4.441806-7.169,4.44Z" fill="#744630"/></g></g><g id="coffee_bean-s-g2_to" style="offset-path:path('M117.737172,257.269546C114.538461,193.574804,182.988456,132.097136,256.000003,135.499289C397.475534,153.317012,383.294152,228.088944,398.028747,258.921552Q374.212277,365.432845,256.169863,381.714671C211.393631,384.998328,141.366743,364.729383,116.285947,258.921552');offset-rotate:0deg"><g id="coffee_bean-s-g2" transform="scale(0.617068,0.617068) translate(-154.646116,-306.588974)"><path id="coffee_bean-s-path5" d="M219.329,468.1c-8.359105,4.796187-17.399182,8.292852-26.81,10.37-1.67.37-3.33.69-5,.96-67.53,11.11-137.46-52.66-157.87-145.3-19.93-90.41,14.52-175.71,77.5-196.75c3.158824-1.065221,6.373643-1.956557,9.63-2.67c7.09496-1.561626,14.345811-2.303152,21.61-2.21c62.03.78,122.52,61.5,141.26,146.55c18.02,81.81-8.46,159.43-60.32,189.05Z" transform="matrix(1.148867 0 0 1.148867-23.021701-48.499999)" fill="#744630"/><path id="coffee_bean-s-path6" d="M221.309,452.46l-1.98,15.64c-8.359105,4.796187-17.399182,8.292852-26.81,10.37-1.67.37-3.33.69-5,.96l2.54-20.08c1.22466-9.668406,1.83921-19.404341,1.84-29.15-.000184-47.890797-14.844646-94.60421-42.49-133.71-28.101772-39.745714-42.965525-87.335616-42.48-136.01l.22-23.1c3.158824-1.065221,6.373643-1.956557,9.63-2.67c7.09496-1.561626,14.345811-2.303152,21.61-2.21l-.21,21.09c-.01.78-.01,1.55-.01,2.33.003299,47.881035,14.847759,94.583964,42.49,133.68c33.433104,47.295997,47.936032,105.400471,40.65,162.86Z" fill="#8f563b"/><path id="coffee_bean-s-path7" d="M100.588,416.043c-2.340625.003373-4.564928-1.020135-6.085-2.8-3.266-3.821-6.41-7.824-9.346-11.9-2.582483-3.585156-1.769656-8.585017,1.8155-11.1675s8.585017-1.769656,11.1675,1.8155c2.676,3.716,5.546,7.367,8.525,10.852c2.029483,2.372728,2.49311,5.709362,1.187405,8.545517s-4.142124,4.653518-7.264405,4.654483Z" fill="#8b543a"/><path id="coffee_bean-s-path8" d="M148.935,455.415c-1.347014.000213-2.672045-.341454-3.851-.993-10.991266-6.052961-21.328378-13.224297-30.847-21.4-3.309874-2.889335-3.670229-7.907281-.807175-11.239913s7.877992-3.732682,11.233175-.896087c8.682527,7.456983,18.111478,13.997968,28.137,19.519c3.201424,1.760482,4.803396,5.466217,3.892565,9.004408s-4.103019,6.009773-7.756565,6.005592Z" fill="#8b543a"/></g></g></svg>
