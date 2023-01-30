@@ -25,7 +25,6 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
   RxString categoryImage="".obs;
 
 
-
 @override
   void onReady() {
     // TODO: implement onReady
@@ -33,22 +32,18 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
     CategoryApiCall();
     ProductApiCall();
     ManufacturerApiCall();
-
-
 }
+
+
 
   Future CategoryApiCall() async{
     loading.value=true;
     print("loading"+loading.toString());
-
-
     print("Category API ");
     final response = await http.post(
       Uri.parse(APPURL.category),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-
+          'Content-Type': 'application/json; charset=UTF-8',},
       body: jsonEncode(<String, dynamic>{
           "attributes": {
             "string": "string"
@@ -68,7 +63,6 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
       print("response --:"+response.body);
      categoryModelData!.value = CategoryModel.fromJson(jsonDecode(response.body));
     // final responceData = json.decode(response.body);
-      loading.value=false;
 
 
 
@@ -80,6 +74,7 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
 
 
 
+      loading.value=false;
 
     }else
     {
@@ -157,6 +152,8 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
 
     }else
     {
+      loading.value=false;
+
       print("error- category"+response.body.toString());
       Map<String, dynamic> error = jsonDecode(response.body);
       Fluttertoast.showToast(

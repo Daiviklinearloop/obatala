@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Obatala',
-      initialRoute: AppRoutes.homePage,
+      initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.page,
 
 

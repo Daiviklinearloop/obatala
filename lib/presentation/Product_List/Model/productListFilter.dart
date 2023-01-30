@@ -4,6 +4,9 @@ class ProductListFilter {
   String? type;
   String? label;
   String? id;
+  dynamic from;
+  dynamic till;
+
   List<Children>? children;
 
   ProductListFilter({
@@ -17,6 +20,8 @@ class ProductListFilter {
     type = json['type'] as String?;
     label = json['label'] as String?;
     id = json['id'] as String?;
+    from = json['from'] ;
+    till = json['till'] ;
     children = (json['children'] as List?)?.map((dynamic e) => Children.fromJson(e as Map<String,dynamic>)).toList();
   }
 
@@ -25,6 +30,8 @@ class ProductListFilter {
     json['type'] = type;
     json['label'] = label;
     json['id'] = id;
+    json['from'] = from;
+    json['till'] = till;
     json['children'] = children?.map((e) => e.toJson()).toList();
     return json;
   }

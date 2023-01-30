@@ -4,8 +4,8 @@ class ProductDetailModel {
   String? categoryName;
   String? manufacturerId;
   String? manufacturerName;
-  String? maxQty;
-  int? minQty;
+  dynamic maxQty;
+  dynamic minQty;
   String? id;
   String? productsDateAvailable;
   String? description;
@@ -159,8 +159,8 @@ class ProductDetailModel {
     categoryName = json['categoryName'] as String?;
     manufacturerId = json['manufacturerId'] as String?;
     manufacturerName = json['manufacturerName'] as String?;
-    maxQty = json['maxQty'] as String?;
-    minQty = json['minQty'] as int?;
+    maxQty = json['maxQty'] ;
+    minQty = json['minQty'];
     id = json['id'] as String?;
     productsDateAvailable = json['products_date_available'] as String?;
     description = json['description'] as String?;

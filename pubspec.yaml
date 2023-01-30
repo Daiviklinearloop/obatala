@@ -46,8 +46,9 @@ dependencies:
   flutter_svg:
   font_awesome_flutter: ^10.3.0
   shimmer: ^2.0.0
+  flutter_widget_from_html: ^0.9.1
+  html: ^0.15.1
   flutter_html:
-  simple_html_css: ^4.0.0
 
 
 

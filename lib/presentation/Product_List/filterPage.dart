@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:obatala/presentation/Product_List/Controller/product_list_controller.dart';
+import 'package:obatala/routes/app_routes.dart';
 import 'package:obatala/theme/app_style.dart';
 
 import '../../core/utils/math_utils.dart';
+import '../Dashboard/Drawer.dart';
 
 class FilterPage extends GetWidget<ProductListController>{
+   FilterPage({super.key});
 
-  RxBool checkbox= false.obs;
-  RxBool checkbox1= false.obs;
-  RxBool checkbox2= false.obs;
-  RxDouble start = 30.0.obs;
-  RxDouble end = 50.0.obs;
-  Rx<TextEditingController> ControllerEnd = TextEditingController().obs;
-  // var ControllerStart= TextEditingController().obs;
-
+  RxList manufacturer=[].obs;
+  @override
   Widget build(BuildContext context){
+
     return Scaffold(
-      appBar: AppBar(
+        backgroundColor: Colors.white,
+        drawer: Drawer(
+          child: DrawerWidget(),
+        ),
+        appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xff616161),
+        backgroundColor: const Color(0xff616161),
         title:Text("Filteren",style:  AppStyle.textStyleAdventProbold222.copyWith(
             color: Colors.white,
             fontSize: getFontSize(18))),
@@ -59,9 +61,21 @@ class FilterPage extends GetWidget<ProductListController>{
                           children: [
                             Obx(()=>  GestureDetector(
                                 onTap: (){
+
                                  // controller.users[index].children[i].checked==false?controller.users[index].children[i].checked=true:controller.users[index].children[i].checked=false;
                                   controller.list![index].children![i].checked!.value=!controller.list![index].children![i].checked!.value;                                  print("check box "+controller.list![index].children![i].checked.toString());
+                                  if( controller.list![index].children![i].checked!.value==true){
+                                    if(manufacturer.contains(controller.list![index].children![i].id.toString())){
+                                      print("Already there");
+                                    }else{
+                                      manufacturer.value.add(controller.list![index].children![i].id.toString());
+                                    }
 
+                                  }else{
+                                    manufacturer.value.remove(controller.list![index].children![i].id.toString());
+                                  }
+
+                                 print("manufacturer"+manufacturer.toString());
                                   },
                                 child:
                                 controller.list![index].children![i].checked!.value==true? Icon(Icons.check_box,color: Colors.black): Icon(Icons.check_box_outline_blank)),),
@@ -77,127 +91,28 @@ class FilterPage extends GetWidget<ProductListController>{
                         ),
                       );
                     }),
-
-
-
-
+                    Divider(color: Colors.grey[300],)
                   ],
                 );
               }
           ),
-
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 15.0,right: 15,top: 10),
-          //   child: Row(
-          //     children: [
-          //       Text(controller.list![0].label.toString(),style:  AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(18)),),
-          //     Spacer(),
-          //     Icon(Icons.keyboard_arrow_up,color: Colors.grey,)
-          //     ],
-          //   ),
-          // ),
-          //
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 15.0,right: 15,top: 10),
-          //   child: Row(
-          //     children: [
-          //     Obx(()=>  GestureDetector(
-          //           onTap: (){
-          //          checkbox==true?checkbox.value=false:checkbox.value=true;
-          //          print("check box "+checkbox.toString());
-          //        },
-          //           child: checkbox==true? Icon(Icons.check_box,color: Colors.blue): Icon(Icons.check_box_outline_blank)),),
-          //       SizedBox(width: 10,),
-          //       Text("ECM",style: AppStyle.textStyleAdventProregular1010.copyWith(
-          //         fontSize: getFontSize(14)
-          //       )),
-          //     Spacer(),
-          //       Text("( 1 )",style: AppStyle.textStyleAdventProregular1010.copyWith(
-          //           fontSize: getFontSize(14)
-          //       )),
-          //     ],
-          //   ),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 15.0,right: 15,top: 10),
-          //   child: Row(
-          //     children: [
-          //       Obx(()=>  GestureDetector(
-          //           onTap: (){
-          //             checkbox1==true?checkbox1.value=false:checkbox1.value=true;
-          //             print("check box "+checkbox1.toString());
-          //           },
-          //           child: checkbox1==true? Icon(Icons.check_box,color: Colors.blue): Icon(Icons.check_box_outline_blank)),),
-          //       SizedBox(width: 10,),
-          //       Text("Lelit",style: AppStyle.textStyleAdventProregular1010.copyWith(
-          //           fontSize: getFontSize(14)
-          //       )),
-          //       Spacer(),
-          //       Text("( 4 )",style: AppStyle.textStyleAdventProregular1010.copyWith(
-          //           fontSize: getFontSize(14)
-          //       )),
-          //     ],
-          //   ),
-          // ),   Padding(
-          //   padding: const EdgeInsets.only(left: 15.0,right: 15,top: 10),
-          //   child: Row(
-          //     children: [
-          //       Obx(()=>  GestureDetector(
-          //           onTap: (){
-          //             checkbox2==true?checkbox2.value=false:checkbox2.value=true;
-          //             print("check box "+checkbox2.toString());
-          //           },
-          //           child: checkbox2==true? Icon(Icons.check_box,color: Colors.blue,): Icon(Icons.check_box_outline_blank)),),
-          //       SizedBox(width: 10,),
-          //       Text("Merken",style: AppStyle.textStyleAdventProregular1010.copyWith(
-          //           fontSize: getFontSize(14)
-          //       )),
-          //       Spacer(),
-          //       Text("( 12 )",style: AppStyle.textStyleAdventProregular1010.copyWith(
-          //           fontSize: getFontSize(14)
-          //       )),
-          //     ],
-          //   ),
-          // ),
-
-          Divider(thickness: 1,color: Colors.grey[300],),
-
-
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0,right: 15,top: 10),
-            child: Row(
-              children: [
-                Text("Prijs",style:  AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(18)),),
-                Spacer(),
-                Icon(Icons.keyboard_arrow_up,color: Colors.grey,)
-              ],
+         Obx(()=> RangeSlider(
+            values: controller.currentRangeValues.value,
+            activeColor: Colors.black,
+            labels: RangeLabels(
+              controller.currentRangeValues.value.start.round().toString(),
+              controller.currentRangeValues.value.end.round().toString(),
             ),
-          ),
-
-       Obx(()=>   RangeSlider (
-         activeColor: Color(0xff262526),
-            inactiveColor: Colors.grey[300],
-            values: RangeValues(start.value, end.value),
-            labels: RangeLabels(start.toString(), end.toString()),
-            onChanged: (value) {
-                start.value = value.start;
-                end.value = value.end;
-                // ControllerStart.ControllerStartvalue=value.start as TextEditingController;
-
+            min: controller.start.value,
+            max: controller.end.value,
+            onChanged: (RangeValues values) {
+                controller.currentRangeValues.value = values;
+                controller.ControllerStart.text=values.start.round().toString();
+                controller.ControllerEnd.text=values.end.round().toString();
+                print("value"+controller.currentRangeValues.value.toString());
             },
-            min: 10.0,
-            max: 80.0,
           ),),
-          // Obx(()=>
-          // Text(
-          //   " Start: " +
-          //       start.toStringAsFixed(2) +
-          //       "\nEnd: " +
-          //       end.toStringAsFixed(2),
-          //   style: const TextStyle(
-          //     fontSize: 16.0,
-          //   ),
-          // ),),
+
 
           Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15),
@@ -209,7 +124,8 @@ class FilterPage extends GetWidget<ProductListController>{
                   height: 40,
                   width: 100,
                   child: TextField(
-                    // controller: ControllerStart.value,
+                    readOnly: true,
+                    controller: controller.ControllerStart,
                     decoration: InputDecoration(
                       border: OutlineInputBorder()
 
@@ -223,12 +139,13 @@ class FilterPage extends GetWidget<ProductListController>{
                   height: 40,
                   width: 100,
                   child: TextField(
-                    // controller: ControllerEnd,
+                    readOnly: true,
+                    controller: controller.ControllerEnd,
                     decoration: InputDecoration(
                         border: OutlineInputBorder()
                     ),
-                  ),
-                ),
+                  ),),
+
                 SizedBox(width: 10,),
 
                 Container(
@@ -242,7 +159,31 @@ class FilterPage extends GetWidget<ProductListController>{
                 )
               ],
             ),
+          ),
+            SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: (){
+                print("manufacter list"+manufacturer.toString());
+                print("Controller Start"+controller.ControllerStart.toString());
+                print("Controller End"+controller.ControllerEnd.toString());
+              controller.ProductListFilterApiCall(manufacturer,controller.ControllerStart.text.toString(),controller.ControllerEnd.text.toString());
+              Get.toNamed(AppRoutes.productList);
+
+              },
+              child: Container(
+                height: 40,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  color: Color(0xff212529),
+                ),
+                child: Center(child: Text("Show product",style: TextStyle(color: Colors.white),)),
+              ),
+            ),
           )
+
         ])
     )
     );

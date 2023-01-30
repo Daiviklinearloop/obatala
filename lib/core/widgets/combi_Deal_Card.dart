@@ -25,8 +25,8 @@ class CombiDealCard extends StatefulWidget {
   int? imageHeight;
   int? imageWidth;
   String? offerLabel;
-
   bool? homePage;
+  bool ? checkbox;
 
   CombiDealCard({ required this.productName, this.Delivery,this.productOfferPrice,this.productImage,this.productPrice,this.productRating,
     this.stockIndicator,
@@ -39,6 +39,7 @@ class CombiDealCard extends StatefulWidget {
     this.imageHeight,
     this.imageWidth,
     this.offerLabel,
+    this.checkbox,
   });
 
   @override
@@ -46,11 +47,11 @@ class CombiDealCard extends StatefulWidget {
 }
 
 class _CombiDealCardState extends State<CombiDealCard> {
-  RxBool checkbox= true.obs;
+  // RxBool checkbox= true.obs;
   @override
   Widget build(BuildContext context) {
-    return Obx(()=> Opacity(
-      opacity:checkbox==true?1: 0.3, //from 0-1, 0.5 = 50% opacity
+    return  Opacity(
+      opacity:widget.checkbox==true?1: 0.3, //from 0-1, 0.5 = 50% opacity
 
       child: Padding(
         padding: const EdgeInsets.only(top:8.0,bottom: 8),
@@ -122,12 +123,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                             ),
 
                           ),
-                          Obx(()=>  GestureDetector(
-                              onTap: (){
-                                checkbox==true?checkbox.value=false:checkbox.value=true;
-                                print("check box "+checkbox.toString());
-                              },
-                              child: checkbox==true? Icon(Icons.check_box,color: Colors.black54): Icon(Icons.check_box_outline_blank)),),
+                          widget.checkbox==true? Icon(Icons.check_box,color: Colors.black54): Icon(Icons.check_box_outline_blank),
 
                         ],
                       ),
@@ -387,7 +383,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
           ),
         ),
       ),
-    ));
+    );
   }
 }
 

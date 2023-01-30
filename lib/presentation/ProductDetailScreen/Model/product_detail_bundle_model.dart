@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class ProductDetailBundleModel {
   List<List1>? list1;
   int? count;
@@ -5,12 +7,14 @@ class ProductDetailBundleModel {
   int? currentPage;
   int? totalPage;
 
+
   ProductDetailBundleModel({
     this.list1,
     this.count,
     this.total,
     this.currentPage,
     this.totalPage,
+
   });
 
   ProductDetailBundleModel.fromJson(Map<String, dynamic> json) {
@@ -159,6 +163,8 @@ class Products {
   MetaData? metaData;
   List<String>? images;
   List<dynamic>? imageTitles;
+  RxBool? checkbox= true.obs;
+
 
   Products({
     this.crumbPath,
@@ -217,6 +223,7 @@ class Products {
     this.metaData,
     this.images,
     this.imageTitles,
+    this.checkbox,
   });
 
   Products.fromJson(Map<String, dynamic> json) {

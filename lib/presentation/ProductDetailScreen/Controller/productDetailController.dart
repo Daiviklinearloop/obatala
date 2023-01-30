@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,7 @@ import 'package:http/http.dart'as http;
 import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/presentation/Dashboard/Category/Model/manufacturer_model.dart';
 import 'package:obatala/presentation/ProductDetailScreen/Model/manufactureIdModel.dart';
+import 'package:obatala/presentation/ProductDetailScreen/Model/productDetailReview.dart';
 import 'package:obatala/presentation/ProductDetailScreen/Model/product_detail_alsoBought_model.dart';
 import 'package:obatala/presentation/ProductDetailScreen/Model/product_detail_bundle_model.dart';
 import 'dart:convert';
@@ -20,10 +23,11 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
   Rx<ProductDetailBundleModel> productDetailBundleModel= ProductDetailBundleModel().obs;
   Rx<ProductDetailAlsoBoughtModel> productDetailAlsoBoughtModel= ProductDetailAlsoBoughtModel().obs;
   Rx<ManufacturerIdModel> manufacturerIdModel= ManufacturerIdModel().obs;
+  Rx<ProductDetailReviewModel> productDetailReviewModel= ProductDetailReviewModel().obs;
   RxBool loading =false.obs;
   dynamic argumentData = Get.arguments;
-  String? productId;
-  String? manufacturerId;
+  RxString? productId=''.obs;
+  RxString? manufacturerId=''.obs;
   RxList<dynamic> manufacturerImage=[].obs;
   Rx<ManufacturerModel>? manufacturerModel = ManufacturerModel().obs;
   RxInt productCount=0.obs;
@@ -32,6 +36,11 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
   RxDouble a=0.0.obs;
   RxDouble DealPrice=0.0.obs;
   RxDouble ProductActualPrice=0.0.obs;
+  RxList combi=[].obs;
+  RxDouble combiTotal=0.0.obs;
+  RxList combiList=[].obs;
+
+
 
 
 
@@ -45,8 +54,8 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
     // TODO: implement onReady
     super.onReady();
     if (argumentData != null) {
-      productId=argumentData['productID'];
-      manufacturerId=argumentData['manufacturerID'];
+      productId!.value=argumentData['productID'];
+      manufacturerId!.value=argumentData['manufacturerID'];
       print("Product Id " +productId.toString());
       print("Manufacturer Id " +manufacturerId.toString());
 
@@ -57,9 +66,44 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
     ProductDetailAlsoBoughtApiCall();
     ManufacturerApiCall();
     ManufacturerIDApiCall();
+    ProductDetailReviewApiCall();
 
 
   }
+
+
+  void RelivantProductApiCall(String proID, String manufactureID){
+
+    productId!.value=proID;
+    manufacturerId!.value=manufactureID;
+    ProductDetailApiCall();
+    ProductDetailRelatedProductApiCall();
+    ProductDetailBundleApiCall();
+    ProductDetailAlsoBoughtApiCall();
+    ManufacturerApiCall();
+    ManufacturerIDApiCall();
+    ProductDetailReviewApiCall();
+    notifyChildrens();
+  }
+
+String cartCalculation(String price, List<Products> products, ){
+    double totalPrice=0.0;
+    print("total price"+price.toString());
+     totalPrice=totalPrice+double.parse(price.toString());
+     if(products !=null && products.length>0){
+       for (var i=0; i<products.length;i++){
+         if(products[i].checkbox!.value==true){
+           if(products[i].price !=null && products[i].price !=""){
+             totalPrice=totalPrice+double.parse(products[i].price.toString()); }
+         }
+       }
+     }
+
+    return totalPrice.toStringAsFixed(2);
+}
+
+
+
   Future ProductDetailApiCall() async{
     loading.value=true;
     print("Product Detail product ID ${APPURL.productDetail +productId.toString()}");
@@ -82,8 +126,9 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
       productDetailModel.value = ProductDetailModel.fromJson(jsonDecode(response.body));
       // // final responceData = json.decode(response.body);
       ProductActualPrice.value=double.parse(productDetailModel.value.price.toString());
-      loading.value=false;
-
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("Api model data collected");
       // print("length "+ categoryModelData.list1!.length.toString());
       // print("list "+ categoryModelData.list1![2].toString());
@@ -131,7 +176,9 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
       print("response product Detail Related Product  --:"+response.body);
       productDetailRelatedProductModel.value =await ProductDetailRelatedProductModel.fromJson(jsonDecode(response.body));
       // // final responceData = json.decode(response.body);
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
 
       print("Api model data collected");
       // print("length "+ categoryModelData.list1!.length.toString());
@@ -141,7 +188,9 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
 
 
     }else
-    {    loading.value=false;
+    {    Timer(Duration(milliseconds:250), () {
+      loading.value=false;
+    });
 
 
     print("error- productDetail Controller"+response.body.toString());
@@ -178,36 +227,42 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
     if (response.statusCode == 200) {
       print("response product Detail Bundle --:"+response.body);
       productDetailBundleModel.value =await ProductDetailBundleModel.fromJson(jsonDecode(response.body));
-      // // final responceData = json.decode(response.body);
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("Api model data collected");
+
+
+
       for( var i =0; i<=productDetailBundleModel.value.list1!.length-1;i++){
         productCount.value =productDetailBundleModel.value.list1![i].products!.length;
-        print("Product Count"+productCount.toString());
-        print("product List count"+productDetailBundleModel.value.list1!.length.toString());
+        // print("Product Count"+productCount.toString());
+        // print("product List count"+productDetailBundleModel.value.list1!.length.toString());
+
+
         for( var j =0; j<=productCount.value-1;j++){
           combiDealTotal.value=productDetailBundleModel.value.list1![i].products![j].price;
-          print("Combi Deal total"+combiDealTotal.toString());
+          combi.value.add(combiDealTotal.value);
 
-          combiDeal.value=double.parse(productDetailBundleModel.value.list1![i].products![j].price.toString());
-          a.value += combiDeal.value;
-          print("cobi "+combiDeal.toString());
-          print("a "+a.toString());
+          // print("Combi Deal "+combi.toString());
+          // print("Combi Deal total"+combiDeal.toString());
         }
-        print("Product Actual"+ProductActualPrice.toString());
-        print("b.value "+DealPrice.toString());
-        print("a total "+a.toString());
+        combi.value.forEach((element) {combiDeal.value += double.parse(element.toString()); });
+        // print("Combi Deal "+combi.toString());
+        // print("Combi Deal total"+combiDeal.toString());
 
+        combiTotal.value=double.parse(combiDeal.toString())+double.parse(ProductActualPrice.toString());
+        combiList.value.add(combiTotal.value);
+        // print("combi list"+combiList.toString());
+        // print("total price"+combiTotal.toString());
+
+        combi.clear();
+        combiDeal.value=0.0;
+        // print("Product Actual"+ProductActualPrice.toString());
 
       };
-
-
       // print("length "+ categoryModelData.list1!.length.toString());
       // print("list "+ categoryModelData.list1![2].toString());
-
-
-
-
     }else
     {
       print("error- productDetailBundle Controller"+response.body.toString());
@@ -224,10 +279,52 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
 
   }
 
+  Future ProductDetailReviewApiCall() async{
+    loading.value=true;
+    print("Product Detail review product ID ${APPURL.reivew +productId.toString()+"/reviews?limit=10&page=1"}");
+
+    final response = await http.get(
+      Uri.parse(APPURL.productDetail +productId.toString()+"/reviews?limit=10&page=1"
+      ),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      // body: jsonEncode(<String, dynamic>{
+      // })
+    );
+    print("Api Called Product  Detail review" );
+
+    if (response.statusCode == 200) {
+      print("response product Detail review --:"+response.body);
+      productDetailReviewModel.value = ProductDetailReviewModel.fromJson(jsonDecode(response.body));
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
+      print("Api model data collected");
+      // print("length "+ categoryModelData.list1!.length.toString());
+      // print("list "+ categoryModelData.list1![2].toString());
+    }else
+    {
+      print("error- productDetailReview Controller"+response.body.toString());
+      Map<String, dynamic> error = jsonDecode(response.body);
+      Fluttertoast.showToast(
+          msg: error["message"],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 12.0);
+    }
+
+  }
+
+
 
 
 
   Future ProductDetailAlsoBoughtApiCall() async{
+    loading.value=true;
     print("Product Detail bundle product ID ${APPURL.productDetail +productId.toString()+"/alsoBought"}");
 
     final response = await http.get(
@@ -248,6 +345,9 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
       productDetailAlsoBoughtModel.value =await ProductDetailAlsoBoughtModel.fromJson(jsonDecode(response.body));
       // // final responceData = json.decode(response.body);
       // loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
 
       print("Api model data collected");
       // print("length "+ categoryModelData.list1!.length.toString());
@@ -306,7 +406,9 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
       }
       // manufacturerImage.value=manufacturerModel.value.list1!.image as List;
       print(manufacturerImage);
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("loading"+loading.toString());
       print("Manufacturer List "+manufacturerImage.toString());
 
@@ -358,7 +460,9 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
 
 
       // manufacturerImage.value=manufacturerModel.value.list1!.image as List;
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("loading"+loading.toString());
       print("Manufacturer List "+manufacturerImage.toString());
 
@@ -375,7 +479,9 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
     }else
     {
       print("error- manufacturer"+response.body.toString());
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       Map<String, dynamic> error = jsonDecode(response.body);
       Fluttertoast.showToast(
           msg: error["message"],

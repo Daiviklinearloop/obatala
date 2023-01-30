@@ -15,6 +15,7 @@ class APPURL {
   static String manufaturer='${baseUrl}manufacturer';
   static String manufacturerId= '${baseUrl}manufacturer/';
   static String filter='${baseUrl}product/filter';
+  static String reivew='${baseUrl}product/';
 
 
 

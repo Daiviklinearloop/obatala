@@ -3,7 +3,7 @@ class CategoryModel {
   int? count;
   int? total;
   int? currentPage;
-  Null? totalPage;
+  var totalPage;
 
   CategoryModel(
       {this.list1, this.count, this.total, this.currentPage, this.totalPage});
@@ -11,8 +11,14 @@ class CategoryModel {
   CategoryModel.fromJson(Map<String, dynamic> json) {
     if (json['list'] != null) {
       list1 = <List1>[];
+
+
       json['list'].forEach((v) {
-        list1!.add(new List1.fromJson(v));
+        if(new List1.fromJson(v).name!.toLowerCase()=="cat 1" || List1.fromJson(v).name!.toLowerCase()=="imported products"  ){
+          // tempory skip this dummy product
+        }else{
+          list1!.add(new List1.fromJson(v));
+        }
       });
     }
     count = json['count'];

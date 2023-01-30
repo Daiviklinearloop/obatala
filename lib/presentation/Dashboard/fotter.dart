@@ -1,193 +1,174 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:obatala/presentation/Dashboard/Category/Controller/category_controller.dart';
+import 'package:obatala/theme/app_style.dart';
 
 import '../../core/utils/math_utils.dart';
-import '../../theme/app_style.dart';
+import 'HomePage.dart';
 
-class Fotter extends StatefulWidget {
-    Fotter({Key? key,}) : super(key: key);
-
-  @override
-  State<Fotter> createState() => _FotterState();
-}
-
-class _FotterState extends State<Fotter> {
-  CategoryController controller =CategoryController();
+class FotterClass extends GetWidget<CategoryController> {
+  FotterClass({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return  Column(
       children: [
         Container(
           color: Colors.black,
-          height: 700,
+
           width: 800,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15,top: 20),
-              child: Text("Klantssrvices",
-                  style: AppStyle.textStyleRobotoromanmedium14
-                      .copyWith(fontSize: getFontSize(18), color: Colors.white)),
-            ),
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15,top: 20),
-                  child: Text("",
+                  child: Text("Customer service ",
                       style: AppStyle.textStyleRobotoromanmedium14
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
-            // Text(controller.categoryModelData.value.list1!.length.toString()),
-            // Container(
-            //   height: MediaQuery.of(context).size.height,
-            //   child: ListView.builder(
-            //       itemCount: 2,
-            //       itemBuilder: (BuildContext context, int index){
-            //     return fotterContent(text:""
-            //     // controller.categoryModelData.value.list1![index].name.toString()
-            //     );
-            //   }),
-            // ),
-
-                ListView.builder(
-                    itemCount: 3,
-                    itemBuilder:
-                (BuildContext context, int index){
-                  return fotterContent(text: controller.categoryModelData!.value.list1![index].name.toString());
-                }
-                ),
-
-            fotterContent(text:'' ),
-            fotterContent(text: "Retourneren en ruilen"),
-            fotterContent(text: "Garantie en reparatie"),
-            fotterContent(text: "Beatlean"),
-
-            SizedBox(
-              height: 10,
-            ),
+                fotterContent(text:"To order"),
+                fotterContent(text: "Pay"),
+                fotterContent(text:  "Delivery and collection"),
+                fotterContent(text:  "Return and exchange"),
+                fotterContent(text:  "Warranty and repair"),
 
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15,top: 20),
-                  child: Text("Product ",
+                  child: Text("Product",
                       style: AppStyle.textStyleRobotoromanmedium14
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
-                SizedBox(height: 20,),
 
-                fotterContent(text:""),
-                fotterContent(text: "Hoe maak je een espresso"),
-                fotterContent(text:  "Welke koffiemolen kopen?"),
-                fotterContent(text:  "Nieuwsbrief"),
-
-
-            SizedBox(
-              height: 30,
-            ),
+                controller.categoryModelData!.value.list1 != null
+                    ?
+                Column(
+                  children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: controller.categoryModelData!.value.list1!.length,
+                        itemBuilder:
+                            (BuildContext context, int index){
+                          return fotterContent(text:controller.categoryModelData!.value.list1![index].name.toString());
+                        }
+                    ),
+                  ],
+                ):SizedBox(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15,),
-                  child: Text("Kennisbank",
+                  padding: const EdgeInsets.only(left: 15,top: 20),
+                  child: Text("Knowledge Base ",
                       style: AppStyle.textStyleRobotoromanmedium14
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextFormField(
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
-                ),
-                decoration: InputDecoration(
-                  focusColor: Colors.white,
-                  filled: true,
-                  fillColor: Colors.white,
-                  //add prefix icon
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  errorText: "",
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(),
-                  ),
+                fotterContent(text:"Which coffee grinder to buy?"),
+                fotterContent(text: "How to make an espresso"),
 
-                  hintText: "Email-address",
-                  hintStyle: TextStyle(
-                    fontSize: 16,
-                    fontFamily: "verdana_regular",
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              children: [
                 Padding(
-                  padding: const EdgeInsets.only(left:15.0),
-                  child: ElevatedButton(
-                    child: const Text(
-                      'Anamelden',
-                      style: TextStyle(color: Colors.white),
+                  padding: const EdgeInsets.only(left: 15,top: 20),
+                  child: Text("Newsletter ",
+                      style: AppStyle.textStyleRobotoromanmedium14
+                          .copyWith(fontSize: getFontSize(18), color: Colors.white)),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextFormField(
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
                     ),
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      shadowColor: Colors.lightGreenAccent,
-                      backgroundColor: Colors.green,
+                    decoration: InputDecoration(
+                      focusColor: Colors.white,
+                      filled: true,
+                      fillColor: Colors.white,
+                      //add prefix icon
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      errorText: "",
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(),
+                      ),
+
+                      hintText: "Email-address",
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontFamily: "verdana_regular",
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left:15.0),
+                      child: ElevatedButton(
+                        child: const Text(
+                          'Sign up',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          shadowColor: Colors.lightGreenAccent,
+                          primary: Colors.green,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Icon(
+                      Icons.facebook,
+                      size: 45,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Center(
+                          child:
+                          FaIcon(FontAwesomeIcons.instagram,color: Colors.black,),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
                 SizedBox(
-                  width: 100,
+                  height: 20,
                 ),
-                Icon(
-                  Icons.facebook,
-                  size: 45,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Center(
-                    child:
-                    FaIcon(FontAwesomeIcons.instagram,color: Colors.black,),
+                Padding(
+                  padding: const EdgeInsets.only(right: 110,left: 15),
+                  child: Row(
+                    children: [
+                      Text("Uiteskend    4.7 uit 5 ",
+                          style: AppStyle.textStyleRobotoromanmedium14.copyWith(
+                              fontSize: getFontSize(14), color: Colors.white)),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      IconButton(
+                        iconSize: 3,
+                        color: Colors.green,
+                        icon: const Icon(
+                          Icons.star,
+                          size: 23,
+                        ),
+                        onPressed: () {},
+                      ),
+                      Text("Trustpilot",
+                          style: AppStyle.textStyleRobotoromanmedium14.copyWith(
+                              fontSize: getFontSize(14), color: Colors.white))
+                    ],
                   ),
                 )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 110,left: 15),
-              child: Row(
-                children: [
-                  Text("Uiteskend    4.7 uit 5 ",
-                      style: AppStyle.textStyleRobotoromanmedium14.copyWith(
-                          fontSize: getFontSize(14), color: Colors.white)),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  IconButton(
-                    iconSize: 3,
-                    color: Colors.green,
-                    icon: const Icon(
-                      Icons.star,
-                      size: 23,
-                    ),
-                    onPressed: () {},
-                  ),
-                  Text("Trustpilot",
-                      style: AppStyle.textStyleRobotoromanmedium14.copyWith(
-                          fontSize: getFontSize(14), color: Colors.white))
-                ],
-              ),
-            )
-          ]),
+              ]),
         ),
 
         SizedBox(
@@ -261,40 +242,12 @@ class _FotterState extends State<Fotter> {
             Text("Gemaakt met ♥ door",
                 style: TextStyle(color: Colors.black,fontSize: 10)),
             SvgPicture.asset("assets/images/logo_ftl_gray.svg",
-            height: 10,width: 10,
+              height: 10,width: 10,
             )
           ],
         ),
       ],
     );
-  }
-}
 
-
-class fotterContent extends StatelessWidget {
-  String text;
-   fotterContent({Key? key,required this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return  Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 15,
-            color: Colors.white,
-          ),
-           SizedBox(width: 20,),
-           Text(
-            "$text",
-            style: AppStyle.textStyleRobotoromanmedium14
-                .copyWith(fontSize: getFontSize(14), color: Colors.white)
-          ),
-        ],
-      ),
-    );
   }
 }
