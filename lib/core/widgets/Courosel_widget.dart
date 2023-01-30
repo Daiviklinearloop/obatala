@@ -15,13 +15,14 @@ verticalCourosel() {
         padding: const EdgeInsets.only(left:18.0),
         child: Row(children: [
           SizedBox(
-              height: 30,width: 30,
+              height: 30,
+              width: 30,
               child: Image.asset("assets/images/icon-152x152.png")),
           SizedBox(width: 10,),
           Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              SizedBox(height: 10,),
+              SizedBox(height: 5,),
               Text("Environmentally friendly",style: AppStyle.textStyleRobotoromanmedium14.copyWith(
                 fontSize: getFontSize(
                   16,
@@ -30,7 +31,10 @@ verticalCourosel() {
               Text("less waste less polution",style: AppStyle.textStyleRobotoromanmedium14.copyWith(
                   fontSize: getFontSize(
                     14,
-                  ),))
+                  ),)),
+
+              SizedBox(height: 5,),
+
             ],
           )
         ],),
