@@ -17,70 +17,50 @@ import 'package:shimmer/shimmer.dart';
 class ProductListPage extends GetWidget<ProductListController>{
   Widget build(BuildContext context){
     return CommonScafford(
-       // backgroundColor: Colors.white,
 
-        // drawer: Drawer(
-        //
-        //     child: SingleChildScrollView(
-        //       child: Column(
-        //         children: [
-        //           Obx(() => Container(
-        //             height: MediaQuery.of(context).size.height,
-        //             child: ListView.builder(
-        //                 itemCount: controller
-        //                     .categoryModelData!.value.list1!.isEmpty
-        //                     ? 0
-        //                     : controller.categoryModelData!.value.list1!.length,
-        //                 itemBuilder: (BuildContext context, int index) {
-        //                   return Column(
-        //                     children: [
-        //                       GestureDetector(
-        //                         onTap: () {
-        //                           Get.back();
-        //                           controller.ProductListReload(controller.categoryModelData!
-        //                                     .value.list1![index].crumbPath![0].id
-        //                                     .toString(),
-        //                               controller.categoryModelData!.value
-        //                                   .list1![index].crumbPath![0].slug
-        //                                   .toString()
-        //                           );
-        //                           // Get.back();
-        //                           print("on Pressed" );
-        //
-        //
-        //                           // Get.toNamed(AppRoutes.productList, arguments: {
-        //                           //   "categoryId": controller.categoryModelData!
-        //                           //       .value.list1![index].crumbPath![0].id
-        //                           //       .toString(),
-        //                           //   "slug": controller.categoryModelData!.value
-        //                           //       .list1![index].crumbPath![0].slug
-        //                           //       .toString()
-        //                           // });
-        //
-        //
-        //                         },
-        //                         child: ListTile(
-        //                           title: Text(controller
-        //                               .categoryModelData!.value.list1![index].name
-        //                               .toString()),
-        //                         ),
-        //                       ),
-        //                       Divider(),
-        //                     ],
-        //                   );
-        //                 }),
-        //           ))
-        //         ],
-        //       ),
-        //     ),
-        // ),
         commonAppBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           title: Text("Obatala Coffee",style:
           AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(16))
           ),
           actions:  [
-            Icon(Icons.person_outline,color: Colors.black,),
+            PopupMenuButton<int>(
+              itemBuilder: (context) => [
+                // PopupMenuItem 1
+                PopupMenuItem(
+                  value: 1,
+                  // row with 2 children
+                  child: Row(
+                    children: [
+                      Text("Dutch")
+                    ],
+                  ),
+                ),
+                // PopupMenuItem 2
+                PopupMenuItem(
+                  value: 2,
+                  // row with two children
+                  child: Row(
+                    children: [
+                      Text("English")
+                    ],
+                  ),
+                ),
+              ],
+              offset: Offset(0, 50),
+              color: Colors.white,
+              elevation: 2,
+              icon: Icon(Icons.language),
+              // on selected we show the dialog box
+              onSelected: (value) {
+                if (value == 1) {
+                  Get.updateLocale(Locale('nl','DF'));
+
+                } else if (value == 2) {
+                  Get.updateLocale(Locale('en','US'));
+                }
+              },
+            ),
             SizedBox(width: 10,),
             Icon(Icons.shopping_cart_outlined,color: Colors.black,),
             SizedBox(width: 4,)
@@ -156,7 +136,7 @@ class ProductListPage extends GetWidget<ProductListController>{
                     child: TextField(
                       decoration: InputDecoration(
                           suffixIcon: Icon(Icons.search),
-                          hintText: "Search for...",
+                          hintText: "lbl_search_for".tr,
                           border: OutlineInputBorder(
                             borderSide: BorderSide(width: 3, color: Colors.grey),
                           )
@@ -167,18 +147,18 @@ class ProductListPage extends GetWidget<ProductListController>{
 
                 verticalCourosel(),
 
-                Padding(
-                    padding: const EdgeInsets.only(top: 8.0,left: 15.0,right: 8.0,bottom: 8.0),
-                    child: Text("Obatala Coffee",
-                      style:  AppStyle.textStyleRobotoromanmedium14.copyWith(
-                        fontSize: getFontSize(
-                          14,
-                        ),),)
-                ),
+                // Padding(
+                //     padding: const EdgeInsets.only(top: 8.0,left: 15.0,right: 8.0,bottom: 8.0),
+                //     child: Text("Obatala Coffee",
+                //       style:  AppStyle.textStyleRobotoromanmedium14.copyWith(
+                //         fontSize: getFontSize(
+                //           14,
+                //         ),),)
+                // ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0,left: 15.0,bottom: 8.0),
                     child:Container(
-                      width: 75,
+                      width: 80,
                       child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             backgroundColor: Colors.black, //<-- SEE HERE
@@ -191,10 +171,10 @@ class ProductListPage extends GetWidget<ProductListController>{
                             children: [
                               Icon(Icons.tune_outlined,color: Colors.white,size: 14),
                               Text(
-                                'Filter',
+                                'lbl_filter'.tr,
                                 style:  AppStyle.textStyleRobotoromanmedium11.copyWith(
                                   fontSize: getFontSize(
-                                    10,
+                                    14,
                                   ),
                                 ),
                               ),
@@ -207,24 +187,34 @@ class ProductListPage extends GetWidget<ProductListController>{
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(controller.slug.toString(),
-                      style:   AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(25))
+                      style:   AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(30))
                   ),
                 ),
 
+                controller.categoryDetailModelData!.value.description != null
+                    ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Html(
+                  data: controller.categoryDetailModelData!.value.description,
+                ),
+                    )
+                    : SizedBox(),
+
+
                 // Padding(
                 //   padding: const EdgeInsets.only(left: 15,top: 10,right: 15),
-                //   child: Text("Coffee from a coffee maker, a quiet start to your day",
+                //   child: Text("msg_coffee_from".tr,
                 //       style:   AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(18))
                 //   ),
                 // ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15,top: 15,right: 15),
-                  child: Text("Coffee makers cannot be ignored from the Netherlands. With a coffee maker we think of filter coffee also called slowdrip, precisely because it is the quiet way of making coffee. It is the most famous way, and almost every household has a filter coffee machine in the kitchen. Coffee, water and a paper filter, that's all you need.",
-                      style:   AppStyle.textStyleAdventProregular124.copyWith(
-                          height: 1.5,
-                          fontSize: getFontSize(11))
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15,top: 15,right: 15),
+                //   child: Text("msg_coffee_maker_cannot".tr,
+                //       style:   AppStyle.textStyleAdventProregular124.copyWith(
+                //           height: 1.5,
+                //           fontSize: getFontSize(11))
+                //   ),
+                // ),
 
                 Column(
                   children: [
@@ -281,43 +271,16 @@ class ProductListPage extends GetWidget<ProductListController>{
                 //   child:ProductCard(productName: "",),
                 // ),
 
-
-
-                Padding(padding: EdgeInsets.only(
-                    left: 17,top: 30
-                ),
-                  child:Column(
-                    children: [
-                      Text("Buy a piston machine or espresso machine?",
-                        style: AppStyle.textStyleRobotoromanmedium14
-                            .copyWith(fontSize: getFontSize(20)),
-                      ),
-                      SizedBox(height: 15,),
-                      Text("There is no difference between a piston machine or an espresso machine. The piston in the word piston machine refers to the filter carrier, which is what we call the piston. All espresso machines in our range therefore have a piston, so both a piston machine and an espresso machine, are both semi-automatic espresso machines.",
-                        style: AppStyle.textStyleAdventProregular124
-                            .copyWith(height: 1.5, fontSize: getFontSize(13)),
-                      )
-                    ],
+                controller.categoryDetailModelData!.value.cmsBottomContent != null
+                    ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Html(
+                    data: controller.categoryDetailModelData!.value.cmsBottomContent,
                   ),
-                ),
+                )
+                    : SizedBox(),
 
-                Padding(padding: EdgeInsets.only(
-                    left: 17,top: 30
-                ),
-                  child:Column(
-                    children: [
-                      Text("How do you put espresso with your espresso machine?",
-                        style: AppStyle.textStyleRobotoromanmedium14
-                            .copyWith(fontSize: getFontSize(20)),
-                      ),
-                      SizedBox(height: 15,),
-                      Text("Do you already have a semi-automatic espresso machine at home? Then you probably know that an espresso tastes much better from an espresso machine than from a normal coffee maker. But how do you make the perfect espresso with such a semi-automatic espresso machine? We have a solution for that, because we explained in our knowledge base how to make the best espresso yourself.",
-                        style: AppStyle.textStyleAdventProregular124
-                            .copyWith(height: 1.5, fontSize: getFontSize(13)),
-                      )
-                    ],
-                  ),
-                ),
+
                 SizedBox(
                   height: 20,
                 ),

@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
 import 'package:obatala/core/utils/app_url.dart';
+import 'package:obatala/core/utils/pref_utils.dart';
+import 'package:obatala/presentation/Dashboard/Category/Model/ProductModel.dart';
 import 'package:obatala/presentation/Dashboard/Category/Model/manufacturer_model.dart';
 import 'package:obatala/presentation/ProductDetailScreen/Model/manufactureIdModel.dart';
 import 'package:obatala/presentation/ProductDetailScreen/Model/productDetailReview.dart';
@@ -41,7 +43,8 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
   RxList combi=[].obs;
   RxDouble combiTotal=0.0.obs;
   RxList combiList=[].obs;
-
+  // RxList<dynamic> recent=[].obs;
+  Rx<ProductModel>? productModelData = ProductModel().obs;
   var _dio = Dio();
 
   @override
@@ -56,20 +59,18 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
 
     }
 
-    allAPICall();
 
+    allAPICall();
   }
 
 
-  void RelivantProductApiCall(String proID, String manufactureID){
-
+  Future<void> RelivantProductApiCall(String proID, String manufactureID) async {
     productId!.value=proID;
     manufacturerId!.value=manufactureID;
     allAPICall();
-
   }
 
-  void allAPICall(){
+  Future<void> allAPICall() async {
     _dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: APPURL.baseUrl)).interceptor);
     ProductDetailApiCall();
     ProductDetailRelatedProductApiCall();
@@ -78,6 +79,15 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
     ManufacturerApiCall();
     ManufacturerIDApiCall();
     ProductDetailReviewApiCall();
+
+    print("recent");
+    try{
+      Get.find<PrefUtils>().setRecentProduct(productId!.value.toString());
+    }catch(e){
+      print("Exception-"+"Error list Data");
+    }
+    print("recent pro");
+    ProductRecentApiCall();
     notifyChildrens();
   }
 
@@ -97,12 +107,59 @@ String cartCalculation(String price, List<Products> products, ){
     return totalPrice.toStringAsFixed(2);
 }
 
+  Future ProductRecentApiCall() async{
+    loading.value=true;
 
+    var recent=(await Get.find<PrefUtils>().getRecentProduct())!;
+    print("recent product"+recent.toString());
+
+
+    print("loading"+loading.toString());
+    print("product API ");
+    final response = await http.post(
+      Uri.parse(APPURL.product),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+
+      body: jsonEncode(<String, dynamic>{
+        "productsId": recent
+      }),
+    );
+    if (response.statusCode == 200) {
+      print("loading"+loading.toString());
+      print("response product recent --: "+response.body);
+
+      productModelData!.value = ProductModel.fromJson(jsonDecode(response.body));
+      // final responceData = json.decode(response.body);
+      print("loading"+loading.toString());
+      loading.value=false;
+      print("Api model data collected");
+    }else
+    {
+      loading.value=false;
+
+      print("error- product recent"+response.body.toString());
+      Map<String, dynamic> error = jsonDecode(response.body);
+      Fluttertoast.showToast(
+          msg: error["message"],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 12.0);
+    }
+
+  }
 
 
   Future ProductDetailApiCall() async{
     loading.value=true;
     print("Product Detail product ID ${APPURL.productDetail +productId.toString()}");
+
+    // recent.value=(await Get.find<PrefUtils>().getRecentProduct())!;
+    // print("recent product"+recent.value.toString());
 
     // final response = await http.get(
     //   Uri.parse(APPURL.productDetail +productId.toString(),),

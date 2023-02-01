@@ -11,6 +11,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/core/utils/color_constant.dart';
 import 'package:obatala/core/utils/math_utils.dart';
+import 'package:obatala/core/utils/pref_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
 import 'package:obatala/core/widgets/category_Card.dart';
@@ -41,8 +42,44 @@ class HomePage extends StatelessWidget {
         commonAppBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         title:SvgPicture.asset("assets/images/logoobatalacoffee.svg",height: 30,width: 100,),
-        actions: const [
-          Icon(Icons.person_outline,color: Colors.black,),
+        actions:  [
+          PopupMenuButton<int>(
+            itemBuilder: (context) => [
+              // PopupMenuItem 1
+              PopupMenuItem(
+                value: 1,
+                // row with 2 children
+                child: Row(
+                  children: [
+                    Text("Dutch")
+                  ],
+                ),
+              ),
+              // PopupMenuItem 2
+              PopupMenuItem(
+                value: 2,
+                // row with two children
+                child: Row(
+                  children: [
+                    Text("English")
+                  ],
+                ),
+              ),
+            ],
+            offset: Offset(0, 50),
+            color: Colors.white,
+            elevation: 2,
+            icon: Icon(Icons.language),
+            // on selected we show the dialog box
+            onSelected: (value) {
+              if (value == 1) {
+                Get.updateLocale(Locale('nl','DF'));
+                
+              } else if (value == 2) {
+                Get.updateLocale(Locale('en','US'));
+              }
+            },
+          ),
           SizedBox(width: 10,),
           Icon(Icons.shopping_cart_outlined,color: Colors.black,),
           SizedBox(width: 4,)
@@ -64,17 +101,17 @@ class HomePage extends StatelessWidget {
          Obx(()=>Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.only(top: 10.0,right: 15,left: 15,bottom: 10),
                   child: SizedBox(
                     height: 50,
                     child: TextField(
                       decoration: InputDecoration(
                           suffixIcon: Icon(Icons.search),
-                          hintText: "Search for... ",
                           border: OutlineInputBorder(
                             borderSide: BorderSide(width: 3, color: Colors.grey),
-                          )
+                          ),
+                          hintText: "lbl_search_for".tr
                       ),
                     ),
                   ),
@@ -147,8 +184,12 @@ class HomePage extends StatelessWidget {
                 Column(
                   children: [
                     Padding(padding: EdgeInsets.only(top: 15,right: 15,left: 15,),
-                      child: Text("Browse our range",style: AppStyle.textStyleRobotoromanmedium14
-                          .copyWith(fontSize: getFontSize(20)),),
+                      child: Row(
+                        children: [
+                          Text('lbl_browse_our_range'.tr,style: AppStyle.textStyleRobotoromanmedium14
+                              .copyWith(fontSize: getFontSize(20)),),
+                        ],
+                      ),
                     ),
 
                     controller.categoryModelData!.value.list1 != null
@@ -225,7 +266,7 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Row(
                         children: [
-                          Text("Most Sold",
+                          Text("lbl_most_sold".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20)),
                           ),
@@ -245,6 +286,15 @@ class HomePage extends StatelessWidget {
                                 itemBuilder: (BuildContext context, int index){
                                   return GestureDetector(
                                     onTap: (){
+                                      // print("recent");
+                                      // try{
+                                      //   Get.find<PrefUtils>().setRecentProduct(controller.productModelData!.value.list1![index].id.toString() );
+                                      // }catch(e){
+                                      //   print("Exception-"+"Error list Data");
+                                      //
+                                      // }
+                                      // print("recent pro");
+
                                       Get.toNamed(AppRoutes.productDetailScreen,
                                           arguments: {
                                             "productID":controller.productModelData!.value.list1![index].id.toString(),
@@ -272,7 +322,7 @@ class HomePage extends StatelessWidget {
 
                     Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: Text("At Obatala Coffee you will find all your coffee and kitchen appliances",
+                      child: Text("msg_at_obatala_coffee_you_will".tr,
                         style: AppStyle.textStyleRobotoromanmedium14
                             .copyWith(fontSize: getFontSize(25)),
                       ),
@@ -280,35 +330,35 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 10,),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("Obatala Coffee is distinguished by the knowledge of its products and is aware of the latest trends in the coffee world.",
+                      child: Text("msg_obatala_coffee_is_distinguished".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("Because we select and import our coffee beans ourselves, we can also tell and justify the honest story of our coffee.",
+                      child: Text("msg_because_we_select_and".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("All coffees from our selection are Ecological and Fair Trade approved.",
+                      child: Text("msg_all_coffees_from".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("This ensures that you pay not only the farmer, but also nature a fair fee for delicious coffee.",
+                      child: Text("msg_this_ensures_that_you".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("In Amsterdam we burn the Arabica coffee beans in small batches. We do this so that we always have a fresh offer.",
+                      child: Text("msg_in_amsterdam_we_br".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),
@@ -316,21 +366,21 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 10,),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("Obatala Coffee ensures that you have the right appliances for the best coffee.",
+                      child: Text("msg_obatala_coffee_ensure".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("Whether it prefers to drink an espresso or slow coffee from a V60, we have the right coffee maker.",
+                      child: Text("msg_whether_it_prefers".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                      child: Text("Everything can be found here in the webshop. And if you need help, we are there for you.",
+                      child: Text("msg_everything_can_be_found".tr,
                         style: AppStyle.textStyleAdventProregular124
                             .copyWith(fontSize: getFontSize(14)),
                       ),

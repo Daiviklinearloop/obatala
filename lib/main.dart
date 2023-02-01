@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:obatala/localization/app_localization.dart';
 import 'package:obatala/presentation/Dashboard/Category/Binding/category_binding.dart';
 import 'package:obatala/routes/app_routes.dart';
+
+import 'core/utils/initial_binding.dart';
 
 
 void main(){
@@ -16,8 +19,12 @@ class MyApp extends StatelessWidget {
     return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Obatala',
+      translations: AppLocalization(),
+      locale: Get.deviceLocale, //for setting localization strings
+      fallbackLocale: Locale('en', 'US'),
       initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.page,
+      initialBinding: InitialBindings(),
       //initialBinding: CategoryBinding(),
 
 

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
 import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/presentation/Dashboard/Category/Model/CategoryModel.dart';
+import 'package:obatala/presentation/Product_List/Model/categoryDetailModel.dart';
 import 'package:obatala/presentation/Product_List/Model/productListFilter.dart';
 import 'dart:convert';
 import 'package:obatala/presentation/Product_List/Model/productListModel.dart';
@@ -16,6 +17,7 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
 
   Rx<ProductListModel>? productListModel = ProductListModel().obs;
   Rx<CategoryModel>? categoryModelData = CategoryModel().obs;
+  Rx<CategoryDetailModel>? categoryDetailModelData = CategoryDetailModel().obs;
 
   RxBool loading =false.obs;
   dynamic argumentData = Get.arguments;
@@ -42,9 +44,11 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
 
     ProductApiCall();
     print("category Id"+categoryID.toString());
+    print("slug"+slug.toString());
 
     ProductFilterApiCall();
     CategoryApiCall();
+    CategoryDetailApiCall();
     currentRangeValues();
 
     super.onInit();
@@ -247,7 +251,59 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
     }
   }
 
+  Future CategoryDetailApiCall() async{
+    loading.value=true;
+    print("loading"+loading.toString());
 
+
+    print("Category Detail API ");
+    final response = await http.get(
+      Uri.parse(APPURL.category+'/'+categoryID.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+
+
+    );
+    if (response.statusCode == 200) {
+
+      print("response cat details--:"+response.body);
+      categoryDetailModelData!.value = CategoryDetailModel.fromJson(jsonDecode(response.body));
+      // final responceData = json.decode(response.body);
+
+
+
+      print("loading"+loading.toString());
+
+      print("Api model data collected");
+      // print("length "+ categoryModelData.list1!.length.toString());
+      // print("list "+ categoryModelData.list1![2].toString());
+
+
+
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
+
+    }else
+    {
+      print("error- category detail"+response.body.toString());
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
+
+      Map<String, dynamic> error = jsonDecode(response.body);
+      Fluttertoast.showToast(
+          msg: error["message"],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 12.0);
+    }
+
+  }
 
   Future CategoryApiCall() async{
     loading.value=true;

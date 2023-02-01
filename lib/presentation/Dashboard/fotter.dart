@@ -25,20 +25,20 @@ class FotterClass extends GetWidget<CategoryController> {
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15,top: 20),
-                  child: Text("Customer service ",
+                  child: Text("lbl_customer_service".tr,
                       style: AppStyle.textStyleRobotoromanmedium14
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
-                fotterContent(text:"To order"),
-                fotterContent(text: "Pay"),
-                fotterContent(text:  "Delivery and collection"),
-                fotterContent(text:  "Return and exchange"),
-                fotterContent(text:  "Warranty and repair"),
+                fotterContent(text:"lbl_to_order".tr),
+                fotterContent(text: "lbl_pay".tr),
+                fotterContent(text:  "lbl_delivery_and_coll".tr),
+                fotterContent(text:  "lbl_return".tr),
+                fotterContent(text:  "lbl_warranty_repair".tr),
 
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15,top: 20),
-                  child: Text("Product",
+                  child: Text("lbl_product".tr,
                       style: AppStyle.textStyleRobotoromanmedium14
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
@@ -60,16 +60,16 @@ class FotterClass extends GetWidget<CategoryController> {
                 ):SizedBox(),
                 Padding(
                   padding: const EdgeInsets.only(left: 15,top: 20),
-                  child: Text("Knowledge Base ",
+                  child: Text("lbl_knowledge".tr,
                       style: AppStyle.textStyleRobotoromanmedium14
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
-                fotterContent(text:"Which coffee grinder to buy?"),
-                fotterContent(text: "How to make an espresso"),
+                fotterContent(text:"lbl_which_coffee".tr),
+                fotterContent(text: "lbl_how_to_make".tr),
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15,top: 20),
-                  child: Text("Newsletter ",
+                  child: Text("lbl_newsletter".tr,
                       style: AppStyle.textStyleRobotoromanmedium14
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
@@ -94,7 +94,7 @@ class FotterClass extends GetWidget<CategoryController> {
                         borderSide: const BorderSide(),
                       ),
 
-                      hintText: "Email-address",
+                      hintText: "lbl_email_add".tr,
                       hintStyle: TextStyle(
                         fontSize: 16,
                         fontFamily: "verdana_regular",
@@ -108,8 +108,8 @@ class FotterClass extends GetWidget<CategoryController> {
                     Padding(
                       padding: const EdgeInsets.only(left:15.0),
                       child: ElevatedButton(
-                        child: const Text(
-                          'Sign up',
+                        child:  Text(
+                          'lbl_signup'.tr,
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {},
@@ -213,7 +213,7 @@ class FotterClass extends GetWidget<CategoryController> {
           height: 10,
         ),
         Center(
-          child: Text("Copyright © 2011-2023 Obatala Coffee",
+          child: Text("lbl_copyright".tr,
               style: TextStyle(fontSize: 10)),
         ),
         SizedBox(
@@ -222,7 +222,7 @@ class FotterClass extends GetWidget<CategoryController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Privacybeleid | ", style: TextStyle(fontSize: 10)),
+            Text("lbl_privacy_policy".tr+" | ", style: TextStyle(fontSize: 10)),
             Text(" KvK: 27349892 | ", style: TextStyle(fontSize: 10)),
             Text(" BTW: NL821075664B01",
                 style: TextStyle(fontSize: 10)),
