@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:obatala/core/utils/app_url.dart';
+import 'package:obatala/core/utils/color_constant.dart';
 import 'package:obatala/core/utils/math_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
@@ -200,7 +201,7 @@ class HomePage extends StatelessWidget {
                                         // ),
                                         child: CachedNetworkImage(
                                           imageUrl: "${APPURL.imageBaseUrl}"+controller.categoryModelData!.value.list1![index].image.toString(),
-                                          placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: Color(0xFF703926),)),
+                                          placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,)),
                                           errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
                                         ),
 
@@ -340,9 +341,10 @@ class HomePage extends StatelessWidget {
                       height: 100,
                       child: Obx(()=>SponcerCarousel(controller.manufacturerImage)),
                     ),
-      Obx(()=>controller.loading.value==true?SizedBox():
-                    FotterClass())
 
+                    Obx(()=>controller.loading.value==true?SizedBox():
+
+                    FotterClass())
 
                   ],
                 ),

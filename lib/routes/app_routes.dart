@@ -8,12 +8,16 @@ import 'package:obatala/presentation/Product_List/filterPage.dart';
 import 'package:obatala/presentation/Product_List/productListPage.dart';
 import 'package:obatala/presentation/SplashScreen/SplashScreen.dart';
 import 'package:obatala/presentation/SplashScreen/binding/SplashBinding.dart';
+import 'package:obatala/presentation/ZoomImageSlider/binding/ZoomImageBinding.dart';
+
+import '../presentation/ZoomImageSlider/ZoomImageScreen.dart';
 class AppRoutes{
 static String homePage= '/HomePage';
 static String productList='/productListPage';
 static String productDetailScreen='/product_detail_screen';
 static String filterPage ='/filterPage';
 static String splashScreen ='/SplashScreen';
+static String zoomImageScreen ='/ZoomImageScreen';
 
 
 static List<GetPage> page=[
@@ -34,7 +38,6 @@ GetPage(name: homePage,
         page: ()=>ProductListPage(),
     bindings: [
       ProductListBinding()
-
     ]
     ),
 
@@ -45,6 +48,12 @@ GetPage(name: homePage,
       ]
   ),
 
+  GetPage(name: zoomImageScreen,
+        page: () => ZoomImageScreen(),
+        bindings: [
+          ZoomImageBinding()
+        ]
+  ),
 
   GetPage(name: filterPage,
       page: ()=> FilterPage(),

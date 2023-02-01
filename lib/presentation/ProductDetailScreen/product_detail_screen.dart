@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:obatala/core/utils/app_url.dart';
+import 'package:obatala/core/utils/color_constant.dart';
 import 'package:obatala/core/utils/math_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
@@ -44,13 +45,7 @@ class ProductDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var Deal = controller.a;
-    // +controller.productDetailModel.value.price;
     return CommonScafford(
-        // key: _scaffoldKey,
-        // drawer: Drawer(
-        //   child: DrawerWidget(),
-        // ),
         commonAppBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           title: Text("Obatala Coffee",
@@ -239,12 +234,12 @@ class ProductDetailsPage extends StatelessWidget {
                                 suffixIcon: Icon(Icons.search),
                                 hintText: "Zoeken naar....",
                                 border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(width: 3, color: Colors.grey),
+                                  borderSide: BorderSide(width: 3, color: Colors.grey),
                                 )),
                           ),
                         ),
                       ),
+
                       verticalCourosel(),
 
                       controller.productDetailModel.value.categoryName != null && controller.productDetailModel.value.categoryName!= ""
@@ -252,10 +247,7 @@ class ProductDetailsPage extends StatelessWidget {
                       Padding(
                           padding: const EdgeInsets.only(top: 8.0, left: 15.0, right: 8.0, bottom: 8.0),
                           child: Text("Obatala Coffee  >  ${controller.productDetailModel.value.categoryName}",
-                              style: AppStyle.textStyleAdventProregular16.copyWith(
-                                      color: Colors.black,
-                                      fontSize: getFontSize(10,)
-                              )
+                              style: AppStyle.textStyleAdventProregular16.copyWith(color: Colors.black, fontSize: getFontSize(10))
                           )
                       ):SizedBox(),
                       SizedBox(
@@ -264,7 +256,6 @@ class ProductDetailsPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.80,
                           child: Obx(
                             () => Text(
                                 controller.productDetailModel.value.name != null
@@ -307,8 +298,7 @@ class ProductDetailsPage extends StatelessWidget {
                             ),
                             Text(
                               controller.productDetailModel.value.ratingCount != null ? " ${controller.productDetailModel.value.ratingCount} " : " -",
-                              style: AppStyle.textStyleRobotoromanmedium14
-                                  .copyWith(height: 1.5,fontSize: getFontSize(16)),
+                              style: AppStyle.textStyleRobotoromanmedium14.copyWith(height: 1.5,fontSize: getFontSize(16)),
                             ),
                             Text(
                               "review",
@@ -334,44 +324,68 @@ class ProductDetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
-                      SizedBox(
+
+                      Container(
                         width: MediaQuery.of(context).size.width,
                         height: 200,
                         child: Stack(
                           children: [
                             controller.productDetailModel.value.images != null
                                 ? Obx(
-                                    () => CarouselSlider(
-                                        carouselController: carouselController,
-                                        // Give the controller
-                                        options: CarouselOptions(
-                                            viewportFraction: 1,
-                                            initialPage: 0,
-                                            onPageChanged: (int page, cs) {
-                                              activePage.value = page;
-                                            }),
-                                        items: [
-                                          ...controller
-                                              .productDetailModel.value.images!
-                                              //.map((title) => Image.network("${APPURL.imageBaseUrl}" + title,)
-                                              .map((title) => CachedNetworkImage(
-                                            imageUrl: "${APPURL.imageBaseUrl}" + title,
-                                            placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: Color(0xFF703926),)),
-                                            errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
-                                          )
-                                          )]),
-                                  )
+                                  () => Center(
+                                child: GestureDetector(
+                                  onTap: () {
+
+                                    Get.toNamed(AppRoutes.zoomImageScreen,
+                                        arguments: {
+                                          "product_images":controller.productDetailModel.value.images!,
+                                          "current_pos":activePage.value,
+                                          "manufacturer_image":controller.manufacturerIdModel.value.image.toString(),
+                                          "product_name":controller.productDetailModel.value.name
+                                        }
+                                    );
+                                  },
+                                  child: CarouselSlider(
+                                      carouselController: carouselController,
+                                      // Give the controller
+                                      options: CarouselOptions(
+                                          viewportFraction: 1,
+                                          initialPage: 0,
+                                          onPageChanged: (int page, cs) {
+                                            activePage.value = page;
+                                          }),
+                                      items: [
+                                        ...controller.productDetailModel.value.images!
+                                        //.map((title) => Image.network("${APPURL.imageBaseUrl}" + title,)
+                                            .map((title) => Hero(
+                                          tag: "pro",
+                                          child: Container(
+                                            child: CachedNetworkImage(
+                                              imageUrl: "${APPURL.imageBaseUrl}" + title,
+                                              placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,)),
+                                              errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
+                                            ),
+                                          ),
+                                        )
+                                        )]),
+                                ),
+                              ),
+                            )
                                 : SizedBox(),
+
                             Positioned(
                               top: 1,
                               child: Container(
                                 height: 40,
                                 width: 80,
-                                child: SvgPicture.network(APPURL.imageBaseUrl +
-                                    controller.manufacturerIdModel.value.image
-                                        .toString()),
+                                child: controller.manufacturerIdModel.value.image.toString().toLowerCase().contains(".svg")
+                                    ?
+                                SvgPicture.network(APPURL.imageBaseUrl + controller.manufacturerIdModel.value.image.toString())
+                                    :
+                                Image.network(APPURL.imageBaseUrl + controller.manufacturerIdModel.value.image.toString()),
                               ),
                             ),
+
                             Align(
                               alignment: Alignment.centerLeft,
                               child: GestureDetector(
@@ -399,6 +413,7 @@ class ProductDetailsPage extends StatelessWidget {
                           ],
                         ),
                       ),
+                      
                       SizedBox(
                         height: 5,
                       ),
@@ -433,12 +448,7 @@ class ProductDetailsPage extends StatelessWidget {
                               onTap: () {},
                               child: Icon(
                                 Icons.check_circle,
-                                color: controller.productDetailModel.value
-                                            .stockIndicatorTitle
-                                            .toString() ==
-                                        "Niet op voorraad"
-                                    ? Colors.red
-                                    : Colors.green,
+                                color: controller.productDetailModel.value.stockIndicatorTitle.toString() == "Niet op voorraad" ? Colors.red : Colors.green,
                                 size: 18,
                               ),
                             ),
@@ -451,12 +461,7 @@ class ProductDetailsPage extends StatelessWidget {
                               style: AppStyle.textStyleRobotoromanmedium14
                                   .copyWith(
                                       fontSize: 14,
-                                      color: controller.productDetailModel.value
-                                                  .stockIndicatorTitle
-                                                  .toString() ==
-                                              "Niet op voorraad"
-                                          ? Colors.red
-                                          : Colors.green),
+                                      color: controller.productDetailModel.value.stockIndicatorTitle.toString() == "Niet op voorraad" ? Colors.red : Colors.green),
                             ),
                             SizedBox(
                               height: 5,
@@ -471,9 +476,8 @@ class ProductDetailsPage extends StatelessWidget {
                           "${controller.productDetailModel.value.stockDeliveryTime}" : "",
                           style: AppStyle.textStyleAdventProregular16.copyWith(
                               color: Colors.black,
-                              fontSize: getFontSize(
-                                14,
-                              )),
+                              fontSize: getFontSize(14)
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -570,10 +574,6 @@ class ProductDetailsPage extends StatelessWidget {
                             onPressed: () {},
                           ),
 
-                          // FaIcon(
-                          //   FontAwesomeIcons.instagram,
-                          //   color: Colors.black,
-                          // ),
                           IconButton(
                             iconSize: 20,
                             color: Colors.black87,
@@ -1335,8 +1335,7 @@ class ProductDetailsPage extends StatelessWidget {
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15, right: 15, bottom: 10),
+                        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 0),
                         child: Text("Other customers also bought",
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
@@ -1442,276 +1441,14 @@ class ProductDetailsPage extends StatelessWidget {
                         ],
                       ),
 
-                      SizedBox(
-                        height: 20,
-                      ),
                       Container(
-                        height: 100,
+                        height: 120,
                         child: Obx(() =>
                             SponcerCarousel(controller.manufacturerImage)),
                       ),
 
-                      // Column(
-                      //   children: [
-                      //     Container(
-                      //       color: Colors.black,
-                      //       width: 800,
-                      //       child: Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             Padding(
-                      //               padding: const EdgeInsets.only(
-                      //                   left: 15, top: 20),
-                      //               child: Text("Customer service ",
-                      //                   style: AppStyle
-                      //                       .textStyleRobotoromanmedium14
-                      //                       .copyWith(
-                      //                           fontSize: getFontSize(18),
-                      //                           color: Colors.white)),
-                      //             ),
-                      //             fotterContent(text: "To order"),
-                      //             fotterContent(text: "Pay"),
-                      //             fotterContent(
-                      //                 text: "Delivery and collection"),
-                      //             fotterContent(text: "Return and exchange"),
-                      //             fotterContent(text: "Warranty and repair"),
-                      //             Padding(
-                      //               padding: const EdgeInsets.only(
-                      //                   left: 15, top: 20),
-                      //               child: Text("Product",
-                      //                   style: AppStyle
-                      //                       .textStyleRobotoromanmedium14
-                      //                       .copyWith(
-                      //                           fontSize: getFontSize(18),
-                      //                           color: Colors.white)),
-                      //             ),
-                      //             Container(
-                      //               height: MediaQuery.of(context).size.height *
-                      //                   0.45,
-                      //               child: ListView.builder(
-                      //                   physics: NeverScrollableScrollPhysics(),
-                      //                   itemCount: 10,
-                      //                   itemBuilder:
-                      //                       (BuildContext context, int index) {
-                      //                     return fotterContent(
-                      //                         text: "Product $index");
-                      //                   }),
-                      //             ),
-                      //             Padding(
-                      //               padding: const EdgeInsets.only(
-                      //                   left: 15, top: 20),
-                      //               child: Text("Knowledge Base ",
-                      //                   style: AppStyle
-                      //                       .textStyleRobotoromanmedium14
-                      //                       .copyWith(
-                      //                           fontSize: getFontSize(18),
-                      //                           color: Colors.white)),
-                      //             ),
-                      //             fotterContent(
-                      //                 text: "Which coffee grinder to buy?"),
-                      //             fotterContent(
-                      //                 text: "How to make an espresso"),
-                      //             Padding(
-                      //               padding: const EdgeInsets.only(
-                      //                   left: 15, top: 20),
-                      //               child: Text("Newsletter ",
-                      //                   style: AppStyle
-                      //                       .textStyleRobotoromanmedium14
-                      //                       .copyWith(
-                      //                           fontSize: getFontSize(18),
-                      //                           color: Colors.white)),
-                      //             ),
-                      //             Padding(
-                      //               padding: const EdgeInsets.all(15.0),
-                      //               child: TextFormField(
-                      //                 style: TextStyle(
-                      //                   fontSize: 18,
-                      //                   fontWeight: FontWeight.w300,
-                      //                 ),
-                      //                 decoration: InputDecoration(
-                      //                   focusColor: Colors.white,
-                      //                   filled: true,
-                      //                   fillColor: Colors.white,
-                      //                   //add prefix icon
-                      //                   contentPadding: EdgeInsets.symmetric(
-                      //                       vertical: 10, horizontal: 20),
-                      //                   errorText: "",
-                      //                   border: OutlineInputBorder(),
-                      //                   focusedBorder: OutlineInputBorder(
-                      //                     borderSide: const BorderSide(),
-                      //                   ),
-                      //
-                      //                   hintText: "Email-address",
-                      //                   hintStyle: TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontFamily: "verdana_regular",
-                      //                     fontWeight: FontWeight.w400,
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Row(
-                      //               children: [
-                      //                 Padding(
-                      //                   padding:
-                      //                       const EdgeInsets.only(left: 15.0),
-                      //                   child: ElevatedButton(
-                      //                     child: const Text(
-                      //                       'Sign up',
-                      //                       style:
-                      //                           TextStyle(color: Colors.white),
-                      //                     ),
-                      //                     onPressed: () {},
-                      //                     style: ElevatedButton.styleFrom(
-                      //                       shadowColor:
-                      //                           Colors.lightGreenAccent,
-                      //                       backgroundColor: Colors.green,
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 Spacer(),
-                      //                 Icon(
-                      //                   Icons.facebook,
-                      //                   size: 45,
-                      //                   color: Colors.white,
-                      //                 ),
-                      //                 SizedBox(
-                      //                   width: 10,
-                      //                 ),
-                      //                 Padding(
-                      //                   padding:
-                      //                       const EdgeInsets.only(right: 15),
-                      //                   child: CircleAvatar(
-                      //                     backgroundColor: Colors.white,
-                      //                     child: Center(
-                      //                       child: FaIcon(
-                      //                         FontAwesomeIcons.instagram,
-                      //                         color: Colors.black,
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 )
-                      //               ],
-                      //             ),
-                      //             SizedBox(
-                      //               height: 20,
-                      //             ),
-                      //             Padding(
-                      //               padding: const EdgeInsets.only(
-                      //                   right: 110, left: 15),
-                      //               child: Row(
-                      //                 children: [
-                      //                   Text("Uiteskend    4.7 uit 5 ",
-                      //                       style: AppStyle
-                      //                           .textStyleRobotoromanmedium14
-                      //                           .copyWith(
-                      //                               fontSize: getFontSize(14),
-                      //                               color: Colors.white)),
-                      //                   SizedBox(
-                      //                     width: 10,
-                      //                   ),
-                      //                   IconButton(
-                      //                     iconSize: 3,
-                      //                     color: Colors.green,
-                      //                     icon: const Icon(
-                      //                       Icons.star,
-                      //                       size: 23,
-                      //                     ),
-                      //                     onPressed: () {},
-                      //                   ),
-                      //                   Text("Trustpilot",
-                      //                       style: AppStyle
-                      //                           .textStyleRobotoromanmedium14
-                      //                           .copyWith(
-                      //                               fontSize: getFontSize(14),
-                      //                               color: Colors.white))
-                      //                 ],
-                      //               ),
-                      //             )
-                      //           ]),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 30,
-                      //     ),
-                      //     Padding(
-                      //       padding: const EdgeInsets.only(left: 10),
-                      //       child: SingleChildScrollView(
-                      //         scrollDirection: Axis.horizontal,
-                      //         child: Row(
-                      //           children: [
-                      //             Container(
-                      //               color: Colors.white,
-                      //               child: SvgPicture.asset(
-                      //                 "assets/images/logo_visa.svg",
-                      //                 height: 25,
-                      //                 width: 25,
-                      //               ),
-                      //             ),
-                      //             SizedBox(
-                      //               width: 7,
-                      //             ),
-                      //             SvgPicture.asset(
-                      //               "assets/images/logo_paypal.svg",
-                      //               height: 25,
-                      //               width: 25,
-                      //             ),
-                      //             SvgPicture.asset(
-                      //               "assets/images/logo_applepay.svg",
-                      //               height: 25,
-                      //               width: 25,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 30,
-                      //     ),
-                      //     SizedBox(
-                      //       height: 10,
-                      //     ),
-                      //     Center(
-                      //       child: Text("Copyright © 2011-2023 Obatala Coffee",
-                      //           style: TextStyle(fontSize: 10)),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 10,
-                      //     ),
-                      //     Row(
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         Text("Privacybeleid | ",
-                      //             style: TextStyle(fontSize: 10)),
-                      //         Text(" KvK: 27349892 | ",
-                      //             style: TextStyle(fontSize: 10)),
-                      //         Text(" BTW: NL821075664B01",
-                      //             style: TextStyle(fontSize: 10)),
-                      //       ],
-                      //     ),
-                      //     Center(
-                      //       child: Text(
-                      //           "Beoordeling op Trustpilot: 4.7 / 5 - 27 beoordelingen",
-                      //           style: TextStyle(fontSize: 10)),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 10,
-                      //     ),
-                      //     Row(
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         Text("Gemaakt met ♥ door",
-                      //             style: TextStyle(
-                      //                 color: Colors.black, fontSize: 10)),
-                      //         SvgPicture.asset(
-                      //           "assets/images/logo_ftl_gray.svg",
-                      //           height: 10,
-                      //           width: 10,
-                      //         )
-                      //       ],
-                      //     ),
-                      //   ],
-                      // )
                       FotterClass()
+
                     ],
                   )),
           ),
@@ -1728,20 +1465,19 @@ class ProductDetailsPage extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
               border: Border.all(
-                  color:
-                      currentIndex == index ? Colors.grey : Colors.transparent,
-                  width: 2),
-              // color: currentIndex == index ? Colors.black : Colors.black26,
-              // shape: BoxShape.circle
+                  color: currentIndex == index ? ColorConstant.appPrimaryColor : Colors.transparent,
+                  width: 2
+              ),
             ),
             child: Container(
               height: 45,
               width: 45,
-              child: Image.network(
-                "${APPURL.imageBaseUrl}" +
-                    controller.productDetailModel.value.images![index],
-                fit: BoxFit.fill,
-              ),
+              // child: Image.network("${APPURL.imageBaseUrl}" + controller.productDetailModel.value.images![index], fit: BoxFit.fill,),
+                child : CachedNetworkImage(
+                  imageUrl: APPURL.imageBaseUrl + controller.productDetailModel.value.images![index],
+                  placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,)),
+                  errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
+                )
             ),
           ));
     });

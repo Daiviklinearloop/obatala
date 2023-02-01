@@ -7,9 +7,7 @@ import 'package:obatala/core/utils/math_utils.dart';
 import 'package:obatala/theme/app_style.dart';
 import 'dart:math' as math;
 
-
-
-
+import '../utils/color_constant.dart';
 
 class CombiDealCard extends StatefulWidget {
   String? productName;
@@ -90,7 +88,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                             height:widget.imageHeight==null?80: widget.imageHeight!.toDouble(),
                             width:widget.imageWidth==null?80:  widget.imageWidth!.toDouble(),
                             imageUrl: widget.productImage==null ? "" : APPURL.imageBaseUrl+ widget.productImage.toString(),
-                            placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: Color(0xFF703926),)),
+                            placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,)),
                             errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
                           ),
                         ),
@@ -320,63 +318,10 @@ class _CombiDealCardState extends State<CombiDealCard> {
                                 SizedBox(
                                   height: 7,
                                 ),
-                                // Row(
-                                //   children: [
-                                //     CircleAvatar(
-                                //       radius: 7,
-                                //       backgroundColor: widget.stockIndicator.toString()=="Niet op voorraad"?Colors.red:Colors.green,
-                                //       child: Center(
-                                //         child: Icon(
-                                //           Icons.check,
-                                //           size: 10,
-                                //         ),
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 5,
-                                //     ),
-                                //     Text(
-                                //       widget.stockIndicator==null?"":
-                                //       widget.stockIndicator.toString(),
-                                //       style:
-                                //       AppStyle.textStyleRobotoromanmedium14.copyWith(
-                                //         color: widget.stockIndicator.toString()=="Niet op voorraad"?Colors.red:Colors.green,
-                                //         fontSize: getFontSize(
-                                //           14,
-                                //         ),
-                                //       ),
-                                //     )
-                                //   ],
-                                // ),
-                                // widget.homePage==true?SizedBox(): Padding(
-                                //   padding: const EdgeInsets.only( top: 8),
-                                //   child: Row(
-                                //     children: [
-                                //       Text(
-                                //         widget.stockIndicatorDescription.toString()==null?"":widget.stockIndicatorDescription.toString(),
-                                //         style: AppStyle.textStyleAdventProregular124
-                                //             .copyWith(fontSize: getFontSize(14)),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
+
                               ],
                             ),
-                            // Spacer(),
 
-                            // Container(
-                            //   decoration: const BoxDecoration(
-                            //       color: Colors.green,
-                            //       borderRadius: BorderRadius.all(Radius.circular(5))),
-                            //   height: 40,
-                            //   width: 40,
-                            //   child: const Center(
-                            //     child: Icon(
-                            //       Icons.shopping_cart_outlined,
-                            //       color: Colors.white,
-                            //     ),
-                            //   ),
-                            // )
                           ],
                         ),
                       )

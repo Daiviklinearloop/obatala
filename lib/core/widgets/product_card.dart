@@ -6,6 +6,8 @@ import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/core/utils/math_utils.dart';
 import 'package:obatala/theme/app_style.dart';
 
+import '../utils/color_constant.dart';
+
 
 class ProductCard extends StatefulWidget {
   String? productName;
@@ -69,7 +71,7 @@ class _ProductCardState extends State<ProductCard> {
                         height:widget.imageHeight==null?80: widget.imageHeight!.toDouble(),
                         width:widget.imageWidth==null?80:  widget.imageWidth!.toDouble(),
                         imageUrl:widget.productImage==null ? "" : APPURL.imageBaseUrl+ widget.productImage.toString(),
-                        placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: Color(0xFF703926),)),
+                        placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,)),
                         errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
                   )
               ),

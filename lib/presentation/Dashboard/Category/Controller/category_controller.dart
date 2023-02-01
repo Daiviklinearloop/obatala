@@ -62,22 +62,15 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
 
       print("response --:"+response.body);
      categoryModelData!.value = CategoryModel.fromJson(jsonDecode(response.body));
-    // final responceData = json.decode(response.body);
-
-
 
       print("loading"+loading.toString());
 
-    print("Api model data collected");
-    // print("length "+ categoryModelData.list1!.length.toString());
-    // print("list "+ categoryModelData.list1![2].toString());
-
-
+      print("Api model data collected");
 
       loading.value=false;
 
-    }else
-    {
+    }else {
+
       print("error- category"+response.body.toString());
       loading.value=false;
 
@@ -139,16 +132,7 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
       print("loading"+loading.toString());
       loading.value=false;
 
-
-
-
-
       print("Api model data collected");
-      // print("length "+ categoryModelData.list1!.length.toString());
-      // print("list "+ categoryModelData.list1![2].toString());
-
-
-
 
     }else
     {
