@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/core/utils/math_utils.dart';
+import 'package:obatala/core/utils/pref_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
 import 'package:obatala/core/widgets/combi_Deal_Card.dart';
@@ -56,14 +57,45 @@ class ProductDetailsPage extends StatelessWidget {
           title: Text("Obatala Coffee",
               style: AppStyle.textStyleRobotoromanmedium14
                   .copyWith(fontSize: getFontSize(16))),
-          actions: const [
-            Icon(
-              Icons.person_outline,
-              color: Colors.black,
+          actions:  [
+            PopupMenuButton<int>(
+              itemBuilder: (context) => [
+                // PopupMenuItem 1
+                PopupMenuItem(
+                  value: 1,
+                  // row with 2 children
+                  child: Row(
+                    children: [
+                      Text("Dutch")
+                    ],
+                  ),
+                ),
+                // PopupMenuItem 2
+                PopupMenuItem(
+                  value: 2,
+                  // row with two children
+                  child: Row(
+                    children: [
+                      Text("English")
+                    ],
+                  ),
+                ),
+              ],
+              offset: Offset(0, 50),
+              color: Colors.white,
+              elevation: 2,
+              icon: Icon(Icons.language),
+              // on selected we show the dialog box
+              onSelected: (value) {
+                if (value == 1) {
+                  Get.updateLocale(Locale('nl','DF'));
+
+                } else if (value == 2) {
+                  Get.updateLocale(Locale('en','US'));
+                }
+              },
             ),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10,),
             Icon(
               Icons.shopping_cart_outlined,
               color: Colors.black,
@@ -229,7 +261,10 @@ class ProductDetailsPage extends StatelessWidget {
                 : Obx(()=>Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
+
+
+
+                 Padding(
                         padding: EdgeInsets.only(
                             top: 10.0, right: 15, left: 15, bottom: 10),
                         child: SizedBox(
@@ -237,7 +272,7 @@ class ProductDetailsPage extends StatelessWidget {
                           child: TextField(
                             decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.search),
-                                hintText: "Zoeken naar....",
+                                hintText: "lbl_search_for".tr,
                                 border: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(width: 3, color: Colors.grey),
@@ -311,7 +346,7 @@ class ProductDetailsPage extends StatelessWidget {
                                   .copyWith(height: 1.5,fontSize: getFontSize(16)),
                             ),
                             Text(
-                              "review",
+                              "lbl_review".tr,
                               style: AppStyle.textStyleAdventProregular124
                                   .copyWith(height: 1.5, fontSize: getFontSize(16)),
                             )
@@ -322,7 +357,7 @@ class ProductDetailsPage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(left: 15),
                         child: Text(
-                          "Schrijf productbeoordeling",
+                          "lbl_write_a_product_review".tr,
                           style: AppStyle.textStyleAdventProregular16.copyWith(
                               color: Colors.black,
                               fontSize: getFontSize(
@@ -488,7 +523,7 @@ class ProductDetailsPage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('in winkelwagen',
+                                  Text('lbl_add_to_cart'.tr,
                                       style: AppStyle
                                           .textStyleRobotoromanmedium14
                                           .copyWith(
@@ -537,9 +572,9 @@ class ProductDetailsPage extends StatelessWidget {
                                           )),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children:  [
                                       Text(
-                                        "Op verlanglijst",
+                                        "lbl_add_to_wish_list".tr,
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       Icon(
@@ -620,7 +655,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     left: 20, top: 10, bottom: 10),
                                 child: Text(
-                                  "Omschrijving",
+                                  "lbl_description".tr,
                                   style: AppStyle.textStyleAdventProregular16
                                       .copyWith(
                                           color: Color(0xff7a5216),
@@ -642,7 +677,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     left: 15, top: 10, bottom: 10),
                                 child: Text(
-                                  "Specificaties",
+                                  "lbl_specifications".tr,
                                   style: AppStyle.textStyleAdventProregular16
                                       .copyWith(
                                           color: Color(0xff7a5216),
@@ -664,7 +699,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     left: 15, top: 10, bottom: 10),
                                 child: Text(
-                                  "Combi deal",
+                                  "lbl_combi_deal".tr,
                                   style: AppStyle.textStyleAdventProregular16
                                       .copyWith(
                                           color: Color(0xff7a5216),
@@ -688,7 +723,7 @@ class ProductDetailsPage extends StatelessWidget {
 
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
-                        child: Text("Omschrijving",
+                        child: Text("lbl_description".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(22))),
                       ),
@@ -749,7 +784,7 @@ class ProductDetailsPage extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    showMore == true?  "Show less":"Show more",
+                                    showMore == true?  "lbl_show_less".tr : "lbl_show_more".tr,
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   Obx(() => Icon(
@@ -771,7 +806,7 @@ class ProductDetailsPage extends StatelessWidget {
                       Padding(
                         key: _keySpecification,
                         padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Text("Specification",
+                        child: Text("lbl_specifications".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
                       ):SizedBox(),
@@ -794,7 +829,7 @@ class ProductDetailsPage extends StatelessWidget {
                      Obx(()=>controller.productDetailReviewModel.value.list1!=null && controller.productDetailReviewModel.value.list1!.isNotEmpty?
                       Padding(
                         padding: EdgeInsets.only(left: 15),
-                        child: Text("Beoordelingen",
+                        child: Text("lbl_Review".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
                       ):SizedBox(),),
@@ -837,7 +872,7 @@ class ProductDetailsPage extends StatelessWidget {
                                   .copyWith(fontSize: getFontSize(16)),
                             ):SizedBox(),
                             Text(
-                              "review",
+                              "lbl_review".tr,
                               style: AppStyle.textStyleAdventProregular124
                                   .copyWith(
                                       height: 1.5, fontSize: getFontSize(16)),
@@ -978,7 +1013,7 @@ class ProductDetailsPage extends StatelessWidget {
                           ? Padding(
                         padding: const EdgeInsets.only(
                             left: 15, right: 15, bottom: 10),
-                        child: Text("Bijpassende producten",
+                        child: Text('lbl_matching_product'.tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
                       ):SizedBox(),
@@ -1008,6 +1043,14 @@ class ProductDetailsPage extends StatelessWidget {
                                               if (!currentFocus.hasPrimaryFocus) {
                                                 currentFocus.unfocus();
                                               }
+                                              // print("recent");
+                                              // try{
+                                              //   Get.find<PrefUtils>().setRecentProduct(controller.productDetailRelatedProductModel.value.list1![index].id.toString());
+                                              // }catch(e){
+                                              //   print("Exception-"+"Error list Data");
+                                              //
+                                              // }
+                                              print("recent pro");
                                               controller.RelivantProductApiCall(controller.productDetailRelatedProductModel.value.list1![index].id.toString(),controller.productDetailRelatedProductModel.value.list1![index].manufacturerId.toString());
                                               // Get.toNamed(AppRoutes.productDetailScreen,
                                               //     arguments: {
@@ -1098,7 +1141,7 @@ class ProductDetailsPage extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 15, right: 15, bottom: 10),
                         key: _keyCombiDeal,
-                        child: Text("Combi deal",
+                        child: Text("lbl_combi_deal".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
                       ):SizedBox(),
@@ -1208,7 +1251,7 @@ class ProductDetailsPage extends StatelessWidget {
                                                       child: Column(
                                                         children: [
                                                           Text(
-                                                            "Maak gebruik van deze voordelige combi deal op de accessoires bij aankoop van de",
+                                                            "msg_makse_use_of_this".tr,
                                                             maxLines: 4,
                                                           ),
                                                           Row(
@@ -1279,7 +1322,7 @@ class ProductDetailsPage extends StatelessWidget {
                                                                       .center,
                                                               children: [
                                                                 Text(
-                                                                    'in winkelwagen',
+                                                                    'lbl_add_to_cart'.tr,
                                                                     style: AppStyle
                                                                         .textStyleRobotoromanmedium14
                                                                         .copyWith(
@@ -1337,7 +1380,7 @@ class ProductDetailsPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 15, right: 15, bottom: 10),
-                        child: Text("Other customers also bought",
+                        child: Text('lbl_other_also_boug'.tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
                       ),
@@ -1359,6 +1402,13 @@ class ProductDetailsPage extends StatelessWidget {
                                             onTap: (){
                                               print("Id : "+controller.productDetailAlsoBoughtModel.value.list1![index].id.toString());
 
+
+                                              // try{
+                                              //   Get.find<PrefUtils>().setRecentProduct(controller.productDetailAlsoBoughtModel.value.list1![index].id.toString());
+                                              // }catch(e){
+                                              //   print("Exception-"+"Error list Data");
+                                              //
+                                              // }
                                               controller.RelivantProductApiCall(controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(), controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString());
                                               //   Get.back();
                                               // Get.toNamed(AppRoutes.productDetailScreen,
@@ -1430,6 +1480,99 @@ class ProductDetailsPage extends StatelessWidget {
                                                   .stockIndicator,
                                               stockIndicatorDescription: controller
                                                   .productDetailAlsoBoughtModel
+                                                  .value
+                                                  .list1![index]
+                                                  .stockIndicatorDescription,
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                )
+                              : SizedBox(),
+                        ],
+                      ),
+
+
+                      // recent product last viewed
+                      controller.productModelData!.value.list1 != null?
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 15, right: 15, bottom: 10),
+                        child: Text("lbl_last_view".tr,
+                            style: AppStyle.textStyleRobotoromanmedium14
+                                .copyWith(fontSize: getFontSize(20))),
+                      ):SizedBox(),
+                      Column(
+                        children: [
+                          controller.productModelData!.value.list1 !=
+                                  null
+                              ? Obx(
+                                  () => ListView.builder(
+                                    reverse: true,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount:controller.productModelData!.value.list1!.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 15.0, right: 15),
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              print("Id : "+controller.productModelData!.value.list1![index].id.toString());
+
+                                              controller.RelivantProductApiCall(controller.productModelData!.value.list1![index].id.toString(), controller.productModelData!.value.list1![index].manufacturerId.toString());
+                                              //   Get.back();
+                                              // Get.toNamed(AppRoutes.productDetailScreen,
+                                              //     arguments: {
+                                              //       "productID":controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(),
+                                              //       "manufacturerID":controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString()
+                                                  },
+                                            child: ProductCard(
+                                              productName: controller
+                                                  .productModelData!
+                                                  .value
+                                                  .list1![index]
+                                                  .name,
+                                              productImage: controller
+                                                  .productModelData!
+                                                  .value
+                                                  .list1![index]
+                                                  .metaData!
+                                                  .image
+                                                  .toString(),
+                                              imageHeight: controller
+                                                  .productModelData!
+                                                  .value
+                                                  .list1![index]
+                                                  .metaData!
+                                                  .imageHeight,
+                                              imageWidth: controller
+                                                  .productModelData!
+                                                  .value
+                                                  .list1![index]
+                                                  .metaData!
+                                                  .imageWidth,
+                                              productPrice: controller
+                                                  .productModelData!
+                                                  .value
+                                                  .list1![index]
+                                                  .price
+                                                  .toString(),
+                                              productOfferPrice: controller
+                                                  .productModelData!
+                                                  .value
+                                                  .list1![index]
+                                                  .oldPrice
+                                                  .toString(),
+
+                                              stockIndicator: controller
+                                                  .productModelData!
+                                                  .value
+                                                  .list1![index]
+                                                  .stockIndicator,
+                                              stockIndicatorDescription: controller
+                                                  .productModelData!
                                                   .value
                                                   .list1![index]
                                                   .stockIndicatorDescription,
