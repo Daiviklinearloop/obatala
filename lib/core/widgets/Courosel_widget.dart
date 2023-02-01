@@ -13,13 +13,17 @@ verticalCourosel() {
 
       child: Padding(
         padding: const EdgeInsets.only(left:18.0),
-        child: Row(children: [
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
           SizedBox(
               height: 30,
               width: 30,
               child: Image.asset("assets/images/icon-152x152.png")),
           SizedBox(width: 10,),
-          Column(crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
               SizedBox(height: 5,),

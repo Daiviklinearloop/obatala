@@ -4,6 +4,7 @@ import 'package:obatala/presentation/Product_List/Controller/product_list_contro
 class ProductListBinding extends Bindings {
   @override
   void dependencies() {
+    Get.delete<ProductListController>();
     Get.lazyPut(() => ProductListController());
   }
 }

@@ -5,9 +5,11 @@ import 'package:obatala/presentation/Product_List/Controller/product_list_contro
 import '../../routes/app_routes.dart';
 import 'Category/Controller/category_controller.dart';
 
-class DrawerWidget extends GetWidget<CategoryController> {
+class DrawerWidget extends StatelessWidget {
   DrawerWidget({super.key});
-  ProductListController controllerList=ProductListController();
+  ProductListController controllerList = ProductListController();
+
+  CategoryController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,6 @@ class DrawerWidget extends GetWidget<CategoryController> {
           children: [
            Container(
                   height: MediaQuery.of(context).size.height,
-
                   child:
                   controller
                       .categoryModelData!.value.list1==null?SizedBox():
@@ -39,8 +40,8 @@ class DrawerWidget extends GetWidget<CategoryController> {
                                 print("slug "+ controller.categoryModelData!.value
                                     .list1![index].crumbPath![0].slug
                                     .toString());
-                                // Get.back();
-                                Navigator.pushReplacementNamed(
+                                Get.back();
+                                Navigator.pushNamed(
                                   context,
                                   AppRoutes.productList,
                                    arguments: {
@@ -52,14 +53,13 @@ class DrawerWidget extends GetWidget<CategoryController> {
                                        }
                                 );
 
-                                // Get.toNamed(AppRoutes.productList, arguments: {
-                                //   "categoryId": controller.categoryModelData!
-                                //       .value.list1![index].crumbPath![0].id
-                                //       .toString(),
-                                //   "slug": controller.categoryModelData!.value
-                                //       .list1![index].crumbPath![0].slug
-                                //       .toString()
-                                // });
+                                // Get.offNamed(
+                                //     AppRoutes.productList,
+                                //     arguments: {
+                                //       "categoryId": controller.categoryModelData!.value.list1![index].crumbPath![0].id.toString(),
+                                //       "slug": controller.categoryModelData!.value.list1![index].crumbPath![0].slug.toString()
+                                //     }
+                                //     );
 
 
                               },

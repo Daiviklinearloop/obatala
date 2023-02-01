@@ -16,9 +16,9 @@ class FilterPage extends GetWidget<ProductListController>{
 
     return Scaffold(
         backgroundColor: Colors.white,
-        drawer: Drawer(
-          child: DrawerWidget(),
-        ),
+        // drawer: Drawer(
+        //   child: DrawerWidget(),
+        // ),
         appBar: AppBar(
         centerTitle: true,
         backgroundColor: const Color(0xff616161),
@@ -27,7 +27,19 @@ class FilterPage extends GetWidget<ProductListController>{
             fontSize: getFontSize(18))),
 
         actions: [
-          Icon(Icons.close_sharp,color: Colors.white,size: 16,)
+          InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: Container(
+                padding: const EdgeInsets.only(left:10,right: 10),
+                child: Icon(
+                  Icons.close_sharp,
+                  color: Colors.white,
+                  size: 25,
+                )
+            ),
+          )
         ],
       ),
       body: SafeArea(child:

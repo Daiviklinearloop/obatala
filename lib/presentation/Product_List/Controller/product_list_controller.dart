@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,8 +33,7 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
 
   @override
   void onInit() {
-    // Get.delete<ProductListController>();
-    // Get.put(ProductListController());
+    print("pro_list onInit");
     if (argumentData != null) {
       categoryID=argumentData['categoryId'];
       slug=argumentData['slug'];
@@ -49,8 +50,10 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
     super.onInit();
   }
 
+
   @override
   void onReady() {
+    print("pro_list onReady");
     // TODO: implement onReady
     // if (argumentData != null) {
     //   categoryID=argumentData['categoryId'];
@@ -77,8 +80,6 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
     ProductFilterApiCall();
     CategoryApiCall();
     // currentRangeValues();
-
-
 
   }
 
@@ -112,10 +113,15 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
 
       // final responceData = json.decode(response.body);
       print("loading"+loading.toString());
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("Api model data collected");
     }else
     {
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("error- product LIST filter used"+response.body.toString());
       Map<String, dynamic> error = jsonDecode(response.body);
       Fluttertoast.showToast(
@@ -155,12 +161,16 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
       productListModel!.value = ProductListModel.fromJson(jsonDecode(response.body));
       // final responceData = json.decode(response.body);
       print("loading"+loading.toString());
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("Api model data collected");
     }else
     {
       print("error- product LIST"+response.body.toString());
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
 
       Map<String, dynamic> error = jsonDecode(response.body);
       Fluttertoast.showToast(
@@ -215,10 +225,15 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
       print("Start value"+start.value.toString());
       print("End value"+end.value.toString());
       print("loading"+loading.toString());
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("Api model data collected");
     }
     else {
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
       print("error- product LIST"+response.body.toString());
       Map<String, dynamic> error = jsonDecode(response.body);
       Fluttertoast.showToast(
@@ -276,12 +291,16 @@ class ProductListController extends GetxController with StateMixin<dynamic> {
 
 
 
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
 
     }else
     {
       print("error- category"+response.body.toString());
-      loading.value=false;
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
 
       Map<String, dynamic> error = jsonDecode(response.body);
       Fluttertoast.showToast(

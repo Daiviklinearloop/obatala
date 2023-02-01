@@ -15,6 +15,8 @@ import 'dart:convert';
 import 'package:obatala/presentation/ProductDetailScreen/Model/product_detail_model.dart';
 import 'package:obatala/presentation/ProductDetailScreen/Model/product_detail_related_product_model.dart';
 
+import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 
 class ProductDetailController extends GetxController with StateMixin<dynamic> {
 
@@ -40,14 +42,7 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
   RxDouble combiTotal=0.0.obs;
   RxList combiList=[].obs;
 
-
-
-
-
-
-
-
-
+  var _dio = Dio();
 
   @override
   void onReady() {
@@ -60,14 +55,8 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
       print("Manufacturer Id " +manufacturerId.toString());
 
     }
-    ProductDetailApiCall();
-    ProductDetailRelatedProductApiCall();
-    ProductDetailBundleApiCall();
-    ProductDetailAlsoBoughtApiCall();
-    ManufacturerApiCall();
-    ManufacturerIDApiCall();
-    ProductDetailReviewApiCall();
 
+    allAPICall();
 
   }
 
@@ -76,6 +65,12 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
 
     productId!.value=proID;
     manufacturerId!.value=manufactureID;
+    allAPICall();
+
+  }
+
+  void allAPICall(){
+    _dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: APPURL.baseUrl)).interceptor);
     ProductDetailApiCall();
     ProductDetailRelatedProductApiCall();
     ProductDetailBundleApiCall();
@@ -104,26 +99,36 @@ String cartCalculation(String price, List<Products> products, ){
 
 
 
+
   Future ProductDetailApiCall() async{
     loading.value=true;
     print("Product Detail product ID ${APPURL.productDetail +productId.toString()}");
 
-    final response = await http.get(
-      Uri.parse(APPURL.productDetail +productId.toString()
-      ),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+    // final response = await http.get(
+    //   Uri.parse(APPURL.productDetail +productId.toString(),),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    //
+    //   // body: jsonEncode(<String, dynamic>{
+    //   // })
+    // );
 
-      // body: jsonEncode(<String, dynamic>{
-      // })
-    );
+    final response = await _dio.get(APPURL.productDetail +productId.toString(), options: buildCacheOptions(
+      Duration(days: 7), //duration of cache
+      forceRefresh: true
+      //500, 500 happens, it will return cache
+    ));
+
+   // loading.value=false;
+
+    //var response = dio.interceptors.add(DioCacheManager(CacheConfig(baseUrl: "http://www.google.com")).interceptor);;
+
     print("Api Called Product Detail");
 
     if (response.statusCode == 200) {
-
-      print("response product Detail --:"+response.body);
-      productDetailModel.value = ProductDetailModel.fromJson(jsonDecode(response.body));
+      print("response product Detail --:"+response.toString());
+      productDetailModel.value = ProductDetailModel.fromJson(response.data);
       // // final responceData = json.decode(response.body);
       ProductActualPrice.value=double.parse(productDetailModel.value.price.toString());
       Timer(Duration(milliseconds:250), () {
@@ -139,8 +144,8 @@ String cartCalculation(String price, List<Products> products, ){
     }else
     {    loading.value=false;
 
-    print("error- productDetail Controller"+response.body.toString());
-      Map<String, dynamic> error = jsonDecode(response.body);
+    print("error- productDetail Controller"+response.data.toString());
+      Map<String, dynamic> error = jsonDecode(response.data.toString());
       Fluttertoast.showToast(
           msg: error["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -159,22 +164,31 @@ String cartCalculation(String price, List<Products> products, ){
     print("Product Detail product ID ${APPURL.productDetail +productId.toString()}");
     loading.value=true;
 
-    final response = await http.get(
-      Uri.parse(APPURL.productDetailRelatedProduct +productId.toString()+'/relatedProduct'
-      ),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+    // final response = await http.get(
+    //   Uri.parse(APPURL.productDetailRelatedProduct +productId.toString()+'/relatedProduct'
+    //   ),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    //
+    //   // body: jsonEncode(<String, dynamic>{
+    //   // })
+    // );
 
-      // body: jsonEncode(<String, dynamic>{
-      // })
-    );
+    final response = await _dio.get(APPURL.productDetailRelatedProduct +productId.toString()+'/relatedProduct', options: buildCacheOptions(
+        Duration(days: 7), //duration of cache
+        forceRefresh: true
+      //500, 500 happens, it will return cache
+    ));
+
+    //loading.value = false;
+
     print("Api Called Product Detail related Product ");
 
     if (response.statusCode == 200) {
 
-      print("response product Detail Related Product  --:"+response.body);
-      productDetailRelatedProductModel.value =await ProductDetailRelatedProductModel.fromJson(jsonDecode(response.body));
+      print("response product Detail Related Product  --:"+response.data.toString());
+      productDetailRelatedProductModel.value =await ProductDetailRelatedProductModel.fromJson(response.data);
       // // final responceData = json.decode(response.body);
       Timer(Duration(milliseconds:250), () {
         loading.value=false;
@@ -184,17 +198,15 @@ String cartCalculation(String price, List<Products> products, ){
       // print("length "+ categoryModelData.list1!.length.toString());
       // print("list "+ categoryModelData.list1![2].toString());
 
+    }else {
+
+      Timer(Duration(milliseconds:250), () {
+        loading.value=false;
+      });
 
 
-
-    }else
-    {    Timer(Duration(milliseconds:250), () {
-      loading.value=false;
-    });
-
-
-    print("error- productDetail Controller"+response.body.toString());
-      Map<String, dynamic> error = jsonDecode(response.body);
+    print("error- productDetail Controller"+response.data.toString());
+      Map<String, dynamic> error = jsonDecode(response.data);
       Fluttertoast.showToast(
           msg: error["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -213,20 +225,29 @@ String cartCalculation(String price, List<Products> products, ){
     loading.value=true;
     print("Product Detail bundle product ID ${APPURL.productDetail +productId.toString()+"/bundle"}");
 
-    final response = await http.get(
-      Uri.parse(APPURL.productDetail +productId.toString()+'/bundle'
-      ),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      // body: jsonEncode(<String, dynamic>{
-      // })
-    );
+    // final response = await http.get(
+    //   Uri.parse(APPURL.productDetail +productId.toString()+'/bundle'
+    //   ),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    //   // body: jsonEncode(<String, dynamic>{
+    //   // })
+    // );
+
+    final response = await _dio.get(APPURL.productDetail +productId.toString()+'/bundle', options: buildCacheOptions(
+        Duration(days: 7), //duration of cache
+        forceRefresh: true
+      //500, 500 happens, it will return cache
+    ));
+
+    //loading.value=false;
+
     print("Api Called Product Detail");
 
     if (response.statusCode == 200) {
-      print("response product Detail Bundle --:"+response.body);
-      productDetailBundleModel.value =await ProductDetailBundleModel.fromJson(jsonDecode(response.body));
+      print("response product Detail Bundle --:"+response.data.toString());
+      productDetailBundleModel.value =await ProductDetailBundleModel.fromJson(response.data);
       Timer(Duration(milliseconds:250), () {
         loading.value=false;
       });
@@ -265,8 +286,8 @@ String cartCalculation(String price, List<Products> products, ){
       // print("list "+ categoryModelData.list1![2].toString());
     }else
     {
-      print("error- productDetailBundle Controller"+response.body.toString());
-      Map<String, dynamic> error = jsonDecode(response.body);
+      print("error- productDetailBundle Controller"+response.data.toString());
+      Map<String, dynamic> error = jsonDecode(response.data);
       Fluttertoast.showToast(
           msg: error["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -283,20 +304,29 @@ String cartCalculation(String price, List<Products> products, ){
     loading.value=true;
     print("Product Detail review product ID ${APPURL.reivew +productId.toString()+"/reviews?limit=10&page=1"}");
 
-    final response = await http.get(
-      Uri.parse(APPURL.productDetail +productId.toString()+"/reviews?limit=10&page=1"
-      ),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      // body: jsonEncode(<String, dynamic>{
-      // })
-    );
+    // final response = await http.get(
+    //   Uri.parse(APPURL.productDetail +productId.toString()+"/reviews?limit=10&page=1"
+    //   ),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    //   // body: jsonEncode(<String, dynamic>{
+    //   // })
+    // );
+
+    final response = await _dio.get(APPURL.productDetail +productId.toString()+"/reviews?limit=10&page=1", options: buildCacheOptions(
+        Duration(days: 7), //duration of cache
+        forceRefresh: true
+      //500, 500 happens, it will return cache
+    ));
+
+   // loading.value=false;
+
     print("Api Called Product  Detail review" );
 
     if (response.statusCode == 200) {
-      print("response product Detail review --:"+response.body);
-      productDetailReviewModel.value = ProductDetailReviewModel.fromJson(jsonDecode(response.body));
+      print("response product Detail review --:"+response.data.toString());
+      productDetailReviewModel.value = ProductDetailReviewModel.fromJson(response.data);
       Timer(Duration(milliseconds:250), () {
         loading.value=false;
       });
@@ -305,8 +335,8 @@ String cartCalculation(String price, List<Products> products, ){
       // print("list "+ categoryModelData.list1![2].toString());
     }else
     {
-      print("error- productDetailReview Controller"+response.body.toString());
-      Map<String, dynamic> error = jsonDecode(response.body);
+      print("error- productDetailReview Controller"+response.data.toString());
+      Map<String, dynamic> error = jsonDecode(response.data);
       Fluttertoast.showToast(
           msg: error["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -327,22 +357,31 @@ String cartCalculation(String price, List<Products> products, ){
     loading.value=true;
     print("Product Detail bundle product ID ${APPURL.productDetail +productId.toString()+"/alsoBought"}");
 
-    final response = await http.get(
-      Uri.parse(APPURL.productDetail +productId.toString()+'/alsoBought'
-      ),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+    // final response = await http.get(
+    //   Uri.parse(APPURL.productDetail +productId.toString()+'/alsoBought'
+    //   ),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    //
+    //   // body: jsonEncode(<String, dynamic>{
+    //   // })
+    // );
 
-      // body: jsonEncode(<String, dynamic>{
-      // })
-    );
+    final response = await _dio.get(APPURL.productDetail +productId.toString()+'/alsoBought', options: buildCacheOptions(
+        Duration(days: 7), //duration of cache
+        forceRefresh: true
+      //500, 500 happens, it will return cache
+    ));
+
+   // loading.value = false;
+
     print("Api Called Product Detail");
 
     if (response.statusCode == 200) {
 
-      print("response product Detail Also bought --:"+response.body);
-      productDetailAlsoBoughtModel.value =await ProductDetailAlsoBoughtModel.fromJson(jsonDecode(response.body));
+      print("response product Detail Also bought --:"+response.data.toString());
+      productDetailAlsoBoughtModel.value =await ProductDetailAlsoBoughtModel.fromJson(response.data);
       // // final responceData = json.decode(response.body);
       // loading.value=false;
       Timer(Duration(milliseconds:250), () {
@@ -358,8 +397,8 @@ String cartCalculation(String price, List<Products> products, ){
 
     }else
     {
-      print("error- productDetailAlsoBought Controller"+response.body.toString());
-      Map<String, dynamic> error = jsonDecode(response.body);
+      print("error- productDetailAlsoBought Controller"+response.data.toString());
+      Map<String, dynamic> error = jsonDecode(response.data);
       Fluttertoast.showToast(
           msg: error["message"],
           toastLength: Toast.LENGTH_SHORT,
@@ -399,18 +438,18 @@ String cartCalculation(String price, List<Products> products, ){
       manufacturerModel!.value = ManufacturerModel.fromJson(jsonDecode(response.body));
       // final responceData = json.decode(response.body);
       for (var i = 0; i < manufacturerModel!.value.list1!.length; i++) {
-        print("index");
-        print(i);
+        // print("index");
+        // print(i);
         manufacturerImage.value.add(APPURL.imageBaseUrl+manufacturerModel!.value.list1![i].image.toString()) ;
-        print(manufacturerImage);
+        // print(manufacturerImage);
       }
       // manufacturerImage.value=manufacturerModel.value.list1!.image as List;
       print(manufacturerImage);
       Timer(Duration(milliseconds:250), () {
         loading.value=false;
       });
-      print("loading"+loading.toString());
-      print("Manufacturer List "+manufacturerImage.toString());
+      // print("loading"+loading.toString());
+      // print("Manufacturer List "+manufacturerImage.toString());
 
 
 
@@ -443,19 +482,26 @@ String cartCalculation(String price, List<Products> products, ){
     loading.value=true;
     print("loading"+loading.toString());
     print("manufacturerID API "+APPURL.manufacturerId+manufacturerId.toString());
-    final response = await http.get(
-      Uri.parse(APPURL.manufacturerId+manufacturerId.toString()),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+    // final response = await http.get(
+    //   Uri.parse(APPURL.manufacturerId+manufacturerId.toString()),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    // );
 
+    final response = await _dio.get(APPURL.manufacturerId+manufacturerId.toString(), options: buildCacheOptions(
+        Duration(days: 7), //duration of cache
+        forceRefresh: true
+      //500, 500 happens, it will return cache
+    ));
 
-    );
+    //loading.value=false;
+
     if (response.statusCode == 200) {
-      print("loading"+loading.toString());
+      // print("loading"+loading.toString());
 
-      print("response manufacturer --: "+response.body);
-      manufacturerIdModel.value = ManufacturerIdModel.fromJson(jsonDecode(response.body));
+      // print("response manufacturer --: "+response.data.toString());
+      manufacturerIdModel.value = ManufacturerIdModel.fromJson(response.data);
       // final responceData = json.decode(response.body);
 
 
@@ -463,8 +509,8 @@ String cartCalculation(String price, List<Products> products, ){
       Timer(Duration(milliseconds:250), () {
         loading.value=false;
       });
-      print("loading"+loading.toString());
-      print("Manufacturer List "+manufacturerImage.toString());
+      // print("loading"+loading.toString());
+      // print("Manufacturer List "+manufacturerImage.toString());
 
 
 
@@ -473,16 +519,13 @@ String cartCalculation(String price, List<Products> products, ){
       // print("length "+ categoryModelData.list1!.length.toString());
       // print("list "+ categoryModelData.list1![2].toString());
 
-
-
-
     }else
     {
-      print("error- manufacturer"+response.body.toString());
+      print("error- manufacturer"+response.data.toString());
       Timer(Duration(milliseconds:250), () {
         loading.value=false;
       });
-      Map<String, dynamic> error = jsonDecode(response.body);
+      Map<String, dynamic> error = jsonDecode(response.data);
       Fluttertoast.showToast(
           msg: error["message"],
           toastLength: Toast.LENGTH_SHORT,

@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/core/utils/math_utils.dart';
@@ -52,17 +54,24 @@ class _ProductCardState extends State<ProductCard> {
             Padding(
               padding: const EdgeInsets.only(top:8.0),
               child: SizedBox(
-                height: 80,
-                width: 80,
-                child:
-    widget.productImage==""?
-    SvgPicture.asset("assets/images/logoobatalacoffee.svg",height: 30,width: 100,)
-        :Image.network(
-               widget.productImage==null?"":
-                 APPURL.imageBaseUrl+ widget.productImage.toString(),
-                  height:widget.imageHeight==null?80: widget.imageHeight!.toDouble(),
-                  width:widget.imageWidth==null?80:  widget.imageWidth!.toDouble(),
-                ),
+                  height: 80,
+                  width: 80,
+                  child:
+                  widget.productImage==""?
+                  SvgPicture.asset("assets/images/logoobatalacoffee.svg",height: 30,width: 100,)
+                  // :Image.network(
+                  //        widget.productImage==null ? "" :
+                  //          APPURL.imageBaseUrl+ widget.productImage.toString(),
+                  //           height:widget.imageHeight==null?80: widget.imageHeight!.toDouble(),
+                  //           width:widget.imageWidth==null?80:  widget.imageWidth!.toDouble(),
+                  //         ),
+                      :CachedNetworkImage(
+                        height:widget.imageHeight==null?80: widget.imageHeight!.toDouble(),
+                        width:widget.imageWidth==null?80:  widget.imageWidth!.toDouble(),
+                        imageUrl:widget.productImage==null ? "" : APPURL.imageBaseUrl+ widget.productImage.toString(),
+                        placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: Color(0xFF703926),)),
+                        errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
+                  )
               ),
             ),
             SizedBox(
@@ -313,18 +322,25 @@ class _ProductCardState extends State<ProductCard> {
                               )
                             ],
                           ),
-                          widget.homePage==true?SizedBox(): Padding(
-                            padding: const EdgeInsets.only( top: 8),
-                            child: Row(
-                              children: [
-                                Text(
-                                  widget.stockIndicatorDescription.toString()=="null"?"":widget.stockIndicatorDescription.toString(),
-                                  style: AppStyle.textStyleAdventProregular124
-                                      .copyWith(fontSize: getFontSize(14)),
-                                ),
-                              ],
+                          widget.homePage==true
+                              ?
+                          SizedBox()
+                              :
+                          widget.stockIndicatorDescription != null && widget.stockIndicatorDescription != ""
+                              ?
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width *0.52,
+                              child: Text(
+                                widget.stockIndicatorDescription.toString(),
+                                style: AppStyle.textStyleAdventProregular124
+                                    .copyWith(fontSize: getFontSize(14)),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
+                          ):SizedBox(),
                         ],
                       ),
                       // Spacer(),

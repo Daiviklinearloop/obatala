@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:obatala/core/utils/math_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
 import 'package:obatala/core/widgets/combi_Deal_Card.dart';
+import 'package:obatala/core/widgets/common_scafford.dart';
 import 'package:obatala/core/widgets/product_card.dart';
 import 'package:obatala/core/widgets/skelton.dart';
 import 'package:obatala/presentation/Dashboard/Drawer.dart';
@@ -22,9 +24,12 @@ import 'package:shimmer/shimmer.dart';
 import '../../routes/app_routes.dart';
 import '../Dashboard/HomePage.dart';
 
-class ProductDetailsPage extends GetWidget<ProductDetailController> {
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+
+class ProductDetailsPage extends StatelessWidget {
   // ProductDetailsPage({super.key});
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   GlobalKey _keyOmschrijving = GlobalKey();
   GlobalKey _keySpecification = GlobalKey();
@@ -35,17 +40,18 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
 
   CarouselController carouselController = CarouselController();
 
+  ProductDetailController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     var Deal = controller.a;
     // +controller.productDetailModel.value.price;
-    return Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Colors.white,
-        drawer: Drawer(
-          child: DrawerWidget(),
-        ),
-        appBar: AppBar(
+    return CommonScafford(
+        // key: _scaffoldKey,
+        // drawer: Drawer(
+        //   child: DrawerWidget(),
+        // ),
+        commonAppBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           title: Text("Obatala Coffee",
               style: AppStyle.textStyleRobotoromanmedium14
@@ -69,7 +75,7 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
           elevation: 1,
           backgroundColor: Colors.white,
         ),
-        body: SafeArea(
+        child: SafeArea(
             child: RefreshIndicator(
           onRefresh: () async {
             controller.ProductDetailApiCall();
@@ -240,16 +246,18 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                         ),
                       ),
                       verticalCourosel(),
+
+                      controller.productDetailModel.value.categoryName != null && controller.productDetailModel.value.categoryName!= ""
+                          ?
                       Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, left: 15.0, right: 8.0, bottom: 8.0),
-                          child: Text("Obatala Coffee   >  Koffiezetapparten",
-                              style:
-                                  AppStyle.textStyleAdventProregular16.copyWith(
+                          padding: const EdgeInsets.only(top: 8.0, left: 15.0, right: 8.0, bottom: 8.0),
+                          child: Text("Obatala Coffee  >  ${controller.productDetailModel.value.categoryName}",
+                              style: AppStyle.textStyleAdventProregular16.copyWith(
                                       color: Colors.black,
-                                      fontSize: getFontSize(
-                                        10,
-                                      )))),
+                                      fontSize: getFontSize(10,)
+                              )
+                          )
+                      ):SizedBox(),
                       SizedBox(
                         height: 10,
                       ),
@@ -259,8 +267,9 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                           width: MediaQuery.of(context).size.width * 0.80,
                           child: Obx(
                             () => Text(
-                                controller.productDetailModel.value.name
-                                    .toString(),
+                                controller.productDetailModel.value.name != null
+                                    ?
+                                controller.productDetailModel.value.name.toString() : "",
                                 maxLines: 2,
                                 style: AppStyle.textStyleRobotoromanmedium14
                                     .copyWith(fontSize: getFontSize(25))),
@@ -280,32 +289,31 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "5.0 ",
+                              controller.productDetailModel.value.ratingValue != null ? "${controller.productDetailModel.value.ratingValue} " : "-",
                               style: AppStyle.textStyleRobotoromanmedium14
-                                  .copyWith(fontSize: getFontSize(18)),
+                                  .copyWith(height: 1.5,fontSize: getFontSize(16)),
                             ),
                             Text(
-                              "/ 5  ",
+                              "/ 5 ",
                               style: AppStyle.textStyleAdventProregular124
-                                  .copyWith(
-                                      height: 1.5, fontSize: getFontSize(16)),
+                                  .copyWith(height: 1.5, fontSize: getFontSize(16)),
                             ),
                             Icon(
                               Icons.circle,
                               size: 5,
                             ),
                             Text(
-                              "  1  ",
+                              controller.productDetailModel.value.ratingCount != null ? " ${controller.productDetailModel.value.ratingCount} " : " -",
                               style: AppStyle.textStyleRobotoromanmedium14
-                                  .copyWith(fontSize: getFontSize(16)),
+                                  .copyWith(height: 1.5,fontSize: getFontSize(16)),
                             ),
                             Text(
                               "review",
                               style: AppStyle.textStyleAdventProregular124
-                                  .copyWith(
-                                      height: 1.5, fontSize: getFontSize(16)),
+                                  .copyWith(height: 1.5, fontSize: getFontSize(16)),
                             )
                           ],
                         ),
@@ -345,10 +353,13 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                                         items: [
                                           ...controller
                                               .productDetailModel.value.images!
-                                              .map((title) => Image.network(
-                                                  "${APPURL.imageBaseUrl}" +
-                                                      title))
-                                        ]),
+                                              //.map((title) => Image.network("${APPURL.imageBaseUrl}" + title,)
+                                              .map((title) => CachedNetworkImage(
+                                            imageUrl: "${APPURL.imageBaseUrl}" + title,
+                                            placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: Color(0xFF703926),)),
+                                            errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
+                                          )
+                                          )]),
                                   )
                                 : SizedBox(),
                             Positioned(
@@ -409,7 +420,8 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                           children: [
                             Obx(
                               () => Text(
-                                "\u{20AC} ${controller.productDetailModel.value.price},-",
+                                controller.productDetailModel.value.price != null ?
+                                "\u{20AC} ${controller.productDetailModel.value.price},-" : "",
                                 style: AppStyle.textStyleRobotoromanmedium14
                                     .copyWith(fontSize: getFontSize(25)),
                               ),
@@ -434,9 +446,8 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                               width: 5,
                             ),
                             Text(
-                              controller
-                                  .productDetailModel.value.stockIndicatorTitle
-                                  .toString(),
+                              controller.productDetailModel.value.stockIndicatorTitle != null ?
+                              controller.productDetailModel.value.stockIndicatorTitle.toString() : "",
                               style: AppStyle.textStyleRobotoromanmedium14
                                   .copyWith(
                                       fontSize: 14,
@@ -456,7 +467,8 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15, top: 5),
                         child: Text(
-                          "${controller.productDetailModel.value.stockDeliveryTime}",
+                          controller.productDetailModel.value.stockDeliveryTime != null ?
+                          "${controller.productDetailModel.value.stockDeliveryTime}" : "",
                           style: AppStyle.textStyleAdventProregular16.copyWith(
                               color: Colors.black,
                               fontSize: getFontSize(
@@ -514,17 +526,17 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                             padding: const EdgeInsets.only(left: 15.0),
                             child: SizedBox(
                               height: 40,
-                              width: MediaQuery.of(context).size.width * 0.60,
+                              width: MediaQuery.of(context).size.width * 0.53,
                               child: ElevatedButton(
                                   onPressed: () {},
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.white,
                                       side: const BorderSide(
                                           width: 1, // the thickness
-                                          color: Colors
-                                              .grey // the color of the border
+                                          color: Colors.grey // the color of the border
                                           )),
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
                                       Text(
                                         "Op verlanglijst",
@@ -547,10 +559,21 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                             ),
                             onPressed: () {},
                           ),
-                          FaIcon(
-                            FontAwesomeIcons.instagram,
-                            color: Colors.black,
+
+                          IconButton(
+                            iconSize: 20,
+                            color: Colors.black87,
+                            icon: const Icon(
+                              FontAwesomeIcons.instagram,
+                              size: 30,
+                            ),
+                            onPressed: () {},
                           ),
+
+                          // FaIcon(
+                          //   FontAwesomeIcons.instagram,
+                          //   color: Colors.black,
+                          // ),
                           IconButton(
                             iconSize: 20,
                             color: Colors.black87,
@@ -798,7 +821,7 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                                   .copyWith(fontSize: getFontSize(18)),
                             ),
                             Text(
-                              "/ 5  ",
+                              "/ 5 ",
                               style: AppStyle.textStyleAdventProregular124
                                   .copyWith(
                                       height: 1.5, fontSize: getFontSize(16)),
@@ -809,7 +832,7 @@ class ProductDetailsPage extends GetWidget<ProductDetailController> {
                             ),
                             controller.productDetailReviewModel.value.list1!=null?
                             Text(
-                            "  ${controller.productDetailReviewModel.value.list1!.length.toString()} ",
+                            " ${controller.productDetailReviewModel.value.list1!.length.toString()} ",
                               style: AppStyle.textStyleRobotoromanmedium14
                                   .copyWith(fontSize: getFontSize(16)),
                             ):SizedBox(),

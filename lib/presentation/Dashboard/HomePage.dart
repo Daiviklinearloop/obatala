@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ import 'package:obatala/core/utils/math_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
 import 'package:obatala/core/widgets/category_Card.dart';
+import 'package:obatala/core/widgets/common_scafford.dart';
 import 'package:obatala/core/widgets/product_card.dart';
 import 'package:obatala/core/widgets/skelton.dart';
 import 'package:obatala/presentation/Dashboard/Category/Controller/category_controller.dart';
@@ -22,17 +25,19 @@ import 'package:obatala/theme/app_style.dart';
 import 'package:shimmer/shimmer.dart';
 
 
-class HomePage extends GetWidget<CategoryController> {
+class HomePage extends StatelessWidget {
    HomePage({super.key});
+
+   CategoryController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      drawer: Drawer(
-        child: DrawerWidget(),
-      ),
-      appBar: AppBar(
+    return CommonScafford(
+      // backgroundColor: Colors.white,
+      // drawer: Drawer(
+      //   child: DrawerWidget(),
+      // ),
+        commonAppBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         title:SvgPicture.asset("assets/images/logoobatalacoffee.svg",height: 30,width: 100,),
         actions: const [
@@ -44,7 +49,7 @@ class HomePage extends GetWidget<CategoryController> {
         elevation: 1,
         backgroundColor: Colors.white,
       ),
-      body: RefreshIndicator(
+        child: RefreshIndicator(
           displacement: 250,
         onRefresh: () async {
         controller.CategoryApiCall();
@@ -155,7 +160,7 @@ class HomePage extends GetWidget<CategoryController> {
                           physics: NeverScrollableScrollPhysics(),
                           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 200,
-                              childAspectRatio: 3 / 2,
+                              childAspectRatio: 3 / 2.8,
                               crossAxisSpacing: 20,
                               mainAxisSpacing: 20
                           ),
@@ -182,22 +187,27 @@ class HomePage extends GetWidget<CategoryController> {
                                     child:Column(children: [
                                       SizedBox(height: 20,),
                                       Container(
-                                        height: 40,
-                                        width: 40,
-                                        child: Image.network("${APPURL.imageBaseUrl}"+controller.categoryModelData!.value.list1![index].image.toString(),
-                                          errorBuilder: (context, error, stackTrace) {
-                                            return Center(child: Row(
-                                              children:  [
-                                                Image.asset("assets/images/icon-152x152.png")
-                                              ],
-                                            ));
-                                          },
+                                        height: 85,
+                                        width: 85,
+                                        // child: Image.network("${APPURL.imageBaseUrl}"+controller.categoryModelData!.value.list1![index].image.toString(),
+                                        //   errorBuilder: (context, error, stackTrace) {
+                                        //     return Center(child: Row(
+                                        //       children:  [
+                                        //         Image.asset("assets/images/icon-152x152.png")
+                                        //       ],
+                                        //     ));
+                                        //   },
+                                        // ),
+                                        child: CachedNetworkImage(
+                                          imageUrl: "${APPURL.imageBaseUrl}"+controller.categoryModelData!.value.list1![index].image.toString(),
+                                          placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: Color(0xFF703926),)),
+                                          errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
                                         ),
 
                                       ),
                                       SizedBox(height: 10,),
                                       Text(controller.categoryModelData!.value.list1![index].name.toString()==null?
-                                      "null":controller.categoryModelData!.value.list1![index].name.toString(),
+                                      "":controller.categoryModelData!.value.list1![index].name.toString(),
                                           style: AppStyle.textStyleRobotoromanmedium14.copyWith(
                                               fontSize: getFontSize(
                                                 14,
@@ -246,8 +256,8 @@ class HomePage extends GetWidget<CategoryController> {
                                       productImage: "${controller.productModelData!.value.list1![index].images![0]}",
                                       imageWidth: controller.productModelData!.value.list1![index].metaData!.imageWidth,
                                       imageHeight: controller.productModelData!.value.list1![index].metaData!.imageHeight,
-                                      productName: controller.productModelData!.value.list1![index].name.toString()=="null"?"null": controller.productModelData!.value.list1![index].name,
-                                      productRating: controller.productModelData!.value.list1![index].ratingValue.toString()=="null"?"null":controller.productModelData!.value.list1![index].ratingValue,
+                                      productName: controller.productModelData!.value.list1![index].name.toString()=="null"?"": controller.productModelData!.value.list1![index].name,
+                                      productRating: controller.productModelData!.value.list1![index].ratingValue.toString()=="null"?"":controller.productModelData!.value.list1![index].ratingValue,
                                       productPrice: controller.productModelData!.value.list1![index].price.toString(),
                                       productOfferPrice: controller.productModelData!.value.list1![index].oldPrice.toString(),
                                       stockIndicator: controller.productModelData!.value.list1![index].stockIndicator.toString(),

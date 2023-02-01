@@ -4,6 +4,6 @@ import 'package:obatala/presentation/Dashboard/Category/Controller/category_cont
 class CategoryBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => CategoryController());
+    Get.put(() => CategoryController());
   }
 }

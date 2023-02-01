@@ -20,7 +20,7 @@ static List<GetPage> page=[
 GetPage(name: homePage,
     page: () => HomePage(),
     bindings: [
-        CategoryBinding()
+        // CategoryBinding()
     ]
 ),
   GetPage(name: splashScreen,

@@ -1,8 +1,6 @@
 
 class APPURL {
   //
-
-
   static String baseUrl = "https://staging.obatala.nl/api/v1/";
 
   //image baseURl

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:obatala/core/utils/math_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
+import 'package:obatala/core/widgets/common_scafford.dart';
 import 'package:obatala/core/widgets/product_card.dart';
 import 'package:obatala/core/widgets/skelton.dart';
 import 'package:obatala/presentation/Dashboard/Drawer.dart';
@@ -15,65 +16,65 @@ import 'package:shimmer/shimmer.dart';
 
 class ProductListPage extends GetWidget<ProductListController>{
   Widget build(BuildContext context){
-    return Scaffold(
-        backgroundColor: Colors.white,
+    return CommonScafford(
+       // backgroundColor: Colors.white,
 
-        drawer: Drawer(
-
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Obx(() => Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: ListView.builder(
-                        itemCount: controller
-                            .categoryModelData!.value.list1!.isEmpty
-                            ? 0
-                            : controller.categoryModelData!.value.list1!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.back();
-                                  controller.ProductListReload(controller.categoryModelData!
-                                            .value.list1![index].crumbPath![0].id
-                                            .toString(),
-                                      controller.categoryModelData!.value
-                                          .list1![index].crumbPath![0].slug
-                                          .toString()
-                                  );
-                                  // Get.back();
-                                  print("on Pressed" );
-
-
-                                  // Get.toNamed(AppRoutes.productList, arguments: {
-                                  //   "categoryId": controller.categoryModelData!
-                                  //       .value.list1![index].crumbPath![0].id
-                                  //       .toString(),
-                                  //   "slug": controller.categoryModelData!.value
-                                  //       .list1![index].crumbPath![0].slug
-                                  //       .toString()
-                                  // });
-
-
-                                },
-                                child: ListTile(
-                                  title: Text(controller
-                                      .categoryModelData!.value.list1![index].name
-                                      .toString()),
-                                ),
-                              ),
-                              Divider(),
-                            ],
-                          );
-                        }),
-                  ))
-                ],
-              ),
-            ),
-        ),
-        appBar: AppBar(
+        // drawer: Drawer(
+        //
+        //     child: SingleChildScrollView(
+        //       child: Column(
+        //         children: [
+        //           Obx(() => Container(
+        //             height: MediaQuery.of(context).size.height,
+        //             child: ListView.builder(
+        //                 itemCount: controller
+        //                     .categoryModelData!.value.list1!.isEmpty
+        //                     ? 0
+        //                     : controller.categoryModelData!.value.list1!.length,
+        //                 itemBuilder: (BuildContext context, int index) {
+        //                   return Column(
+        //                     children: [
+        //                       GestureDetector(
+        //                         onTap: () {
+        //                           Get.back();
+        //                           controller.ProductListReload(controller.categoryModelData!
+        //                                     .value.list1![index].crumbPath![0].id
+        //                                     .toString(),
+        //                               controller.categoryModelData!.value
+        //                                   .list1![index].crumbPath![0].slug
+        //                                   .toString()
+        //                           );
+        //                           // Get.back();
+        //                           print("on Pressed" );
+        //
+        //
+        //                           // Get.toNamed(AppRoutes.productList, arguments: {
+        //                           //   "categoryId": controller.categoryModelData!
+        //                           //       .value.list1![index].crumbPath![0].id
+        //                           //       .toString(),
+        //                           //   "slug": controller.categoryModelData!.value
+        //                           //       .list1![index].crumbPath![0].slug
+        //                           //       .toString()
+        //                           // });
+        //
+        //
+        //                         },
+        //                         child: ListTile(
+        //                           title: Text(controller
+        //                               .categoryModelData!.value.list1![index].name
+        //                               .toString()),
+        //                         ),
+        //                       ),
+        //                       Divider(),
+        //                     ],
+        //                   );
+        //                 }),
+        //           ))
+        //         ],
+        //       ),
+        //     ),
+        // ),
+        commonAppBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           title: Text("Obatala Coffee",style:
           AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(16))
@@ -87,9 +88,7 @@ class ProductListPage extends GetWidget<ProductListController>{
           elevation: 1,
           backgroundColor: Colors.white,
         ),
-        body:
-
-        SafeArea(
+        child : SafeArea(
           child: SingleChildScrollView(
             child:
         Obx(()=> controller.loading.value==true?

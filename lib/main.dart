@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:obatala/presentation/Dashboard/Category/Binding/category_binding.dart';
 import 'package:obatala/routes/app_routes.dart';
 
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Obatala',
       initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.page,
+      //initialBinding: CategoryBinding(),
 
 
     );

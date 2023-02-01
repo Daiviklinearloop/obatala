@@ -4,6 +4,7 @@ import 'package:obatala/presentation/ProductDetailScreen/Controller/productDetai
 class ProductDetailBinding extends Bindings {
   @override
   void dependencies() {
+    Get.delete<ProductDetailController>();
     Get.lazyPut(() => ProductDetailController());
   }
 }

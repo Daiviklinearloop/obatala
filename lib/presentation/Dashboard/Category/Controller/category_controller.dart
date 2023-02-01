@@ -197,16 +197,16 @@ class CategoryController extends GetxController with StateMixin<dynamic> {
       manufacturerModel!.value = ManufacturerModel.fromJson(jsonDecode(response.body));
       // final responceData = json.decode(response.body);
       for (var i = 0; i < manufacturerModel!.value.list1!.length; i++) {
-        print("index");
-        print(i);
+        // print("index");
+        // print(i);
         manufacturerImage.value.add(APPURL.imageBaseUrl+manufacturerModel!.value.list1![i].image.toString()) ;
-        print(manufacturerImage);
+        // print(manufacturerImage);
       }
       // manufacturerImage.value=manufacturerModel.value.list1!.image as List;
-      print(manufacturerImage);
+      //print(manufacturerImage);
       loading.value=false;
-      print("loading"+loading.toString());
-      print("Manufacturer List "+manufacturerImage.toString());
+      // print("loading"+loading.toString());
+      // print("Manufacturer List "+manufacturerImage.toString());
 
 
 

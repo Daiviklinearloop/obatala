@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/core/utils/math_utils.dart';
@@ -78,11 +80,18 @@ class _CombiDealCardState extends State<CombiDealCard> {
                         SizedBox(
                           height: 80,
                           width: 80,
-                          child: Image.network(
-                            widget.productImage==null?"":
-                            APPURL.imageBaseUrl+ widget.productImage.toString(),
+                          // child: Image.network(
+                          //   widget.productImage==null?"":
+                          //   APPURL.imageBaseUrl+ widget.productImage.toString(),
+                          //   height:widget.imageHeight==null?80: widget.imageHeight!.toDouble(),
+                          //   width:widget.imageWidth==null?80:  widget.imageWidth!.toDouble(),
+                          // ),
+                          child: CachedNetworkImage(
                             height:widget.imageHeight==null?80: widget.imageHeight!.toDouble(),
                             width:widget.imageWidth==null?80:  widget.imageWidth!.toDouble(),
+                            imageUrl: widget.productImage==null ? "" : APPURL.imageBaseUrl+ widget.productImage.toString(),
+                            placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: Color(0xFF703926),)),
+                            errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
                           ),
                         ),
                         Positioned(

@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
 import 'package:obatala/core/utils/color_constant.dart';
+import 'package:obatala/presentation/Dashboard/Category/Controller/category_controller.dart';
 import 'package:obatala/presentation/SplashScreen/controller/splashController.dart';
 import '../../core/utils/math_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen1Screen extends GetWidget<SplashController> {
+
+  CategoryController controllerCategory = Get.put(CategoryController(),permanent: true);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
