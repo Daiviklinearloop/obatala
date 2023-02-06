@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:obatala/presentation/Dashboard/Category/Binding/category_binding.dart';
 import 'package:obatala/presentation/Dashboard/HomePage.dart';
 import 'package:obatala/presentation/ProductDetailScreen/Binding/productDetailBinding.dart';
 import 'package:obatala/presentation/ProductDetailScreen/product_detail_screen.dart';
@@ -12,52 +11,52 @@ import 'package:obatala/presentation/ZoomImageSlider/binding/ZoomImageBinding.da
 
 import '../presentation/ZoomImageSlider/ZoomImageScreen.dart';
 class AppRoutes{
-static String homePage= '/HomePage';
-static String productList='/productListPage';
-static String productDetailScreen='/product_detail_screen';
-static String filterPage ='/filterPage';
-static String splashScreen ='/SplashScreen';
-static String zoomImageScreen ='/ZoomImageScreen';
+  static String homePage= '/HomePage';
+  static String productList='/productListPage';
+  static String productDetailScreen='/product_detail_screen';
+  static String filterPage ='/filterPage';
+  static String splashScreen ='/SplashScreen';
+  static String zoomImageScreen ='/ZoomImageScreen';
 
+  static List<GetPage> page=[
 
-static List<GetPage> page=[
-GetPage(name: homePage,
-    page: () => HomePage(),
-    bindings: [
-        // CategoryBinding()
-    ]
-),
-  GetPage(name: splashScreen,
-    page: () => SplashScreen1Screen(),
-    bindings: [
-      SplashBinding()
-    ]
-),
+    GetPage(name: homePage,
+        page: () => HomePage(),
+        bindings: [
+          // CategoryBinding()
+        ]
+    ),
+
+    GetPage(name: splashScreen,
+        page: () => SplashScreen1Screen(),
+        bindings: [
+          SplashBinding()
+        ]
+    ),
 
     GetPage(name: productList,
         page: ()=>ProductListPage(),
-    bindings: [
-      ProductListBinding()
-    ]
+        bindings: [
+          ProductListBinding()
+        ]
     ),
 
-  GetPage(name: productDetailScreen,
-      page: () => ProductDetailsPage(),
-      bindings: [
-        ProductDetailBinding()
-      ]
-  ),
+    GetPage(name: productDetailScreen,
+        page: () => ProductDetailsPage(),
+        bindings: [
+          ProductDetailBinding()
+        ]
+    ),
 
-  GetPage(name: zoomImageScreen,
+    GetPage(name: zoomImageScreen,
         page: () => ZoomImageScreen(),
         bindings: [
           ZoomImageBinding()
         ]
-  ),
+    ),
 
-  GetPage(name: filterPage,
+    GetPage(name: filterPage,
       page: ()=> FilterPage(),
-
-  )
-];
+    )
+  ];
 }

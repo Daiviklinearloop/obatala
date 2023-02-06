@@ -1,31 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:obatala/core/utils/app_url.dart';
 import 'package:obatala/core/utils/color_constant.dart';
 import 'package:obatala/core/utils/math_utils.dart';
-import 'package:obatala/core/utils/pref_utils.dart';
 import 'package:obatala/core/widgets/Courosel_widget.dart';
 import 'package:obatala/core/widgets/Sponser_carousel.dart';
-import 'package:obatala/core/widgets/category_Card.dart';
 import 'package:obatala/core/widgets/common_scafford.dart';
 import 'package:obatala/core/widgets/product_card.dart';
 import 'package:obatala/core/widgets/skelton.dart';
 import 'package:obatala/presentation/Dashboard/Category/Controller/category_controller.dart';
-import 'package:obatala/presentation/Dashboard/Category/Model/CategoryModel.dart';
-import 'package:obatala/presentation/Dashboard/Drawer.dart';
 import 'package:obatala/presentation/Dashboard/fotter.dart';
 import 'package:obatala/routes/app_routes.dart';
 import 'package:obatala/theme/app_style.dart';
 import 'package:shimmer/shimmer.dart';
-
 
 class HomePage extends StatelessWidget {
    HomePage({super.key});
@@ -40,7 +32,7 @@ class HomePage extends StatelessWidget {
       //   child: DrawerWidget(),
       // ),
         commonAppBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title:SvgPicture.asset("assets/images/logoobatalacoffee.svg",height: 30,width: 100,),
         actions:  [
           PopupMenuButton<int>(
@@ -51,7 +43,7 @@ class HomePage extends StatelessWidget {
                 // row with 2 children
                 child: Row(
                   children: [
-                    Text("Dutch")
+                    const Text("Dutch")
                   ],
                 ),
               ),
@@ -61,28 +53,28 @@ class HomePage extends StatelessWidget {
                 // row with two children
                 child: Row(
                   children: [
-                    Text("English")
+                    const Text("English")
                   ],
                 ),
               ),
             ],
-            offset: Offset(0, 50),
+            offset: const Offset(0, 50),
             color: Colors.white,
             elevation: 2,
-            icon: Icon(Icons.language),
+            icon: const Icon(Icons.language),
             // on selected we show the dialog box
             onSelected: (value) {
               if (value == 1) {
-                Get.updateLocale(Locale('nl','DF'));
+                Get.updateLocale(const Locale('nl','DF'));
                 
               } else if (value == 2) {
-                Get.updateLocale(Locale('en','US'));
+                Get.updateLocale(const Locale('en','US'));
               }
             },
           ),
-          SizedBox(width: 10,),
-          Icon(Icons.shopping_cart_outlined,color: Colors.black,),
-          SizedBox(width: 4,)
+          const SizedBox(width: 10,),
+          const Icon(Icons.shopping_cart_outlined,color: Colors.black,),
+          const SizedBox(width: 4,)
         ],
         elevation: 1,
         backgroundColor: Colors.white,
@@ -90,10 +82,9 @@ class HomePage extends StatelessWidget {
         child: RefreshIndicator(
           displacement: 250,
         onRefresh: () async {
-        controller.CategoryApiCall();
-        controller.ProductApiCall();
-        controller.ManufacturerApiCall();
-
+          controller.CategoryApiCall();
+          controller.ProductApiCall();
+          controller.ManufacturerApiCall();
         },
         child: SafeArea(
           child: SingleChildScrollView(
@@ -102,13 +93,13 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                  Padding(
-                  padding: EdgeInsets.only(top: 10.0,right: 15,left: 15,bottom: 10),
+                  padding: const EdgeInsets.only(top: 10.0,right: 15,left: 15,bottom: 10),
                   child: SizedBox(
                     height: 50,
                     child: TextField(
                       decoration: InputDecoration(
-                          suffixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
+                          suffixIcon: const Icon(Icons.search),
+                          border: const OutlineInputBorder(
                             borderSide: BorderSide(width: 3, color: Colors.grey),
                           ),
                           hintText: "lbl_search_for".tr
@@ -119,56 +110,55 @@ class HomePage extends StatelessWidget {
                 verticalCourosel(),
                 controller.loading.value==true?
                 Shimmer.fromColors(
-                  child:
-                  Padding(
+                  child: Padding(
                     padding: const EdgeInsets.only(top:30,right: 30.0,left: 30),
                     child: Column(children: [
                       Row(
                         children: [
-                          skelton(height: 50,width: 300,),
+                          const skelton(height: 50,width: 300,),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       Row(
                         children: [
-                          skelton(height: 50,width: 300,),
+                          const skelton(height: 50,width: 300,),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       Row(
                         children: [
-                          skelton(height: 30,width: 100,),
+                          const skelton(height: 30,width: 100,),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       Row(
                         children: [
-                          skelton(height: 130,width: 130,),
-                          SizedBox(width: 30,),
-                          skelton(height: 130,width: 130,),
+                          const skelton(height: 130,width: 130,),
+                          const SizedBox(width: 30,),
+                          const skelton(height: 130,width: 130,),
                         ],
-                      ), SizedBox(height: 10,),
+                      ), const SizedBox(height: 10,),
                       Row(
                         children: [
-                          skelton(height: 130,width: 130,),
-                          SizedBox(width: 30,),
-                          skelton(height: 130,width: 130,),
-                        ],
-                      ),
-                      SizedBox(height: 20,),
-                      Row(
-                        children: [
-                          skelton(height: 130,width: 130,),
-                          SizedBox(width: 30,),
-                          skelton(height: 130,width: 130,),
+                          const skelton(height: 130,width: 130,),
+                          const SizedBox(width: 30,),
+                          const skelton(height: 130,width: 130,),
                         ],
                       ),
-                      SizedBox(height: 20,),
+                      const SizedBox(height: 20,),
                       Row(
                         children: [
-                          skelton(height: 130,width: 130,),
-                          SizedBox(width: 30,),
-                          skelton(height: 130,width: 130,),
+                          const skelton(height: 130,width: 130,),
+                          const SizedBox(width: 30,),
+                          const skelton(height: 130,width: 130,),
+                        ],
+                      ),
+                      const SizedBox(height: 20,),
+                      Row(
+                        children: [
+                          const skelton(height: 130,width: 130,),
+                          const SizedBox(width: 30,),
+                          const skelton(height: 130,width: 130,),
                         ],
                       )
 
@@ -177,13 +167,13 @@ class HomePage extends StatelessWidget {
                   ),
 
                   baseColor: Colors.grey[300]!, highlightColor: Colors.grey[400]!,
-                  period: Duration(seconds: 3),
+                  period: const Duration(seconds: 3),
                 )
                     :
 
                 Column(
                   children: [
-                    Padding(padding: EdgeInsets.only(top: 15,right: 15,left: 15,),
+                    Padding(padding: const EdgeInsets.only(top: 15,right: 15,left: 15,),
                       child: Row(
                         children: [
                           Text('lbl_browse_our_range'.tr,style: AppStyle.textStyleRobotoromanmedium14
@@ -194,12 +184,12 @@ class HomePage extends StatelessWidget {
 
                     controller.categoryModelData!.value.list1 != null
                         ?
-                    Obx(()=> controller.loading.value ? SizedBox() : Padding(
+                    Obx(()=> controller.loading.value ? const SizedBox() : Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: GridView.builder(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 200,
                               childAspectRatio: 3 / 2.8,
@@ -223,11 +213,11 @@ class HomePage extends StatelessWidget {
                                     height: 350,
                                     width: 150,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                                        borderRadius: const BorderRadius.all(Radius.circular(4)),
                                         border: Border.all(color: Colors.grey)
                                     ),
                                     child:Column(children: [
-                                      SizedBox(height: 20,),
+                                      const SizedBox(height: 20,),
                                       Container(
                                         height: 85,
                                         width: 85,
@@ -247,7 +237,7 @@ class HomePage extends StatelessWidget {
                                         ),
 
                                       ),
-                                      SizedBox(height: 10,),
+                                      const SizedBox(height: 10,),
                                       Text(controller.categoryModelData!.value.list1![index].name.toString()==null?
                                       "":controller.categoryModelData!.value.list1![index].name.toString(),
                                           style: AppStyle.textStyleRobotoromanmedium14.copyWith(
@@ -258,7 +248,7 @@ class HomePage extends StatelessWidget {
                                 ),
                               );
                           }),
-                    ),):SizedBox(),
+                    ),):const SizedBox(),
 
 
 
@@ -276,12 +266,12 @@ class HomePage extends StatelessWidget {
 
                     controller.productModelData!.value.list1 != null
                         ?
-                    Obx(()=>controller.loading.value==true?SizedBox():  Column(
+                    Obx(()=>controller.loading.value==true?const SizedBox():  Column(
                       children: [
-                        Padding(padding: EdgeInsets.only(left: 15,top: 10),
+                        Padding(padding: const EdgeInsets.only(left: 15,top: 10),
                             child:ListView.builder(
                                 shrinkWrap: true,
-                                physics:  NeverScrollableScrollPhysics(),
+                                physics:  const NeverScrollableScrollPhysics(),
                                 itemCount: controller.productModelData!.value.list1!.length,
                                 itemBuilder: (BuildContext context, int index){
                                   return GestureDetector(
@@ -317,7 +307,7 @@ class HomePage extends StatelessWidget {
                                 })
                         ),
                       ],
-                    )):SizedBox(),
+                    )):const SizedBox(),
                     const SizedBox(height: 20,),
 
                     Padding(
@@ -327,7 +317,7 @@ class HomePage extends StatelessWidget {
                             .copyWith(fontSize: getFontSize(25)),
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
                       child: Text("msg_obatala_coffee_is_distinguished".tr,
@@ -363,7 +353,7 @@ class HomePage extends StatelessWidget {
                             .copyWith(fontSize: getFontSize(14)),
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0,right: 15.0),
                       child: Text("msg_obatala_coffee_ensure".tr,
@@ -386,13 +376,13 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Container(
                       height: 100,
                       child: Obx(()=>SponcerCarousel(controller.manufacturerImage)),
                     ),
 
-                    Obx(()=>controller.loading.value==true?SizedBox():
+                    Obx(()=>controller.loading.value==true?const SizedBox():
 
                     FotterClass())
 
@@ -425,12 +415,12 @@ class fotterContent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             Icons.arrow_forward_ios,
             size: 15,
             color: Colors.white,
           ),
-          SizedBox(width: 20,),
+          const SizedBox(width: 20,),
           Text(
               "$text",
               style: AppStyle.textStyleRobotoromanmedium14

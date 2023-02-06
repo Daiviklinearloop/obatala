@@ -19,9 +19,10 @@ class DrawerWidget extends StatelessWidget {
           children: [
            Container(
                   height: MediaQuery.of(context).size.height,
-                  child:
-                  controller
-                      .categoryModelData!.value.list1==null?SizedBox():
+                  child: controller.categoryModelData!.value.list1 == null
+                      ?
+                  const SizedBox()
+                      :
                   ListView.builder(
                       itemCount:  controller.categoryModelData!.value.list1!.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -29,28 +30,22 @@ class DrawerWidget extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                // controller.ProductListPage();
-                                // Get.back();
-                                // controllerList.ProductListReload();
-                                print("on Pressed" );
+
+                                print("on Pressed");
                                 print("Cat id"+controller.categoryModelData!
                                     .value.list1![index].crumbPath![0].id
                                     .toString());
 
-                                print("slug "+ controller.categoryModelData!.value
-                                    .list1![index].crumbPath![0].slug
-                                    .toString());
+                                print("slug "+ controller.categoryModelData!.value.list1![index].crumbPath![0].slug.toString());
+
                                 Get.back();
                                 Navigator.pushNamed(
                                   context,
                                   AppRoutes.productList,
                                    arguments: {
-                                     "categoryId": controller.categoryModelData!
-                                     .value.list1![index].crumbPath![0].id.toString(),
-                                      "slug": controller.categoryModelData!.value
-                                          .list1![index].crumbPath![0].slug
-                                          .toString()
-                                       }
+                                     "categoryId": controller.categoryModelData!.value.list1![index].crumbPath![0].id.toString(),
+                                      "slug": controller.categoryModelData!.value.list1![index].crumbPath![0].slug.toString()
+                                   }
                                 );
 
                                 // Get.offNamed(
@@ -61,12 +56,9 @@ class DrawerWidget extends StatelessWidget {
                                 //     }
                                 //     );
 
-
                               },
                               child: ListTile(
-                                title: Text(controller
-                                    .categoryModelData!.value.list1![index].name
-                                    .toString()),
+                                title: Text(controller.categoryModelData!.value.list1![index].name.toString()),
                               ),
                             ),
                             Divider(),

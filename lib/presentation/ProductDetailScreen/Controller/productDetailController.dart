@@ -59,7 +59,6 @@ class ProductDetailController extends GetxController with StateMixin<dynamic> {
 
     }
 
-
     allAPICall();
   }
 
@@ -121,7 +120,6 @@ String cartCalculation(String price, List<Products> products, ){
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-
       body: jsonEncode(<String, dynamic>{
         "productsId": recent
       }),
@@ -194,9 +192,6 @@ String cartCalculation(String price, List<Products> products, ){
       print("Api model data collected");
       // print("length "+ categoryModelData.list1!.length.toString());
       // print("list "+ categoryModelData.list1![2].toString());
-
-
-
 
     }else
     {    loading.value=false;

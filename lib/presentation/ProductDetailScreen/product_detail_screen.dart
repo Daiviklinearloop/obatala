@@ -48,7 +48,7 @@ class ProductDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScafford(
         commonAppBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           title: Text("Obatala Coffee",
               style: AppStyle.textStyleRobotoromanmedium14
                   .copyWith(fontSize: getFontSize(16))),
@@ -61,7 +61,7 @@ class ProductDetailsPage extends StatelessWidget {
                   // row with 2 children
                   child: Row(
                     children: [
-                      Text("Dutch")
+                      const Text("Dutch")
                     ],
                   ),
                 ),
@@ -71,31 +71,31 @@ class ProductDetailsPage extends StatelessWidget {
                   // row with two children
                   child: Row(
                     children: [
-                      Text("English")
+                      const Text("English")
                     ],
                   ),
                 ),
               ],
-              offset: Offset(0, 50),
+              offset: const Offset(0, 50),
               color: Colors.white,
               elevation: 2,
-              icon: Icon(Icons.language),
+              icon: const Icon(Icons.language),
               // on selected we show the dialog box
               onSelected: (value) {
                 if (value == 1) {
-                  Get.updateLocale(Locale('nl','DF'));
+                  Get.updateLocale(const Locale('nl','DF'));
 
                 } else if (value == 2) {
-                  Get.updateLocale(Locale('en','US'));
+                  Get.updateLocale(const Locale('en','US'));
                 }
               },
             ),
-            SizedBox(width: 10,),
-            Icon(
+            const SizedBox(width: 10,),
+            const Icon(
               Icons.shopping_cart_outlined,
               color: Colors.black,
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             )
           ],
@@ -104,143 +104,142 @@ class ProductDetailsPage extends StatelessWidget {
         ),
         child: SafeArea(
             child: RefreshIndicator(
-          onRefresh: () async {
-            controller.ProductDetailApiCall();
-            controller.ProductDetailRelatedProductApiCall();
-            controller.ProductDetailBundleApiCall();
-            controller.ProductDetailAlsoBoughtApiCall();
-          },
-          child: SingleChildScrollView(
-            child: Obx(() => controller.loading.value == true
-                ? Shimmer.fromColors(
+                onRefresh: () async {
+                  controller.ProductDetailApiCall();
+                  controller.ProductDetailRelatedProductApiCall();
+                  controller.ProductDetailBundleApiCall();
+                  controller.ProductDetailAlsoBoughtApiCall();
+                },
+                child: SingleChildScrollView(
+                  child: Obx(() => controller.loading.value == true
+                      ? Shimmer.fromColors(
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 30, right: 15.0, left: 15),
+                      padding: const EdgeInsets.only(top: 30, right: 15.0, left: 15),
                       child: Column(
                         children: [
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 50,
                                 width: 320,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 50,
                                 width: 320,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 60,
                                 width: 320,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 20,
                                 width: 130,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 20,
                                 width: 130,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 20,
                                 width: 130,
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 200,
                                 width: 320,
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 50,
                                 width: 50,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              skelton(
+                              const skelton(
                                 height: 50,
                                 width: 50,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              skelton(
+                              const skelton(
                                 height: 50,
                                 width: 50,
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 40,
                                 width: 60,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              skelton(
+                              const skelton(
                                 height: 30,
                                 width: 60,
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Row(
                             children: [
-                              skelton(
+                              const skelton(
                                 height: 30,
                                 width: 200,
                               ),
@@ -251,24 +250,24 @@ class ProductDetailsPage extends StatelessWidget {
                     ),
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[400]!,
-                    period: Duration(seconds: 3),
+                    period: const Duration(seconds: 3),
                   )
-                : Obx(()=>Column(
+                      : Obx(()=>Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
 
 
-                 Padding(
-                        padding: EdgeInsets.only(
+                      Padding(
+                        padding: const EdgeInsets.only(
                             top: 10.0, right: 15, left: 15, bottom: 10),
                         child: SizedBox(
                           height: 50,
                           child: TextField(
                             decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.search),
+                                suffixIcon: const Icon(Icons.search),
                                 hintText: "lbl_search_for".tr,
-                                border: OutlineInputBorder(
+                                border: const OutlineInputBorder(
                                   borderSide: BorderSide(width: 3, color: Colors.grey),
                                 )),
                           ),
@@ -284,15 +283,15 @@ class ProductDetailsPage extends StatelessWidget {
                           child: Text("Obatala Coffee  >  ${controller.productDetailModel.value.categoryName}",
                               style: AppStyle.textStyleAdventProregular16.copyWith(color: Colors.black, fontSize: getFontSize(10))
                           )
-                      ):SizedBox(),
-                      SizedBox(
+                      ):const SizedBox(),
+                      const SizedBox(
                         height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Container(
                           child: Obx(
-                            () => Text(
+                                () => Text(
                                 controller.productDetailModel.value.name != null
                                     ?
                                 controller.productDetailModel.value.name.toString() : "",
@@ -304,7 +303,7 @@ class ProductDetailsPage extends StatelessWidget {
                       ),
 
                       Padding(
-                        padding: EdgeInsets.only(left: 15, top: 5),
+                        padding: const EdgeInsets.only(left: 15, top: 5),
                         child: Container(
                           height: 20,
                           width: MediaQuery.of(context).size.width * 0.30,
@@ -327,7 +326,7 @@ class ProductDetailsPage extends StatelessWidget {
                               style: AppStyle.textStyleAdventProregular124
                                   .copyWith(height: 1.5, fontSize: getFontSize(16)),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.circle,
                               size: 5,
                             ),
@@ -345,7 +344,7 @@ class ProductDetailsPage extends StatelessWidget {
                       ),
 
                       Padding(
-                        padding: EdgeInsets.only(left: 15),
+                        padding: const EdgeInsets.only(left: 15),
                         child: Text(
                           "lbl_write_a_product_review".tr,
                           style: AppStyle.textStyleAdventProregular16.copyWith(
@@ -356,7 +355,7 @@ class ProductDetailsPage extends StatelessWidget {
                         ),
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
 
@@ -406,20 +405,26 @@ class ProductDetailsPage extends StatelessWidget {
                                 ),
                               ),
                             )
-                                : SizedBox(),
+                                : const SizedBox(),
 
+                            controller.manufacturerIdModel.value.image != null && controller.manufacturerIdModel.value.image != ""
+                                ?
                             Positioned(
                               top: 1,
                               child: Container(
                                 height: 40,
                                 width: 80,
+                                alignment: Alignment.topLeft,
+                                margin: const EdgeInsets.only(left: 15),
                                 child: controller.manufacturerIdModel.value.image.toString().toLowerCase().contains(".svg")
                                     ?
                                 SvgPicture.network(APPURL.imageBaseUrl + controller.manufacturerIdModel.value.image.toString())
                                     :
                                 Image.network(APPURL.imageBaseUrl + controller.manufacturerIdModel.value.image.toString()),
                               ),
-                            ),
+                            )
+                                :
+                            const SizedBox(),
 
                             Align(
                               alignment: Alignment.centerLeft,
@@ -427,7 +432,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 onTap: () {
                                   carouselController.previousPage();
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.arrow_back_ios_new_outlined,
                                   color: Colors.grey,
                                 ),
@@ -439,7 +444,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 onTap: () {
                                   carouselController.nextPage();
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.arrow_forward_ios_outlined,
                                   color: Colors.grey,
                                 ),
@@ -448,35 +453,35 @@ class ProductDetailsPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      
-                      SizedBox(
+
+                      const SizedBox(
                         height: 5,
                       ),
                       controller.productDetailModel.value.images != null
                           ? Obx(() => Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: indicators(
-                                        controller.productDetailModel.value
-                                            .images!.length,
-                                        activePage)),
-                              ))
-                          : SizedBox(),
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: indicators(
+                                controller.productDetailModel.value
+                                    .images!.length,
+                                activePage)),
+                      ))
+                          : const SizedBox(),
 
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0, top: 10),
                         child: Row(
                           children: [
                             Obx(
-                              () => Text(
+                                  () => Text(
                                 controller.productDetailModel.value.price != null ?
                                 "\u{20AC} ${controller.productDetailModel.value.price},-" : "",
                                 style: AppStyle.textStyleRobotoromanmedium14
                                     .copyWith(fontSize: getFontSize(25)),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 19,
                             ),
                             GestureDetector(
@@ -487,7 +492,7 @@ class ProductDetailsPage extends StatelessWidget {
                                 size: 18,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
@@ -495,10 +500,10 @@ class ProductDetailsPage extends StatelessWidget {
                               controller.productDetailModel.value.stockIndicatorTitle.toString() : "",
                               style: AppStyle.textStyleRobotoromanmedium14
                                   .copyWith(
-                                      fontSize: 14,
-                                      color: controller.productDetailModel.value.stockIndicatorTitle.toString() == "Niet op voorraad" ? Colors.red : Colors.green),
+                                  fontSize: 14,
+                                  color: controller.productDetailModel.value.stockIndicatorTitle.toString() == "Niet op voorraad" ? Colors.red : Colors.green),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                           ],
@@ -515,14 +520,14 @@ class ProductDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Container(
                           height: 50,
                           child: Padding(
                             padding:
-                                const EdgeInsets.only(left: 15.0, right: 15),
+                            const EdgeInsets.only(left: 15.0, right: 15),
                             child: ElevatedButton(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -531,18 +536,18 @@ class ProductDetailsPage extends StatelessWidget {
                                       style: AppStyle
                                           .textStyleRobotoromanmedium14
                                           .copyWith(
-                                              fontSize: getFontSize(
-                                                18,
-                                              ),
-                                              color: Colors.white)),
-                                  SizedBox(
+                                          fontSize: getFontSize(
+                                            18,
+                                          ),
+                                          color: Colors.white)),
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   GestureDetector(
                                     onTap: () {
                                       carouselController.previousPage();
                                     },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.shopping_cart_outlined,
                                       size: 19,
                                       color: Colors.white,
@@ -552,11 +557,11 @@ class ProductDetailsPage extends StatelessWidget {
                               ),
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xff208836),
+                                backgroundColor: const Color(0xff208836),
                               ),
                             ),
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -573,15 +578,15 @@ class ProductDetailsPage extends StatelessWidget {
                                       side: const BorderSide(
                                           width: 1, // the thickness
                                           color: Colors.grey // the color of the border
-                                          )),
+                                      )),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:  [
                                       Text(
                                         "lbl_add_to_wish_list".tr,
-                                        style: TextStyle(color: Colors.black),
+                                        style: const TextStyle(color: Colors.black),
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.favorite_border_rounded,
                                         color: Colors.black,
                                       )
@@ -620,22 +625,22 @@ class ProductDetailsPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       controller.productDetailModel.value.usp != null
                           ? Html(
-                              data: controller.productDetailModel.value.usp,
-                            )
-                          : SizedBox(),
+                        data: controller.productDetailModel.value.usp,
+                      )
+                          : const SizedBox(),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.grey,
                       ),
 
@@ -658,10 +663,10 @@ class ProductDetailsPage extends StatelessWidget {
                                   "lbl_description".tr,
                                   style: AppStyle.textStyleAdventProregular16
                                       .copyWith(
-                                          color: Color(0xff7a5216),
-                                          fontSize: getFontSize(
-                                            14,
-                                          )),
+                                      color: const Color(0xff7a5216),
+                                      fontSize: getFontSize(
+                                        14,
+                                      )),
                                 ),
                               ),
                             ),
@@ -680,10 +685,10 @@ class ProductDetailsPage extends StatelessWidget {
                                   "lbl_specifications".tr,
                                   style: AppStyle.textStyleAdventProregular16
                                       .copyWith(
-                                          color: Color(0xff7a5216),
-                                          fontSize: getFontSize(
-                                            14,
-                                          )),
+                                      color: const Color(0xff7a5216),
+                                      fontSize: getFontSize(
+                                        14,
+                                      )),
                                 ),
                               ),
                             ),
@@ -702,14 +707,14 @@ class ProductDetailsPage extends StatelessWidget {
                                   "lbl_combi_deal".tr,
                                   style: AppStyle.textStyleAdventProregular16
                                       .copyWith(
-                                          color: Color(0xff7a5216),
-                                          fontSize: getFontSize(
-                                            14,
-                                          )),
+                                      color: const Color(0xff7a5216),
+                                      fontSize: getFontSize(
+                                        14,
+                                      )),
                                 ),
                               ),
                             ),
-                            Divider(
+                            const Divider(
                               color: Colors.grey,
                             ),
                           ],
@@ -727,7 +732,7 @@ class ProductDetailsPage extends StatelessWidget {
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(22))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       // controller.productDetailModel.value.description != null
@@ -741,109 +746,114 @@ class ProductDetailsPage extends StatelessWidget {
                       controller
                           .productDetailModel.value.description!=null?
                       Container(
-                        constraints: BoxConstraints(maxHeight: 130),
-                              // height: 150,
-                              child: Html(
-                                data: controller
-                                    .productDetailModel.value.description,
-                              ),
-                              foregroundDecoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.white
-                                  ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  stops: const [0, 0, 0.4, 1],
-                                ),
-                              ),
-                            ):SizedBox()
+                        constraints: const BoxConstraints(maxHeight: 130),
+                        // height: 150,
+                        child: Html(
+                          data: controller
+                              .productDetailModel.value.description,
+                        ),
+                        foregroundDecoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white.withOpacity(0.1),
+                              Colors.white.withOpacity(0.1),
+                              Colors.white.withOpacity(0.1),
+                              Colors.white
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: const [0, 0, 0.4, 1],
+                          ),
+                        ),
+                      ):const SizedBox()
                           : Html(
-                              data: controller
-                                  .productDetailModel.value.description,
-                            ),
+                        data: controller
+                            .productDetailModel.value.description,
+                      ),
 
                       Center(
-                          child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: SizedBox(
-                          height: 30,
-                          width: 130,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                showMore == false
-                                    ? showMore.value = true
-                                    : showMore.value = false;
-                              },
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.brown)),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    showMore == true?  "lbl_show_less".tr : "lbl_show_more".tr,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  Obx(() => Icon(
-                                        showMore == true
-                                            ? Icons.keyboard_arrow_up
-                                            : Icons
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: SizedBox(
+                                  height: 30,
+                                  //width: 135,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        showMore == false
+                                            ? showMore.value = true
+                                            : showMore.value = false;
+                                      },
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                          MaterialStateProperty.all(Colors.brown)),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            showMore == true?  "lbl_show_less".tr : "lbl_show_more".tr,
+                                            style: const TextStyle(color: Colors.white),
+                                          ),
+                                          Obx(() => Icon(
+                                            showMore == true
+                                                ? Icons.keyboard_arrow_up
+                                                : Icons
                                                 .keyboard_arrow_down_outlined,
-                                        color: Colors.white,
-                                      ))
-                                ],
-                              )),
-                        ),
-                      )),
-                      SizedBox(
+                                            color: Colors.white,
+                                          ))
+                                        ],
+                                      )),
+                                ),
+                              ),
+                            ],
+                          )),
+                      const SizedBox(
                         height: 10,
                       ),
                       controller.productDetailModel.value.descriptionTabs != null && controller.productDetailModel.value.descriptionTabs!.length > 0
-                        ?
+                          ?
                       Padding(
                         key: _keySpecification,
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Text("lbl_specifications".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
-                      ):SizedBox(),
-                      SizedBox(
+                      ):const SizedBox(),
+                      const SizedBox(
                         height: 10,
                       ),
                       controller.productDetailModel.value.descriptionTabs != null && controller.productDetailModel.value.descriptionTabs!.length > 0
                           ? Obx(() => Html(
-                                data: controller.productDetailModel.value
-                                    .descriptionTabs![0].content,
-                              ))
-                          : SizedBox(),
+                        data: controller.productDetailModel.value
+                            .descriptionTabs![0].content,
+                      ))
+                          : const SizedBox(),
 
                       controller.productDetailReviewModel.value.list1 ==null?
-                      Divider(
+                      const Divider(
                         color: Colors.grey,
-                      ):SizedBox(),
+                      ):const SizedBox(),
 
                       //  Rating and review  ******************************************************8****
-                     Obx(()=>controller.productDetailReviewModel.value.list1!=null && controller.productDetailReviewModel.value.list1!.isNotEmpty?
+                      Obx(()=>controller.productDetailReviewModel.value.list1!=null && controller.productDetailReviewModel.value.list1!.isNotEmpty?
                       Padding(
-                        padding: EdgeInsets.only(left: 15),
+                        padding: const EdgeInsets.only(left: 15),
                         child: Text("lbl_Review".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
-                      ):SizedBox(),),
+                      ):const SizedBox(),),
 
 
                       Obx(()=>controller.productDetailReviewModel.value.list1!=null && controller.productDetailReviewModel.value.list1!.isNotEmpty?
                       Padding(
-                        padding: EdgeInsets.only(left: 15, top: 5),
+                        padding: const EdgeInsets.only(left: 15, top: 5),
                         child: Container(
                           height: 20,
                           width: MediaQuery.of(context).size.width * 0.30,
                           child: SvgPicture.asset("assets/images/stars-5.svg"),
                         ),
-                      ):SizedBox(),),
+                      ):const SizedBox(),),
 
                       Obx(()=>controller.productDetailReviewModel.value.list1!=null && controller.productDetailReviewModel.value.list1!.isNotEmpty?
                       Padding(
@@ -859,26 +869,26 @@ class ProductDetailsPage extends StatelessWidget {
                               "/ 5 ",
                               style: AppStyle.textStyleAdventProregular124
                                   .copyWith(
-                                      height: 1.5, fontSize: getFontSize(16)),
+                                  height: 1.5, fontSize: getFontSize(16)),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.circle,
                               size: 5,
                             ),
                             controller.productDetailReviewModel.value.list1!=null?
                             Text(
-                            " ${controller.productDetailReviewModel.value.list1!.length.toString()} ",
+                              " ${controller.productDetailReviewModel.value.list1!.length.toString()} ",
                               style: AppStyle.textStyleRobotoromanmedium14
                                   .copyWith(fontSize: getFontSize(16)),
-                            ):SizedBox(),
+                            ):const SizedBox(),
                             Text(
                               "lbl_review".tr,
                               style: AppStyle.textStyleAdventProregular124
                                   .copyWith(
-                                      height: 1.5, fontSize: getFontSize(16)),
+                                  height: 1.5, fontSize: getFontSize(16)),
                             ),
-                            Spacer(),
-                            Icon(
+                            const Spacer(),
+                            const Icon(
                               Icons.star,
                               color: Colors.green,
                               size: 18,
@@ -888,123 +898,121 @@ class ProductDetailsPage extends StatelessWidget {
                                     .copyWith(fontSize: getFontSize(16)))
                           ],
                         ),
-                      ):SizedBox(),),
+                      ):const SizedBox(),),
 
-              Column(
-                children: [
-                  controller.productDetailReviewModel.value.list1 !=null?
-                 Obx(()=> ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                     shrinkWrap: true,
-                     itemCount: controller.productDetailReviewModel.value.list1!.length,
-                      itemBuilder: (BuildContext context, int index){
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        left: 15,
-                        right: 15,
-                      ),
-                      child: Column(
+                      Column(
                         children: [
-                          Row(
-                            children: [
-                             Obx(()=> Text(controller.productDetailReviewModel.value.list1![index].reviewAuthor.toString(),
-                                  style: AppStyle.textStyleAdventProregular124
-                                      .copyWith(
-                                      height: 1.5,
-                                      fontSize: getFontSize(16))),),
-                              Spacer(),
-                              Text(controller.productDetailReviewModel.value.list1![index].createdAt.toString(),
-                                  style: AppStyle.textStyleAdventProregular124
-                                      .copyWith(
-                                      height: 1.5,
-                                      fontSize: getFontSize(16)))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              controller.productDetailReviewModel.value.list1![index].ratingScore==5?
-                              Container(
-                                  height: 20,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.30,
-                                  child:
-                                  SvgPicture.asset(
-                                      "assets/images/stars-5.svg")):
-                              controller.productDetailReviewModel.value.list1![index].ratingScore==4.5?
-                              Container(
-                                  height: 20,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.30,
-                                  child:
-                                  SvgPicture.asset(
-                                      "assets/images/stars-4.5.svg")):
-                              controller.productDetailReviewModel.value.list1![index].ratingScore==4?
-                              Container(
-                                  height: 20,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.30,
-                                  child:
-                                  SvgPicture.asset(
-                                      "assets/images/stars-4.svg")):
-                              controller.productDetailReviewModel.value.list1![index].ratingScore==3?
-                              Container(
-                                  height: 20,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.30,
-                                  child:
-                                  SvgPicture.asset(
-                                      "assets/images/stars-3.svg")):
-                              controller.productDetailReviewModel.value.list1![index].ratingScore==2?
-                              Container(
-                                  height: 20,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.30,
-                                  child:
-                                  SvgPicture.asset(
-                                      "assets/images/stars-2.svg")):
-                              controller.productDetailReviewModel.value.list1![index].ratingScore==1?
-                              Container(
-                                  height: 20,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.30,
-                                  child:
-                                  SvgPicture.asset(
-                                      "assets/images/stars-1.svg")):SizedBox()
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Align(
-                            alignment:Alignment.centerLeft,
-                            child: Text(controller.productDetailReviewModel.value.list1![index].reviewContent.toString(),
-                            style: AppStyle.textStyleAdventProregular16
-                                    .copyWith(
-                                    color: Colors.black,
-                                    fontSize: getFontSize(
-                                      14,
-                                    ))),
-                          )
+                          controller.productDetailReviewModel.value.list1 !=null?
+                          Obx(()=> ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: controller.productDetailReviewModel.value.list1!.length,
+                              itemBuilder: (BuildContext context, int index){
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 15,
+                                    right: 15,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Obx(()=> Text(controller.productDetailReviewModel.value.list1![index].reviewAuthor.toString(),
+                                              style: AppStyle.textStyleAdventProregular124
+                                                  .copyWith(
+                                                  height: 1.5,
+                                                  fontSize: getFontSize(16))),),
+                                          const Spacer(),
+                                          Text(controller.productDetailReviewModel.value.list1![index].createdAt.toString(),
+                                              style: AppStyle.textStyleAdventProregular124
+                                                  .copyWith(
+                                                  height: 1.5,
+                                                  fontSize: getFontSize(16)))
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          controller.productDetailReviewModel.value.list1![index].ratingScore==5?
+                                          Container(
+                                              height: 20,
+                                              width: MediaQuery.of(context).size.width *
+                                                  0.30,
+                                              child:
+                                              SvgPicture.asset(
+                                                  "assets/images/stars-5.svg")):
+                                          controller.productDetailReviewModel.value.list1![index].ratingScore==4.5?
+                                          Container(
+                                              height: 20,
+                                              width: MediaQuery.of(context).size.width *
+                                                  0.30,
+                                              child:
+                                              SvgPicture.asset(
+                                                  "assets/images/stars-4.5.svg")):
+                                          controller.productDetailReviewModel.value.list1![index].ratingScore==4?
+                                          Container(
+                                              height: 20,
+                                              width: MediaQuery.of(context).size.width *
+                                                  0.30,
+                                              child:
+                                              SvgPicture.asset(
+                                                  "assets/images/stars-4.svg")):
+                                          controller.productDetailReviewModel.value.list1![index].ratingScore==3?
+                                          Container(
+                                              height: 20,
+                                              width: MediaQuery.of(context).size.width *
+                                                  0.30,
+                                              child:
+                                              SvgPicture.asset(
+                                                  "assets/images/stars-3.svg")):
+                                          controller.productDetailReviewModel.value.list1![index].ratingScore==2?
+                                          Container(
+                                              height: 20,
+                                              width: MediaQuery.of(context).size.width *
+                                                  0.30,
+                                              child:
+                                              SvgPicture.asset(
+                                                  "assets/images/stars-2.svg")):
+                                          controller.productDetailReviewModel.value.list1![index].ratingScore==1?
+                                          Container(
+                                              height: 20,
+                                              width: MediaQuery.of(context).size.width * 0.30,
+                                              child:
+                                              SvgPicture.asset(
+                                                  "assets/images/stars-1.svg")):const SizedBox()
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Align(
+                                        alignment:Alignment.centerLeft,
+                                        child: Text(controller.productDetailReviewModel.value.list1![index].reviewContent.toString(),
+                                            style: AppStyle.textStyleAdventProregular16.copyWith(
+                                                color: Colors.black,
+                                                fontSize: getFontSize(14)
+                                            )
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              })):const SizedBox(),
                         ],
                       ),
-                    );
-                  })):SizedBox(),
-                ],
-              ),
 
                       controller.productDetailRelatedProductModel.value
                           .list1 != null  &&
                           controller.productDetailRelatedProductModel.value
                               .list1!.length>0
-                          ? Padding(
-                        padding: const EdgeInsets.all(15.0),
+                          ? const Padding(
+                        padding: EdgeInsets.all(15.0),
                         child: Divider(
                           thickness: 1,
                         ),
-                      ):SizedBox(),
+                      ):const SizedBox(),
                       controller.productDetailRelatedProductModel.value
                           .list1 !=
                           null
@@ -1016,127 +1024,127 @@ class ProductDetailsPage extends StatelessWidget {
                         child: Text('lbl_matching_product'.tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
-                      ):SizedBox(),
+                      ):const SizedBox(),
 
                       Column(
                         children: [
                           controller.productDetailRelatedProductModel.value
-                                      .list1 !=
-                                  null
+                              .list1 !=
+                              null
                               ? Obx(
-                                  () => ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller
-                                          .productDetailRelatedProductModel
-                                          .value
-                                          .list1!
-                                          .length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 15.0),
-                                          child:Obx(()=> InkWell(
-                                            onTap: (){
-                                              FocusScopeNode currentFocus = FocusScope.of(context);
-                                              if (!currentFocus.hasPrimaryFocus) {
-                                                currentFocus.unfocus();
-                                              }
-                                              // print("recent");
-                                              // try{
-                                              //   Get.find<PrefUtils>().setRecentProduct(controller.productDetailRelatedProductModel.value.list1![index].id.toString());
-                                              // }catch(e){
-                                              //   print("Exception-"+"Error list Data");
-                                              //
-                                              // }
-                                              print("recent pro");
-                                              controller.RelivantProductApiCall(controller.productDetailRelatedProductModel.value.list1![index].id.toString(),controller.productDetailRelatedProductModel.value.list1![index].manufacturerId.toString());
-                                              // Get.toNamed(AppRoutes.productDetailScreen,
-                                              //     arguments: {
-                                              //       "productID":controller.productDetailRelatedProductModel.value.list1![index].id.toString(),
-                                              //       "manufacturerID":controller.productDetailRelatedProductModel.value.list1![index].manufacturerId.toString()
-                                              //     }
-                                              // );
-                                            },
-                                            child: ProductCard(
-                                              productImage: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .image
-                                                  .toString(),
-                                              imageHeight: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .imageHeight,
-                                              imageWidth: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .imageWidth,
-                                              productName: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .name,
-                                              productPrice: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .price
-                                                  .toString(),
-                                              productOfferPrice: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .oldPrice
-                                                  .toString(),
-                                              featureHighlight1: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight1,
-                                              featureHighlight2: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight2,
-                                              featureHighlight3: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight3,
-                                              featureHighlight4: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight4,
-                                              stockIndicator: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .stockIndicator,
-                                              stockIndicatorDescription: controller
-                                                  .productDetailRelatedProductModel
-                                                  .value
-                                                  .list1![index]
-                                                  .stockIndicatorDescription,
-                                            ),
-                                          ),)
-                                        );
-                                      }),
-                                )
-                              : SizedBox(),
+                                () => ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller
+                                    .productDetailRelatedProductModel
+                                    .value
+                                    .list1!
+                                    .length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 15.0),
+                                      child:Obx(()=> InkWell(
+                                        onTap: (){
+                                          FocusScopeNode currentFocus = FocusScope.of(context);
+                                          if (!currentFocus.hasPrimaryFocus) {
+                                            currentFocus.unfocus();
+                                          }
+                                          // print("recent");
+                                          // try{
+                                          //   Get.find<PrefUtils>().setRecentProduct(controller.productDetailRelatedProductModel.value.list1![index].id.toString());
+                                          // }catch(e){
+                                          //   print("Exception-"+"Error list Data");
+                                          //
+                                          // }
+                                          print("recent pro");
+                                          controller.RelivantProductApiCall(controller.productDetailRelatedProductModel.value.list1![index].id.toString(),controller.productDetailRelatedProductModel.value.list1![index].manufacturerId.toString());
+                                          // Get.toNamed(AppRoutes.productDetailScreen,
+                                          //     arguments: {
+                                          //       "productID":controller.productDetailRelatedProductModel.value.list1![index].id.toString(),
+                                          //       "manufacturerID":controller.productDetailRelatedProductModel.value.list1![index].manufacturerId.toString()
+                                          //     }
+                                          // );
+                                        },
+                                        child: ProductCard(
+                                          productImage: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .metaData!
+                                              .image
+                                              .toString(),
+                                          imageHeight: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .metaData!
+                                              .imageHeight,
+                                          imageWidth: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .metaData!
+                                              .imageWidth,
+                                          productName: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .name,
+                                          productPrice: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .price
+                                              .toString(),
+                                          productOfferPrice: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .oldPrice
+                                              .toString(),
+                                          featureHighlight1: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .featureHighlight1,
+                                          featureHighlight2: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .featureHighlight2,
+                                          featureHighlight3: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .featureHighlight3,
+                                          featureHighlight4: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .featureHighlight4,
+                                          stockIndicator: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .stockIndicator,
+                                          stockIndicatorDescription: controller
+                                              .productDetailRelatedProductModel
+                                              .value
+                                              .list1![index]
+                                              .stockIndicatorDescription,
+                                        ),
+                                      ),)
+                                  );
+                                }),
+                          )
+                              : const SizedBox(),
                         ],
                       ),
 
                       controller.productDetailBundleModel.value.list1 != null &&
-                      controller.productDetailBundleModel.value.list1!.length>0
+                          controller.productDetailBundleModel.value.list1!.length>0
                           ?Padding(
                         padding: const EdgeInsets.only(
                             left: 15, right: 15, bottom: 10),
@@ -1144,233 +1152,212 @@ class ProductDetailsPage extends StatelessWidget {
                         child: Text("lbl_combi_deal".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
-                      ):SizedBox(),
+                      ):const SizedBox(),
                       controller.productDetailBundleModel.value.list1 != null
                           ? Obx(
-                              () => Column(
-                                children: [
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller
-                                          .productDetailBundleModel
-                                          .value
-                                          .list1!
-                                          .length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return controller.productDetailModel
-                                                    .value.images !=
-                                                null
-                                            ? Obx(
-                                                () => Column(
+                            () => Column(
+                          children: [
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller
+                                    .productDetailBundleModel
+                                    .value
+                                    .list1!
+                                    .length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return controller.productDetailModel
+                                      .value.images !=
+                                      null
+                                      ? Obx(
+                                        () => Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.only(
+                                              left: 15.0),
+                                          child: ProductCard(
+                                            productName: controller
+                                                .productDetailModel
+                                                .value
+                                                .name
+                                                .toString(),
+                                            productPrice: controller
+                                                .productDetailModel
+                                                .value
+                                                .price
+                                                .toString(),
+                                            productImage: controller
+                                                .productDetailModel
+                                                .value
+                                                .images![0],
+                                            combiDeal: true,
+                                            // imageHeight: controller.productDetailAlsoBoughtModel.value.list1![index].metaData!.imageHeight,
+                                            // imageWidth: controller.productDetailAlsoBoughtModel.value.list1![index].metaData!.imageWidth,
+                                          ),
+                                        ),
+                                        Column(
+                                          children: [
+                                            controller.loading
+                                                .value ==
+                                                true
+                                                ? const SizedBox()
+                                                : Obx(() => ListView
+                                                .builder(
+                                                shrinkWrap:
+                                                true,
+                                                physics:
+                                                const NeverScrollableScrollPhysics(),
+                                                itemCount: controller
+                                                    .productCount
+                                                    .value,
+                                                itemBuilder:
+                                                    (BuildContext
+                                                context,
+                                                    int i) {
+                                                  return Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          left:
+                                                          15.0,
+                                                          right:
+                                                          15),
+                                                      child:
+                                                      GestureDetector(
+                                                        onTap: (){
+                                                          if(checkbox.value==true){
+                                                            checkbox.value=false;
+                                                          }
+                                                        },
+                                                        child: GestureDetector(
+                                                          onTap:  () {
+                                                            controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value == true
+                                                                ?
+                                                            controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value = false
+                                                                : controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value =true;
+                                                          },
+                                                          child:Obx(()=> CombiDealCard(
+                                                            productImage: controller.productDetailBundleModel.value.list1![index].products![i].metaData!.image.toString(),
+                                                            imageHeight: controller.productDetailBundleModel.value.list1![index].products![i].metaData!.imageHeight,
+                                                            imageWidth: controller.productDetailBundleModel.value.list1![index].products![i].metaData!.imageWidth,
+                                                            productName: controller.productDetailBundleModel.value.list1![index].products![i].name,
+                                                            offerLabel: controller.productDetailBundleModel.value.list1![index].products![i].customLabel![0].label,
+                                                            productPrice: controller.productDetailBundleModel.value.list1![index].products![i].price.toString(),
+                                                            productOfferPrice: controller.productDetailBundleModel.value.list1![index].products![i].oldPrice.toString(),
+                                                            checkbox: controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value,
+                                                          ),),
+                                                        ),)
+                                                  );
+                                                })),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.only(
+                                              left: 15.0,
+                                              right: 15),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "msg_makse_use_of_this".tr,
+                                                maxLines: 4,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Obx(
+                                                        () => Text(
+                                                      controller.productDetailModel.value.name.toString(),
+                                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .end,
+                                                children: [
+                                                  Obx(()=> Text(
+                                                    "\u{20AC} " +
+                                                        controller
+                                                            .cartCalculation(
+                                                          controller.productDetailModel.value.price.toString(),
+                                                          controller.productDetailBundleModel.value.list1![index].products!,
+
+                                                        ).toString(),
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .bold),)),
+                                                  // ),) Obx(()=> Text(
+                                                  //   "\u{20AC} " +
+                                                  //       controller
+                                                  //           .combiList[index]
+                                                  //           .toStringAsPrecision(
+                                                  //               4),
+                                                  //   style: TextStyle(
+                                                  //       fontWeight:
+                                                  //           FontWeight
+                                                  //               .bold),
+                                                  // ),
+                                                  // )
+                                                ],
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                            height: 50,
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets.only(left: 15.0, right: 15, bottom: 10),
+                                              child: ElevatedButton(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .center,
                                                   children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 15.0),
-                                                      child: ProductCard(
-                                                        productName: controller
-                                                            .productDetailModel
-                                                            .value
-                                                            .name
-                                                            .toString(),
-                                                        productPrice: controller
-                                                            .productDetailModel
-                                                            .value
-                                                            .price
-                                                            .toString(),
-                                                        productImage: controller
-                                                            .productDetailModel
-                                                            .value
-                                                            .images![0],
-                                                        combiDeal: true,
-                                                        // imageHeight: controller.productDetailAlsoBoughtModel.value.list1![index].metaData!.imageHeight,
-                                                        // imageWidth: controller.productDetailAlsoBoughtModel.value.list1![index].metaData!.imageWidth,
+                                                    Text(
+                                                        'lbl_add_to_cart'.tr,
+                                                        style: AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(18,), color: Colors.white)
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        carouselController.previousPage();
+                                                      },
+                                                      child: const Icon(
+                                                        Icons.shopping_cart_outlined,
+                                                        size: 19,
+                                                        color: Colors.white,
                                                       ),
                                                     ),
-                                                    Column(
-                                                      children: [
-                                                        controller.loading
-                                                                    .value ==
-                                                                true
-                                                            ? SizedBox()
-                                                            : Obx(() => ListView
-                                                                .builder(
-                                                                    shrinkWrap:
-                                                                        true,
-                                                                    physics:
-                                                                        NeverScrollableScrollPhysics(),
-                                                                    itemCount: controller
-                                                                        .productCount
-                                                                        .value,
-                                                                    itemBuilder:
-                                                                        (BuildContext
-                                                                                context,
-                                                                            int i) {
-                                                                      return Padding(
-                                                                        padding: const EdgeInsets.only(
-                                                                            left:
-                                                                                15.0,
-                                                                            right:
-                                                                                15),
-                                                                        child:
-                                                                            GestureDetector(
-                                                                              onTap: (){
-                                                                                if(checkbox.value==true){
-                                                                                  checkbox.value=false;
-                                                                                }
-                                                                              },
-                                                                              child: GestureDetector(
-                                                                                onTap:  () {
-                                                                                  controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value == true
-                                                                                      ?
-                                                                                  controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value = false
-                                                                                      : controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value =true;
-                                                                                },
-                                                                                child:Obx(()=> CombiDealCard(
-                                                                          productImage: controller.productDetailBundleModel.value.list1![index].products![i].metaData!.image.toString(),
-                                                                          imageHeight: controller.productDetailBundleModel.value.list1![index].products![i].metaData!.imageHeight,
-                                                                          imageWidth: controller.productDetailBundleModel.value.list1![index].products![i].metaData!.imageWidth,
-                                                                          productName: controller.productDetailBundleModel.value.list1![index].products![i].name,
-                                                                          offerLabel: controller.productDetailBundleModel.value.list1![index].products![i].customLabel![0].label,
-                                                                          productPrice: controller.productDetailBundleModel.value.list1![index].products![i].price.toString(),
-                                                                          productOfferPrice: controller.productDetailBundleModel.value.list1![index].products![i].oldPrice.toString(),
-                                                                          checkbox: controller.productDetailBundleModel.value.list1![index].products![i].checkbox!.value,
-                                                                        ),),
-                                                                              ),)
-                                                                      );
-                                                                    })),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 15.0,
-                                                              right: 15),
-                                                      child: Column(
-                                                        children: [
-                                                          Text(
-                                                            "msg_makse_use_of_this".tr,
-                                                            maxLines: 4,
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Obx(
-                                                                () => Text(
-                                                                  controller
-                                                                      .productDetailModel
-                                                                      .value
-                                                                      .name
-                                                                      .toString(),
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                           Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .end,
-                                                              children: [
-                                                               Obx(()=> Text(
-                                                                  "\u{20AC} " +
-                                                                      controller
-                                                                          .cartCalculation(
-                                                                        controller.productDetailModel.value.price.toString(),
-                                                                          controller.productDetailBundleModel.value.list1![index].products!,
-
-                                                                      ).toString(),
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),)),
-                                                                // ),) Obx(()=> Text(
-                                                                //   "\u{20AC} " +
-                                                                //       controller
-                                                                //           .combiList[index]
-                                                                //           .toStringAsPrecision(
-                                                                //               4),
-                                                                //   style: TextStyle(
-                                                                //       fontWeight:
-                                                                //           FontWeight
-                                                                //               .bold),
-                                                                // ),
-                                                    // )
-                                                              ],
-                                                            ),
-
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                        height: 50,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 15.0,
-                                                                  right: 15,
-                                                                  bottom: 10),
-                                                          child: ElevatedButton(
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                    'lbl_add_to_cart'.tr,
-                                                                    style: AppStyle
-                                                                        .textStyleRobotoromanmedium14
-                                                                        .copyWith(
-                                                                            fontSize:
-                                                                                getFontSize(
-                                                                              18,
-                                                                            ),
-                                                                            color:
-                                                                                Colors.white)),
-                                                                SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    carouselController
-                                                                        .previousPage();
-                                                                  },
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .shopping_cart_outlined,
-                                                                    size: 19,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            onPressed: () {},
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              backgroundColor:
-                                                                  Color(
-                                                                      0xff208836),
-                                                            ),
-                                                          ),
-                                                        )),
                                                   ],
                                                 ),
-                                              )
-                                            : SizedBox();
-                                      }),
-                                ],
-                              ),
-                            )
-                          : SizedBox(),
+                                                onPressed: () {},
+                                                style:
+                                                ElevatedButton
+                                                    .styleFrom(
+                                                  backgroundColor:
+                                                  const Color(
+                                                      0xff208836),
+                                                ),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                      : const SizedBox();
+                                }),
+                          ],
+                        ),
+                      )
+                          : const SizedBox(),
 
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.all(15),
                         child: Divider(
                           color: Colors.grey,
@@ -1386,108 +1373,108 @@ class ProductDetailsPage extends StatelessWidget {
                       Column(
                         children: [
                           controller.productDetailAlsoBoughtModel.value.list1 !=
-                                  null
+                              null
                               ? Obx(
-                                  () => ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.productDetailAlsoBoughtModel.value.list1!.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 15.0, right: 15),
-                                          child: GestureDetector(
-                                            onTap: (){
-                                              print("Id : "+controller.productDetailAlsoBoughtModel.value.list1![index].id.toString());
+                                () => ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller.productDetailAlsoBoughtModel.value.list1!.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15.0, right: 15),
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        print("Id : "+controller.productDetailAlsoBoughtModel.value.list1![index].id.toString());
 
 
-                                              // try{
-                                              //   Get.find<PrefUtils>().setRecentProduct(controller.productDetailAlsoBoughtModel.value.list1![index].id.toString());
-                                              // }catch(e){
-                                              //   print("Exception-"+"Error list Data");
-                                              //
-                                              // }
-                                              controller.RelivantProductApiCall(controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(), controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString());
-                                              //   Get.back();
-                                              // Get.toNamed(AppRoutes.productDetailScreen,
-                                              //     arguments: {
-                                              //       "productID":controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(),
-                                              //       "manufacturerID":controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString()
-                                                  },
-                                            child: ProductCard(
-                                              productName: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .name,
-                                              productImage: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .image
-                                                  .toString(),
-                                              imageHeight: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .imageHeight,
-                                              imageWidth: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .imageWidth,
-                                              productPrice: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .price
-                                                  .toString(),
-                                              productOfferPrice: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .oldPrice
-                                                  .toString(),
-                                              featureHighlight1: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight1,
-                                              featureHighlight2: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight2,
-                                              featureHighlight3: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight3,
-                                              featureHighlight4: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .featureHighlight4,
-                                              stockIndicator: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .stockIndicator,
-                                              stockIndicatorDescription: controller
-                                                  .productDetailAlsoBoughtModel
-                                                  .value
-                                                  .list1![index]
-                                                  .stockIndicatorDescription,
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                )
-                              : SizedBox(),
+                                        // try{
+                                        //   Get.find<PrefUtils>().setRecentProduct(controller.productDetailAlsoBoughtModel.value.list1![index].id.toString());
+                                        // }catch(e){
+                                        //   print("Exception-"+"Error list Data");
+                                        //
+                                        // }
+                                        controller.RelivantProductApiCall(controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(), controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString());
+                                        //   Get.back();
+                                        // Get.toNamed(AppRoutes.productDetailScreen,
+                                        //     arguments: {
+                                        //       "productID":controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(),
+                                        //       "manufacturerID":controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString()
+                                      },
+                                      child: ProductCard(
+                                        productName: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .name,
+                                        productImage: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .metaData!
+                                            .image
+                                            .toString(),
+                                        imageHeight: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .metaData!
+                                            .imageHeight,
+                                        imageWidth: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .metaData!
+                                            .imageWidth,
+                                        productPrice: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .price
+                                            .toString(),
+                                        productOfferPrice: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .oldPrice
+                                            .toString(),
+                                        featureHighlight1: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .featureHighlight1,
+                                        featureHighlight2: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .featureHighlight2,
+                                        featureHighlight3: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .featureHighlight3,
+                                        featureHighlight4: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .featureHighlight4,
+                                        stockIndicator: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .stockIndicator,
+                                        stockIndicatorDescription: controller
+                                            .productDetailAlsoBoughtModel
+                                            .value
+                                            .list1![index]
+                                            .stockIndicatorDescription,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          )
+                              : const SizedBox(),
                         ],
                       ),
 
@@ -1499,91 +1486,91 @@ class ProductDetailsPage extends StatelessWidget {
                         child: Text("lbl_last_view".tr,
                             style: AppStyle.textStyleRobotoromanmedium14
                                 .copyWith(fontSize: getFontSize(20))),
-                      ):SizedBox(),
+                      ):const SizedBox(),
                       Column(
                         children: [
                           controller.productModelData!.value.list1 !=
-                                  null
+                              null
                               ? Obx(
-                                  () => ListView.builder(
-                                    reverse: true,
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount:controller.productModelData!.value.list1!.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 15.0, right: 15),
-                                          child: GestureDetector(
-                                            onTap: (){
-                                              print("Id : "+controller.productModelData!.value.list1![index].id.toString());
+                                () => ListView.builder(
+                                reverse: true,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount:controller.productModelData!.value.list1!.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15.0, right: 15),
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        print("Id : "+controller.productModelData!.value.list1![index].id.toString());
 
-                                              controller.RelivantProductApiCall(controller.productModelData!.value.list1![index].id.toString(), controller.productModelData!.value.list1![index].manufacturerId.toString());
-                                              //   Get.back();
-                                              // Get.toNamed(AppRoutes.productDetailScreen,
-                                              //     arguments: {
-                                              //       "productID":controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(),
-                                              //       "manufacturerID":controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString()
-                                                  },
-                                            child: ProductCard(
-                                              productName: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .name,
-                                              productImage: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .image
-                                                  .toString(),
-                                              imageHeight: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .imageHeight,
-                                              imageWidth: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .metaData!
-                                                  .imageWidth,
-                                              productPrice: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .price
-                                                  .toString(),
-                                              productOfferPrice: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .oldPrice
-                                                  .toString(),
+                                        controller.RelivantProductApiCall(controller.productModelData!.value.list1![index].id.toString(), controller.productModelData!.value.list1![index].manufacturerId.toString());
+                                        //   Get.back();
+                                        // Get.toNamed(AppRoutes.productDetailScreen,
+                                        //     arguments: {
+                                        //       "productID":controller.productDetailAlsoBoughtModel.value.list1![index].id.toString(),
+                                        //       "manufacturerID":controller.productDetailAlsoBoughtModel.value.list1![index].manufacturerId.toString()
+                                      },
+                                      child: ProductCard(
+                                        productName: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .name,
+                                        productImage: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .metaData!
+                                            .image
+                                            .toString(),
+                                        imageHeight: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .metaData!
+                                            .imageHeight,
+                                        imageWidth: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .metaData!
+                                            .imageWidth,
+                                        productPrice: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .price
+                                            .toString(),
+                                        productOfferPrice: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .oldPrice
+                                            .toString(),
 
-                                              stockIndicator: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .stockIndicator,
-                                              stockIndicatorDescription: controller
-                                                  .productModelData!
-                                                  .value
-                                                  .list1![index]
-                                                  .stockIndicatorDescription,
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                )
-                              : SizedBox(),
+                                        stockIndicator: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .stockIndicator,
+                                        stockIndicatorDescription: controller
+                                            .productModelData!
+                                            .value
+                                            .list1![index]
+                                            .stockIndicatorDescription,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          )
+                              : const SizedBox(),
                         ],
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
 
@@ -1597,8 +1584,8 @@ class ProductDetailsPage extends StatelessWidget {
 
                     ],
                   )),
-          ),
-        ))));
+                  ),
+                ))));
   }
 
   List<Widget> indicators(imagesLength, currentIndex) {
@@ -1606,26 +1593,26 @@ class ProductDetailsPage extends StatelessWidget {
     print("image current Index" + currentIndex.toString());
     return List<Widget>.generate(imagesLength, (index) {
       return Obx(() => Container(
-            margin: EdgeInsets.all(3),
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color: currentIndex == index ? ColorConstant.appPrimaryColor : Colors.transparent,
-                  width: 2
-              ),
-            ),
-            child: Container(
-              height: 45,
-              width: 45,
-              // child: Image.network("${APPURL.imageBaseUrl}" + controller.productDetailModel.value.images![index], fit: BoxFit.fill,),
-                child : CachedNetworkImage(
-                  imageUrl: APPURL.imageBaseUrl + controller.productDetailModel.value.images![index],
-                  placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,)),
-                  errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
-                )
-            ),
-          ));
+        margin: const EdgeInsets.all(3),
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          border: Border.all(
+              color: currentIndex == index ? ColorConstant.appPrimaryColor : Colors.transparent,
+              width: 2
+          ),
+        ),
+        child: Container(
+            height: 45,
+            width: 45,
+            // child: Image.network("${APPURL.imageBaseUrl}" + controller.productDetailModel.value.images![index], fit: BoxFit.fill,),
+            child : CachedNetworkImage(
+              imageUrl: APPURL.imageBaseUrl + controller.productDetailModel.value.images![index],
+              placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,size: 30,)),
+              errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
+            )
+        ),
+      ));
     });
   }
 }
@@ -1649,15 +1636,15 @@ class Specification extends StatelessWidget {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 0.30,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
                     child: Text("Diameter"),
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.60,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
                     child: Text("13 cm"),
                   ),
                 )
@@ -1670,15 +1657,15 @@ class Specification extends StatelessWidget {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 0.30,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
                     child: Text("Hoogte"),
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.60,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
                     child: Text("21,6 cm"),
                   ),
                 )
@@ -1691,15 +1678,15 @@ class Specification extends StatelessWidget {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 0.30,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
                     child: Text("Capaciteit"),
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.60,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
                     child: Text("887 ml"),
                   ),
                 )

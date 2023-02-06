@@ -17,7 +17,6 @@ import 'package:shimmer/shimmer.dart';
 class ProductListPage extends GetWidget<ProductListController>{
   Widget build(BuildContext context){
     return CommonScafford(
-
         commonAppBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           title: Text("Obatala Coffee",style:
@@ -55,7 +54,6 @@ class ProductListPage extends GetWidget<ProductListController>{
               onSelected: (value) {
                 if (value == 1) {
                   Get.updateLocale(Locale('nl','DF'));
-
                 } else if (value == 2) {
                   Get.updateLocale(Locale('en','US'));
                 }
@@ -71,64 +69,64 @@ class ProductListPage extends GetWidget<ProductListController>{
         child : SafeArea(
           child: SingleChildScrollView(
             child:
-        Obx(()=> controller.loading.value==true?
-          Shimmer.fromColors(
-                child:
-                     Padding(
-                   padding: const EdgeInsets.only(top:30,right: 30.0,left: 30),
-                     child: Column(children: [
-                      Row(
-                      children: [
-                        skelton(height: 50,width: 300,),
-                     ],
-                   ),
-      SizedBox(height: 10,),
-      Row(
-        children: [
-          skelton(height: 50,width: 300,),
-        ],
-      ),
-      SizedBox(height: 10,),
-      Row(
-        children: [
-          skelton(height: 30,width: 100,),
-        ],
-      ),
-      SizedBox(height: 10,),
+            Obx(()=> controller.loading.value==true?
+            Shimmer.fromColors(
+              child:
+              Padding(
+                padding: const EdgeInsets.only(top:30,right: 30.0,left: 30),
+                child: Column(children: [
+                  Row(
+                    children: [
+                      skelton(height: 50,width: 300,),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      skelton(height: 50,width: 300,),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      skelton(height: 30,width: 100,),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
 
-      Row(
-        children: [
-          skelton(height: 30,width: 100,),
-        ],
-      ),
-      SizedBox(height: 10,),
-      skelton(height: 100,width: 300,),
-      SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      skelton(height: 30,width: 100,),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  skelton(height: 100,width: 300,),
+                  SizedBox(height: 5,),
 
-      Row(
-        children: [
-          skelton(height: 130,width: 100,),
-          SizedBox(width: 10,),
-          skelton(height: 130,width: 170,),
-        ],
-      ), SizedBox(height: 10,),Row(
-        children: [
-          skelton(height: 130,width: 100,),
-          SizedBox(width: 10,),
-          skelton(height: 130,width: 170,),
-        ],
-      ), SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      skelton(height: 130,width: 100,),
+                      SizedBox(width: 10,),
+                      skelton(height: 130,width: 170,),
+                    ],
+                  ), SizedBox(height: 10,),Row(
+                    children: [
+                      skelton(height: 130,width: 100,),
+                      SizedBox(width: 10,),
+                      skelton(height: 130,width: 170,),
+                    ],
+                  ), SizedBox(height: 10,),
 
-    ],),
-  ),
+                ],),
+              ),
 
-  baseColor: Colors.grey[300]!, highlightColor: Colors.grey[400]!,
-  period: Duration(seconds: 3),
-)
-    :
+              baseColor: Colors.grey[300]!, highlightColor: Colors.grey[400]!,
+              period: Duration(seconds: 3),
+            )
+                :
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
+              children: [
                 Padding(
                   padding: EdgeInsets.only(top: 10.0,right: 15,left: 15,bottom: 10),
                   child: SizedBox(
@@ -147,17 +145,9 @@ class ProductListPage extends GetWidget<ProductListController>{
 
                 verticalCourosel(),
 
-                // Padding(
-                //     padding: const EdgeInsets.only(top: 8.0,left: 15.0,right: 8.0,bottom: 8.0),
-                //     child: Text("Obatala Coffee",
-                //       style:  AppStyle.textStyleRobotoromanmedium14.copyWith(
-                //         fontSize: getFontSize(
-                //           14,
-                //         ),),)
-                // ),
                 Padding(
                     padding: const EdgeInsets.only(top: 8.0,left: 15.0,bottom: 8.0),
-                    child:Container(
+                    child: Container(
                       width: 80,
                       child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
@@ -166,13 +156,14 @@ class ProductListPage extends GetWidget<ProductListController>{
                           onPressed: () {
                             Get.toNamed(AppRoutes.filterPage);
                           },
-                          child:  Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(Icons.tune_outlined,color: Colors.white,size: 14),
                               Text(
                                 'lbl_filter'.tr,
                                 style:  AppStyle.textStyleRobotoromanmedium11.copyWith(
+                                  color: Colors.white,
                                   fontSize: getFontSize(
                                     14,
                                   ),
@@ -193,11 +184,11 @@ class ProductListPage extends GetWidget<ProductListController>{
 
                 controller.categoryDetailModelData!.value.description != null
                     ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Html(
-                  data: controller.categoryDetailModelData!.value.description,
-                ),
-                    )
+                  padding: const EdgeInsets.all(8.0),
+                  child: Html(
+                    data: controller.categoryDetailModelData!.value.description,
+                  ),
+                )
                     : SizedBox(),
 
 
@@ -219,49 +210,49 @@ class ProductListPage extends GetWidget<ProductListController>{
                 Column(
                   children: [
                     controller.productListModel!.value.list1 !=null?
-                   Obx(()=>controller.loading==true?SizedBox(): ListView.builder(
-                      shrinkWrap: true,
+                    Obx(()=>controller.loading==true?SizedBox(): ListView.builder(
+                        shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: controller.productListModel!.value.list1!.length,
                         itemBuilder: (BuildContext context, int index){
                           return Padding(padding: EdgeInsets.only(left: 15,right: 15),
-                          child:Obx(()=> GestureDetector(
-                            onTap: (){
+                              child:Obx(()=> GestureDetector(
+                                onTap: (){
 
-                              Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.productDetailScreen,
-                                  arguments: {
-                                    "productID":controller.productListModel!.value.list1![index].id.toString(),
-                                    "manufacturerID":controller.productListModel!.value.list1![index].manufacturerId.toString()
-                                  }
-                              );
-                              // Get.toNamed(AppRoutes.productDetailScreen,
-                              //     arguments: {
-                              //       "productID":controller.productListModel!.value.list1![index].id.toString(),
-                              //       "manufacturerID":controller.productListModel!.value.list1![index].manufacturerId.toString()
-                              //     }
-                              // );
-                            },
-                            child: ProductCard(
-                              productName: controller.productListModel!.value.list1![index].name.toString(),
-                              productImage:
-                              controller.productListModel!.value.list1![index].metaData!.image.toString(),
-                              imageWidth: controller.productListModel!.value.list1![index].metaData!.imageWidth,
-                              imageHeight: controller.productListModel!.value.list1![index].metaData!.imageHeight,
-                              productPrice: controller.productListModel!.value.list1![index].price.toString(),
-                              productOfferPrice: controller.productListModel!.value.list1![index].oldPrice.toString(),
-                              featureHighlight1: controller.productListModel!.value.list1![index].featureHighlight1.toString(),
-                              featureHighlight2: controller.productListModel!.value.list1![index].featureHighlight2.toString(),
-                              featureHighlight3: controller.productListModel!.value.list1![index].featureHighlight3.toString(),
-                              featureHighlight4: controller.productListModel!.value.list1![index].featureHighlight4.toString(),
-                            ),
-                          ),)
+                                  Navigator.pushNamed(
+                                      context,
+                                      AppRoutes.productDetailScreen,
+                                      arguments: {
+                                        "productID":controller.productListModel!.value.list1![index].id.toString(),
+                                        "manufacturerID":controller.productListModel!.value.list1![index].manufacturerId.toString()
+                                      }
+                                  );
+                                  // Get.toNamed(AppRoutes.productDetailScreen,
+                                  //     arguments: {
+                                  //       "productID":controller.productListModel!.value.list1![index].id.toString(),
+                                  //       "manufacturerID":controller.productListModel!.value.list1![index].manufacturerId.toString()
+                                  //     }
+                                  // );
+                                },
+                                child: ProductCard(
+                                  productName: controller.productListModel!.value.list1![index].name.toString(),
+                                  productImage:
+                                  controller.productListModel!.value.list1![index].metaData!.image.toString(),
+                                  imageWidth: controller.productListModel!.value.list1![index].metaData!.imageWidth,
+                                  imageHeight: controller.productListModel!.value.list1![index].metaData!.imageHeight,
+                                  productPrice: controller.productListModel!.value.list1![index].price.toString(),
+                                  productOfferPrice: controller.productListModel!.value.list1![index].oldPrice.toString(),
+                                  featureHighlight1: controller.productListModel!.value.list1![index].featureHighlight1.toString(),
+                                  featureHighlight2: controller.productListModel!.value.list1![index].featureHighlight2.toString(),
+                                  featureHighlight3: controller.productListModel!.value.list1![index].featureHighlight3.toString(),
+                                  featureHighlight4: controller.productListModel!.value.list1![index].featureHighlight4.toString(),
+                                ),
+                              ),)
 
                           );
                         }
                     )):
-                   const SizedBox(),
+                    const SizedBox(),
                   ],
                 ),
 

@@ -19,8 +19,7 @@ class SplashScreen1Screen extends GetWidget<SplashController> {
               height: size.height,
               width: size.width,
               decoration: BoxDecoration(color: ColorConstant.whiteA700),
-              child:
-              Align(
+              child: Align(
                   alignment: Alignment.center,
                   child: Padding(
                       padding: EdgeInsets.only(

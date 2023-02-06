@@ -198,7 +198,7 @@ class ZoomImageScreen extends StatelessWidget {
           //child: Image.network("${APPURL.imageBaseUrl}" + controller.imageList.value[index], fit: BoxFit.fill,),
             child : CachedNetworkImage(
               imageUrl: APPURL.imageBaseUrl + controller.imageList.value[index],
-              placeholder: (context, url) => SizedBox(height:50,width:50,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,)),
+              placeholder: (context, url) => SizedBox(height:30,width:30,child: SpinKitCircle(color: ColorConstant.appPrimaryColor,size: 30,)),
               errorWidget: (context, url, error) => SizedBox(height:50,width:50,child: Image.asset("assets/images/icon-152x152.png")),
             )
         ),

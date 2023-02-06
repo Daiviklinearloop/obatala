@@ -12,11 +12,10 @@ class PrefUtils{
     List<String>? recentProduct =await getRecentProduct();
     print("recent old "+recentProduct.toString());
 
-
     if(recentProduct != null && recentProduct.length > 0){
       recent.addAll(recentProduct);
       if(!recent.contains(ProductId)){
-        if(recent.length>=4 ){
+        if(recent.length >= 4 ){
           recent.removeLast();
         }
         recent.insert(0, ProductId);

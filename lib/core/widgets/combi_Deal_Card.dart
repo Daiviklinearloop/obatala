@@ -56,7 +56,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
       child: Padding(
         padding: const EdgeInsets.only(top:8.0,bottom: 8),
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
 
@@ -102,7 +102,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                               child: Container(
                                 height: 100,
                                 color: Colors.lightBlue,
-                                child: Center(child: Text(widget.offerLabel.toString(), style: TextStyle(fontSize: 14,color: Colors.white),)),
+                                child: Center(child: Text(widget.offerLabel.toString(), style: const TextStyle(fontSize: 14,color: Colors.white),)),
                               ),
                             ),
                           ),
@@ -110,7 +110,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Column(
@@ -120,25 +120,24 @@ class _CombiDealCardState extends State<CombiDealCard> {
                       Row(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width *0.50,
+                            width: MediaQuery.of(context).size.width * 0.50,
                             child: Text(
                               widget.productName.toString()==null?"":widget.productName.toString(),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: AppStyle.textStyleRobotoromanmedium14
-                                  .copyWith(fontSize: getFontSize(18)),
+                              style: AppStyle.textStyleRobotoromanmedium14.copyWith(fontSize: getFontSize(18)),
                             ),
 
                           ),
-                          widget.checkbox==true? Icon(Icons.check_box,color: Colors.black54): Icon(Icons.check_box_outline_blank),
+                          widget.checkbox==true? const Icon(Icons.check_box,color: Colors.black54): const Icon(Icons.check_box_outline_blank),
 
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
 
-                      widget.productRating.toString()=="null"?SizedBox(): Row(
+                      widget.productRating.toString()=="null"?const SizedBox(): Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 2.0),
@@ -146,7 +145,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                               height: 25,
                               width: 25,
                               color: Colors.cyan,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.star,
                                   color: Colors.white,
@@ -160,7 +159,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                               height: 25,
                               width: 25,
                               color: Colors.cyan,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.star,
                                   color: Colors.white,
@@ -174,7 +173,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                               height: 25,
                               width: 25,
                               color: Colors.cyan,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.star,
                                   color: Colors.white,
@@ -188,7 +187,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                               height: 25,
                               width: 25,
                               color: Colors.cyan,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.star,
                                   color: Colors.white,
@@ -202,7 +201,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                               height: 25,
                               width: 25,
                               color: Colors.cyan,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.star,
                                   color: Colors.white,
@@ -212,13 +211,13 @@ class _CombiDealCardState extends State<CombiDealCard> {
                           )
                         ],
                       ),
-                      widget.productRating.toString()=="null"?SizedBox(): Row(
+                      widget.productRating.toString()=="null"?const SizedBox(): Row(
                         children: [
                           Text("5.0 ", style: AppStyle.textStyleRobotoromanmedium14
                               .copyWith(fontSize: getFontSize(18)),),
                           Text("/ 5  ", style: AppStyle.textStyleAdventProregular124
                               .copyWith(height: 1.5, fontSize: getFontSize(16)),),
-                          Icon(Icons.circle, size: 5,),
+                          const Icon(Icons.circle, size: 5,),
                           Text("  1  ",style: AppStyle.textStyleRobotoromanmedium14
                               .copyWith(fontSize: getFontSize(14)), ),
                           Text("review", style: AppStyle.textStyleAdventProregular124
@@ -226,12 +225,12 @@ class _CombiDealCardState extends State<CombiDealCard> {
                         ],
                       ),
 
-                      widget.homePage==true?SizedBox():  Row(
+                      widget.homePage==true?const SizedBox():  Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          widget.featureHighlight2.toString()=="null"||widget.featureHighlight1.toString()==""?SizedBox():
-                          Text("• "),
-                          widget.featureHighlight1.toString()=="null"||widget.featureHighlight1.toString()==""?SizedBox():
+                          widget.featureHighlight2.toString()=="null"||widget.featureHighlight1.toString()==""?const SizedBox():
+                          const Text("• "),
+                          widget.featureHighlight1.toString()=="null"||widget.featureHighlight1.toString()==""?const SizedBox():
                           Text(
                           widget.featureHighlight1.toString(),
                             style: AppStyle.textStyleAdventProregular124
@@ -239,25 +238,25 @@ class _CombiDealCardState extends State<CombiDealCard> {
                           ),
                         ],
                       ),
-                      widget.homePage==true?SizedBox(): Row(
+                      widget.homePage==true?const SizedBox(): Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          widget.featureHighlight2.toString()=="null"||widget.featureHighlight2.toString()==""?SizedBox():
-                          Text("• "),
-                          widget.featureHighlight2.toString()=="null"||widget.featureHighlight2.toString()==""?SizedBox():
+                          widget.featureHighlight2.toString()=="null"||widget.featureHighlight2.toString()==""?const SizedBox():
+                          const Text("• "),
+                          widget.featureHighlight2.toString()=="null"||widget.featureHighlight2.toString()==""?const SizedBox():
                           Text(widget.featureHighlight2.toString(),
                             style: AppStyle.textStyleAdventProregular124
                                 .copyWith(height: 1.5, fontSize: getFontSize(13)),
                           ),
                         ],
                       ),
-                      widget.homePage==true?SizedBox(): Row(
+                      widget.homePage==true?const SizedBox(): Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          widget.featureHighlight3.toString()=="null"||widget.featureHighlight3.toString()==""?SizedBox():
-                          Text("• "),
-                          widget.featureHighlight3.toString()=="null"||widget.featureHighlight3.toString()==""?SizedBox():
+                          widget.featureHighlight3.toString()=="null"||widget.featureHighlight3.toString()==""?const SizedBox():
+                          const Text("• "),
+                          widget.featureHighlight3.toString()=="null"||widget.featureHighlight3.toString()==""?const SizedBox():
                           Text(
                           widget.featureHighlight3.toString(),
                             style: AppStyle.textStyleAdventProregular124
@@ -265,13 +264,13 @@ class _CombiDealCardState extends State<CombiDealCard> {
                           ),
                         ],
                       ),
-                      widget.homePage==true?SizedBox(): Row(
+                      widget.homePage==true?const SizedBox(): Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          widget.featureHighlight4.toString()=="null"||widget.featureHighlight4.toString()==""?SizedBox():
-                          Text("• "),
-                          widget.featureHighlight4.toString()=="null"||widget.featureHighlight4.toString()==""?SizedBox():
+                          widget.featureHighlight4.toString()=="null"||widget.featureHighlight4.toString()==""?const SizedBox():
+                          const Text("• "),
+                          widget.featureHighlight4.toString()=="null"||widget.featureHighlight4.toString()==""?const SizedBox():
 
                           Text(
                           widget.featureHighlight4.toString(),
@@ -294,7 +293,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                               children: [
                                 Row(
                                   children: [
-                                    widget.productOfferPrice.toString()==""?SizedBox(): Row(
+                                    widget.productOfferPrice.toString()==""?const SizedBox(): Row(
                                       children: [
                                         Text("\u{20AC} ${widget.productOfferPrice.toString()},- ",
                                             style: AppStyle.textStyleAdventProregular175
@@ -303,11 +302,11 @@ class _CombiDealCardState extends State<CombiDealCard> {
                                             )),
                                       ],
                                     ),
-                                    widget.productOfferPrice.toString()==""?SizedBox():  SizedBox(width: 8,),
+                                    widget.productOfferPrice.toString()==""?const SizedBox():  const SizedBox(width: 8,),
                                     Row(
                                       children: [
-                                        Icon(Icons.euro,size: 15,),
-                                        SizedBox(width: 3,),
+                                        const Icon(Icons.euro,size: 15,),
+                                        const SizedBox(width: 3,),
                                         Text("${widget.productPrice.toString()==null?"-":widget.productPrice.toString()},- ",
                                             style: AppStyle.textStyleRobotoromanmedium14
                                                 .copyWith(fontSize: getFontSize(18))),
@@ -315,7 +314,7 @@ class _CombiDealCardState extends State<CombiDealCard> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 7,
                                 ),
 

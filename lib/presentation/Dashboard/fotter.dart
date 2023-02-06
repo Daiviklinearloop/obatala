@@ -17,7 +17,6 @@ class FotterClass extends GetWidget<CategoryController> {
       children: [
         Container(
           color: Colors.black,
-
           width: 800,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,12 +29,10 @@ class FotterClass extends GetWidget<CategoryController> {
                           .copyWith(fontSize: getFontSize(18), color: Colors.white)),
                 ),
                 fotterContent(text:"lbl_to_order".tr),
-                fotterContent(text: "lbl_pay".tr),
-                fotterContent(text:  "lbl_delivery_and_coll".tr),
-                fotterContent(text:  "lbl_return".tr),
-                fotterContent(text:  "lbl_warranty_repair".tr),
-
-
+                fotterContent(text:"lbl_pay".tr),
+                fotterContent(text:"lbl_delivery_and_coll".tr),
+                fotterContent(text:"lbl_return".tr),
+                fotterContent(text:"lbl_warranty_repair".tr),
                 Padding(
                   padding: const EdgeInsets.only(left: 15,top: 20),
                   child: Text("lbl_product".tr,

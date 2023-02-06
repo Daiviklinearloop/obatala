@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:obatala/localization/nl/nl_translations.dart';
-import 'en_us/en_us_translations.dart';
+import 'package:obatala/localization/en_us/en_us_translations.dart';
 
 class AppLocalization extends Translations {
   @override
